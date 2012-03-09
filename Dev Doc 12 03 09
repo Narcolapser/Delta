@@ -1,0 +1,7 @@
+Ok. I've realized that before I get in over my head with this mesh stuff, I need to rework a few little things. Most notably of which is the concept of meshes. Right now while I have 1 mesh everything is fine and dandy. but what happens when I need to move meshes independently? I looked online and appearently it has todo with pushing/popping matricies.... further research i found that has been depricated. So what have we now? well, appearently it works by doing different meshes in different buffers. less than ideal, but i'm going to keep reading and see if this makes more sense.
+
+yea, that is how it works. now I'm trying to think how the transformation will work. ok, so I see now how this is working for the tutorial I'm following. they actually recalculate the mesh and uploaded to the GPU every frame. yea, that can't happen for me. I need a way to have the GPU handle that info. 
+
+So, what I did was change the mvp uniform before each object gets rendered. I'll change the way this works in the future, but right now the whole mvpa get recalculated. I can just have the mvp be calculated once and then add anim to it to get the individual mvp uniforms. 
+
+So now I'm interested in making a mesh class. This class would read data in from a .obj file. but I think I'll push that on to the next alpha.
