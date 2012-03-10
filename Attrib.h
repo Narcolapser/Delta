@@ -14,15 +14,16 @@
 class Attrib
 {
 public:
-	Attrib(Program *prog, const char* _name, GLenum _type, GLuint bo)
+	Attrib(Program *prog, const char* _name, GLenum _type, GLuint bo, GLenum _bufType)
 	{
-		attref = glGetAttribLocation(prog->getProgram(), _name);
-		if (attref == -1) 
+		if (_bufType == GL_ARRAY_BUFFER)
 		{
-			fprintf(stderr, "Could not bind attribute %s\n", _name);
+			attref = glGetAttribLocation(prog->getProgram(), _name);
+			if (attref == -1) fprintf(stderr, "Could not bind attribute %s\n", _name);
 		}
 		name = _name;
 		type = _type;
+		bufType = _bufType;
 		numEl = 3;
 		interweave = 0;
 		offset = 0;
@@ -39,7 +40,7 @@ public:
 	}
 	void inline bind()
 	{
-		glBindBuffer(GL_ARRAY_BUFFER, buffer);	
+		glBindBuffer(bufType, buffer);	
 	}
 	void inline pointer()
 	{
@@ -75,6 +76,7 @@ private:
 	GLuint buffer;
 	int numEl;
 	GLenum type;
+	GLenum bufType;
 	int interweave;
 	GLvoid* offset;	
 };

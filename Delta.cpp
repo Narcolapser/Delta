@@ -197,18 +197,18 @@ int init_resources()
 	//ATTRIBUTE SPEC:////////////////////////////////////////////////////////////////////
 	const char* attribute_name;
 	attribute_name = "coord3d";
-	coord3d = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_vertices);
+	coord3d = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_vertices,GL_ARRAY_BUFFER);
 	attribute_name = "v_color";
-	vColor = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_colors);
-//	attribute_name = "elArr";
-//	elArr = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_cube_elements);
+	vColor = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_colors,GL_ARRAY_BUFFER);
+	attribute_name = "elArr";
+	elArr = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_cube_elements,GL_ELEMENT_ARRAY_BUFFER);
 
 	attribute_name = "coord3d";
-	coord3df = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_vertices);
+	coord3df = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_vertices,GL_ARRAY_BUFFER);
 	attribute_name = "v_color";
-	vColorf = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_colors);
-//	attribute_name = "elArr";
-//	elArrf = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_floor_elements);
+	vColorf = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_colors,GL_ARRAY_BUFFER);
+	attribute_name = "elArr";
+	elArrf = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_floor_elements,GL_ELEMENT_ARRAY_BUFFER);
 
 	const char* uniform_name;
 	uniform_name = "mvp";
@@ -254,7 +254,8 @@ void onDisplay()
 	vColorf->pointer();
 
 	/* Push each element in buffer_vertices to the vertex shader */
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_floor_elements);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_floor_elements);
+	elArrf->bind();
 	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
 	
 	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
