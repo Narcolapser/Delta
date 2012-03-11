@@ -2,101 +2,92 @@
 
 Mesh::Mesh(Program *prog, const char* filename)
 {
-//	cout <<"I started" << endl;
+	//the constructor for the mesh class. This will read in a mesh from a .obj file and send
+	//	the information up to the GPU automatically and then maintains the references to
+	//	the attributes locally so that a call to "render" can be made simply.
+
+	//open the file. 
 	ifstream in(filename, ios::in);
-
 	if (!in) {cout << "Cannot open " << filename << endl;}
-	
-//	GLfloat *verts = NULL;
-//	GLushort *els = NULL;
 
-//	cout <<"File opened, got pointers." << endl;
-
-	GLfloat verts[65535];
-	GLushort els[65535];
-
-//	verts = (GLfloat*) realloc (verts, 3000 * sizeof(GLfloat));
-//	els = (GLushort*) realloc (els, 3000 * sizeof(GLushort));
-
-//	verts = (GLfloat*) realloc (verts, 3000 );
-//	els = (GLushort*) realloc (els, 3000 );
-
+	//initalize the variables needed for loading a mesh from an obj.
+	vector<GLfloat> verts;
+	vector<GLushort> els;
 	int vertc = 0;
 	int elc = 0;
 	string line;
-//	cout << "allocated. verts is now:" << sizeof(verts) << " vertc is: " << vertc << " els is now: " << sizeof(els) << " elc is: " << elc << endl;
-	while (getline(in, line)) 
-	{
 
-		if (line.substr(0,2) == "v ") 
+	//loop to read all the data in from the file.
+	while (getline(in, line)) //while there is still a line to be had.
+	{
+		if (line.substr(0,2) == "v ") //if it starts with "v " it is a vertex
 		{
-//			if(vertc == 1000)
-//			{
-//				verts = (GLfloat*) realloc (verts, 65535 * sizeof(GLfloat));
-//			}
-			istringstream s(line.substr(2));
-			s >> verts[vertc*3];
-			s >> verts[vertc*3+1];
-			s >> verts[vertc*3+2];
-//			cout << "vert: " << vertc << " values: " << verts[vertc] << " : " << verts[vertc+1] << " : " << verts[vertc+2] << endl;
-			vertc++;			
+			istringstream s(line.substr(2));//read the info in through a stream.
+			GLfloat x,y,z;//temp variables to hold the vertex data as it comes in.
+			s >> x; s >> y; s >> z;//read in the vertex info
+			verts.push_back(x);//push the info onto the vector
+			verts.push_back(y);
+			verts.push_back(z);
+			vertc++;//increment the number of vertices.
 		}
-		else if (line.substr(0,2) == "f ") 
+		else if (line.substr(0,2) == "f ") //if it starts with "f " it is a face.
 		{
-//			if(elc == 1000)
-//			{
-//				els = (GLushort*) realloc (els, 65535 * sizeof(GLushort));
-//			}
-			istringstream s(line.substr(2));
-			GLushort a,b,c;
-			s >> a; s >> b; s >> c;
-			a--; b--; c--;
-			els[elc*3] = a;
-			els[elc*3+1] = b;
-			els[elc*3+2] = c;
-//			cout << "element: " << elc << " values: " << els[elc] << " : " << els[elc+1] << " : " << els[elc+2] << endl;
-			elc++;
+			istringstream s(line.substr(2));//stream in again for simplicity.
+			GLushort a,b,c;//temp variables to hold face info as it comes in.
+			s >> a; s >> b; s >> c;//read in the face info.
+			a--; b--; c--;// each one needs to be decrememnted because .obj is 1 
+				//indexed where as vbos are 0 indexed.
+			els.push_back(a);//push info onto the vector
+			els.push_back(b);
+			els.push_back(c);
+			elc++;//incrememnt the number of faces.
 		}
 		else if (line[0] == '#') { /* ignoring this line */ }
 		else { /* ignoring this line */ }
  	}
 
-//	cout << "done with while." << endl;
-//	verts = (GLfloat*) realloc (verts, vertc * 3 * sizeof(GLfloat));
-//	els = (GLushort*) realloc (els, elc * 3 * sizeof(GLushort));
+	//these two loops convert the vectors into arrays so they can be sent to opengl.
+	GLfloat vertarray[vertc*3];
+	GLushort elarray[elc*3];
+	for(int i = 0; i < vertc; i++)
+	{
+		vertarray[i*3+0] = verts[i*3+0];
+		vertarray[i*3+1] = verts[i*3+1];
+		vertarray[i*3+2] = verts[i*3+2];
+	}
+	for(int i = 0; i < elc; i++)
+	{
+		elarray[i*3+0] = els[i*3+0];
+		elarray[i*3+1] = els[i*3+1];
+		elarray[i*3+2] = els[i*3+2];
+	}
 
-//	verts = (GLfloat*) realloc (verts, 96);
-//	els = (GLushort*) realloc (els, 60);
-
-//	cout << "reallocated. verts is now:" << sizeof(verts) << " vertc is: " << vertc << " els is now: " << sizeof(els) << " elc is: " << elc << endl;
 	//Create Attribute and send data to GPU
-	const char* name = "coord3d";
+	const char* name = "coord3d";// name of the Attribute of interest.
 
 	//Binding the buffer objects:
-	GLuint vbo_verts, ibo_elements;
+	GLuint vbo_verts, ibo_elements;// holder for the buffers to hold the mesh data.
 
-	glGenBuffers(1, &vbo_verts);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_verts);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glGenBuffers(1, &vbo_verts);//create the vertex buffer.
+	glBindBuffer(GL_ARRAY_BUFFER, vbo_verts);// bind the buffer so it can be worked on.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertarray), vertarray, GL_STATIC_DRAW);
+		//send the information from the vertex array to the buffer.
 
+	//same as above.
 	glGenBuffers(1, &ibo_elements);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_elements);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(els), els, GL_STATIC_DRAW);
-//	cout << "time to make attributes." << endl;
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elarray), elarray, GL_STATIC_DRAW);
+
+	//create the attribute objects.
 	coords = new Attrib(prog,name,GL_FLOAT,vbo_verts,GL_ARRAY_BUFFER);
 	elements = new Attrib(prog,name,GL_FLOAT,ibo_elements,GL_ELEMENT_ARRAY_BUFFER);
 	
-//	free(verts);
-//	free(els);
-//	verts = NULL;
-//	els = NULL;
-
+	//set local values to defaults.
 	loc = glm::mat4(1.0f);
 	rot = glm::mat4(1.0f);
 	scale = glm::mat4(1.0f);
 	trans = glm::mat4(1.0f);
 	newTrans = 1;
-//	cout << "donzies!" << endl;
 }
 Mesh::~Mesh()
 {

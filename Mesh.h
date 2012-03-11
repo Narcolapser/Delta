@@ -5,7 +5,7 @@
  *Purpose: 	A wrapper class for mesh objects. With the capacities to load from .obj files and
  *	handle the process of animating and given the values of rotation, transformation, and scale
  *Notes:	HA! I'm making this class again. I must have made this class 4 or 5 times before 
- *	when I had no idea what I was doing. >.<
+ *	when I had no idea what I was doing. >.< see mesh class for comments.
  **********************/
 
 #ifndef MESH_H
@@ -41,13 +41,13 @@ public:
 	void scaleStatic(glm::vec3& val);
 //private:
 	//data members:
-	Attrib *coords;
-	Attrib *elements;
-	glm::mat4 loc;
-	glm::mat4 rot;
-	glm::mat4 scale;
-	glm::mat4 trans;
-	int newTrans;
+	Attrib *coords;		//attribute containing all the vertex information.
+	Attrib *elements;	//attribute containing all the face information
+	glm::mat4 loc;		//the current location of the object.
+	glm::mat4 rot;		//the current rotation of the object.
+	glm::mat4 scale;	//the current scaling factor on the object.
+	glm::mat4 trans;	//the current local transform matrix.
+	int newTrans;		//sentinal value for the local transform matrix.
 };
 
 #endif

@@ -4,6 +4,8 @@
  * Fragment Shader.
  * It will hold this info as well as deal with loading, compiling, and linking.
  */
+#ifndef PROGRAM_H
+#define PROGRAM_H
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -11,34 +13,33 @@
 #include <GL/glut.h>
 
 using namespace std;
-
-#ifndef PROGRAM_H
-#define PROGRAM_H
-
 class Program
 {
 public:
 	Program()
-	{
+	{//default contructor, everything is initially empty.
 		newProg = 0;
 		vs = 0;
 		fs = 0;
 		prog = 0;
 	}
 	~Program()
-	{
+	{//ask GL to delete the respective objects.
 		glDeleteShader(vs);
 		glDeleteShader(fs);
 		glDeleteProgram(prog);
-	}	
+	}
+	
+	//another trick like i used in the camera class. I'd hope that eventually I could remove 
+	//this function, but for now it remains to fill in the gaps where necessary.
 	GLuint inline getProgram() { return newProg ? prog : updateProg(); }
 
 //	void loadGeometry()
 //	{
 //		usingGeom = 1;		
-//	}
+//	}I'm not looking to support geometry shaders in delta right now, this may be trashed.
 	int loadVertex(const char* fileName)
-	{
+	{//loads a vertex shader using the function I borrowed from wiki books.
 		vs = create_shader(fileName, GL_VERTEX_SHADER);
 		if (vs) 
 		{
@@ -48,7 +49,7 @@ public:
 		return 0;
 	}
 	int loadFragment(const char* fileName)
-	{
+	{//loads a fragment shader using the function I borrowed from wiki books.
 		fs = create_shader(fileName, GL_FRAGMENT_SHADER);
 		if(fs) 
 		{
@@ -58,7 +59,8 @@ public:
 		return 0;
 	}
 	void inline use()
-	{
+	{//declares to openGl that this is the program that will be used right now. and will update
+	//the program if necessary.
 		if (newProg==1)
 		{
 			glUseProgram(prog);
@@ -73,32 +75,33 @@ private:
 	//data members:
 	//int usingGeom;
 	//GLuint gs, vs, fs;
-	GLuint vs, fs;
-	GLuint prog;
-	int newProg;
+	GLuint vs, fs;	//pointers to the shanders on the gpu.
+	GLuint prog;	//pointer to the program on the gpu.
+	int newProg;	//sentinal value for if the program needs to be updated or not.
 
 	//member functions:
 	GLuint updateProg()
-	{
-		prog = glCreateProgram();
-		if (vs == 0 || fs == 0) return 0;
-		glAttachShader(prog, vs);
-		glAttachShader(prog, fs);
+	{//this method updates a program on the GPU, relinks and compiles it.
+		prog = glCreateProgram();//create the new program
+		if (vs == 0 || fs == 0) return 0;//if the shaders don't exist, back out now.
+		glAttachShader(prog, vs);//attach the vertex shader
+		glAttachShader(prog, fs);//attach the fragment shader/
 
-		int link_ok;
-		glLinkProgram(prog);
-		glGetProgramiv(prog, GL_LINK_STATUS, &link_ok);
-		if (!link_ok) 
+		int link_ok;//sentinal value.
+		glLinkProgram(prog);//link the program
+		glGetProgramiv(prog, GL_LINK_STATUS, &link_ok);//check the status of the program.
+		if (!link_ok) //if it linked fine continue, other wise:
 		{
-			fprintf(stderr, "glLinkProgram:");
-			print_log(prog);
-			return 0;
+			fprintf(stderr, "glLinkProgram:");// report the error
+			print_log(prog);//print prog log for debugging.
+			return 0;//exit
 		}
-		newProg = 1;
-		return prog;
+		newProg = 1;//if it succeds the program is now at its most current version, set the
+			//sentinal value to reflect such.
+		return prog;//lastly return the resulting program.
 	}
 
-	//convenience methods:
+	//convenience methods: I copied these from wikibooks, I won't probably be maintaining them and as such I won't comment them.
 	char* file_read(const char* filename)
 	{
 		FILE* in = fopen(filename, "rb");
@@ -134,7 +137,6 @@ private:
 		}
 		GLuint res = glCreateShader(type);
 		glShaderSource(res, 1, &source, NULL);
-//		printf("Shader: %s \n",source);
 		free((void*)source);
 
 		glCompileShader(res);

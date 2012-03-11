@@ -5,7 +5,7 @@
  *Purpose: 	A wrapper class for mesh objects. With the capacities to load from .obj files and
  *	handle the process of animating and given the values of rotation, transformation, and scale
  *Notes:	HA! I'm making this class again. I must have made this class 4 or 5 times before 
- *	when I had no idea what I was doing. >.<
+ *	when I had no idea what I was doing. >.< see mesh class for comments.
  **********************/
 
 #ifndef MESH_H
@@ -39,7 +39,7 @@ public:
 	void moveStatic(glm::vec3& val);
 	void rotateStatic(float by, glm::vec3& val);
 	void scaleStatic(glm::vec3& val);
-private:
+//private:
 	//data members:
 	Attrib *coords;
 	Attrib *elements;

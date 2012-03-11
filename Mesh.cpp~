@@ -2,73 +2,65 @@
 
 Mesh::Mesh(Program *prog, const char* filename)
 {
-//	cout <<"I started" << endl;
+	//the constructor for the mesh class. This will read in a mesh from a .obj file and send
+	//	the information up to the GPU automatically and then maintains the references to
+	//	the attributes locally so that a call to "render" can be made simply.
+
+	//open the file. 
 	ifstream in(filename, ios::in);
-
 	if (!in) {cout << "Cannot open " << filename << endl;}
-	
-//	GLfloat *verts = NULL;
-//	GLushort *els = NULL;
 
-//	cout <<"File opened, got pointers." << endl;
-
-	GLfloat verts[65535];
-	GLushort els[65535];
-
-//	verts = (GLfloat*) realloc (verts, 3000 * sizeof(GLfloat));
-//	els = (GLushort*) realloc (els, 3000 * sizeof(GLushort));
-
-//	verts = (GLfloat*) realloc (verts, 3000 );
-//	els = (GLushort*) realloc (els, 3000 );
-
+	//initalize the variables needed for loading a mesh from an obj.
+	vector<GLfloat> verts;
+	vector<GLushort> els;
 	int vertc = 0;
 	int elc = 0;
 	string line;
-//	cout << "allocated. verts is now:" << sizeof(verts) << " vertc is: " << vertc << " els is now: " << sizeof(els) << " elc is: " << elc << endl;
+
+	//loop to read all the data in from the file.
 	while (getline(in, line)) 
 	{
 
 		if (line.substr(0,2) == "v ") 
 		{
-//			if(vertc == 1000)
-//			{
-//				verts = (GLfloat*) realloc (verts, 65535 * sizeof(GLfloat));
-//			}
+			GLfloat x,y,z;
 			istringstream s(line.substr(2));
-			s >> verts[vertc*3];
-			s >> verts[vertc*3+1];
-			s >> verts[vertc*3+2];
-//			cout << "vert: " << vertc << " values: " << verts[vertc] << " : " << verts[vertc+1] << " : " << verts[vertc+2] << endl;
+			s >> x; s >> y; s >> z;
+			verts.push_back(x);
+			verts.push_back(y);
+			verts.push_back(z);
 			vertc++;			
 		}
 		else if (line.substr(0,2) == "f ") 
 		{
-//			if(elc == 1000)
-//			{
-//				els = (GLushort*) realloc (els, 65535 * sizeof(GLushort));
-//			}
 			istringstream s(line.substr(2));
 			GLushort a,b,c;
 			s >> a; s >> b; s >> c;
 			a--; b--; c--;
-			els[elc*3] = a;
-			els[elc*3+1] = b;
-			els[elc*3+2] = c;
-//			cout << "element: " << elc << " values: " << els[elc] << " : " << els[elc+1] << " : " << els[elc+2] << endl;
+			els.push_back(a);
+			els.push_back(b);
+			els.push_back(c);
 			elc++;
 		}
 		else if (line[0] == '#') { /* ignoring this line */ }
 		else { /* ignoring this line */ }
  	}
 
-//	cout << "done with while." << endl;
-//	verts = (GLfloat*) realloc (verts, vertc * 3 * sizeof(GLfloat));
-//	els = (GLushort*) realloc (els, elc * 3 * sizeof(GLushort));
+	GLfloat vertarray[vertc*3];
+	GLushort elarray[elc*3];
+	for(int i = 0; i < vertc; i++)
+	{
+		vertarray[i*3+0] = verts[i*3+0];
+		vertarray[i*3+1] = verts[i*3+1];
+		vertarray[i*3+2] = verts[i*3+2];
+	}
+	for(int i = 0; i < elc; i++)
+	{
+		elarray[i*3+0] = els[i*3+0];
+		elarray[i*3+1] = els[i*3+1];
+		elarray[i*3+2] = els[i*3+2];
+	}
 
-//	verts = (GLfloat*) realloc (verts, 96);
-//	els = (GLushort*) realloc (els, 60);
-
-//	cout << "reallocated. verts is now:" << sizeof(verts) << " vertc is: " << vertc << " els is now: " << sizeof(els) << " elc is: " << elc << endl;
 	//Create Attribute and send data to GPU
 	const char* name = "coord3d";
 
@@ -77,19 +69,19 @@ Mesh::Mesh(Program *prog, const char* filename)
 
 	glGenBuffers(1, &vbo_verts);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_verts);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertarray), vertarray, GL_STATIC_DRAW);
 
 	glGenBuffers(1, &ibo_elements);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_elements);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(els), els, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elarray), elarray, GL_STATIC_DRAW);
 //	cout << "time to make attributes." << endl;
 	coords = new Attrib(prog,name,GL_FLOAT,vbo_verts,GL_ARRAY_BUFFER);
 	elements = new Attrib(prog,name,GL_FLOAT,ibo_elements,GL_ELEMENT_ARRAY_BUFFER);
 	
-//	free(verts);
-//	free(els);
-//	verts = NULL;
-//	els = NULL;
+//	delete &els;
+//	delete &verts;
+//	delete [] vertarray;
+//	delete [] elarray;
 
 	loc = glm::mat4(1.0f);
 	rot = glm::mat4(1.0f);
@@ -128,7 +120,7 @@ void Mesh::render(GLint local)
 //	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 //	coords->disable();
 
-	Mesh *cube = &this;
+	Mesh *cube = this;
 	cube->coords->enable();
 	cube->coords->bind();
 	cube->coords->pointer();
