@@ -12,6 +12,9 @@
 
 using namespace std;
 
+#ifndef PROGRAM_H
+#define PROGRAM_H
+
 class Program
 {
 public:
@@ -56,7 +59,15 @@ public:
 	}
 	void inline use()
 	{
-		glUseProgram(prog);
+		if (newProg==1)
+		{
+			glUseProgram(prog);
+		}
+		else
+		{
+			updateProg();
+			glUseProgram(prog);
+		}
 	}
 private:
 	//data members:
@@ -162,4 +173,6 @@ private:
 		free(log);
 	}
 };
+#endif
 
+/*.S.D.G.*/

@@ -6,9 +6,11 @@
 
 #include <math.h>
 #include <iostream>
+#include "Mesh.h"
 #include "InterfaceGL.cpp"
-//#include "Camera.h"
-//#include "Attrib.h"
+#include "Camera.h"
+#include "Program.h"
+#include "Attrib.h"
 
 using namespace std;
 
@@ -24,6 +26,7 @@ GLuint vbo_floor_vertices, vbo_floor_colors, ibo_floor_elements;
 glm::mat4 model,view,projection,anim;
 
 GLint uniform_mvp;
+GLint local;
 bool rotate_l = false;
 bool rotate_r = false;
 float angle = 0.0;
@@ -73,21 +76,21 @@ int init_resources()
 	c = new Camera(45.0f,800,600,0.1f,1000.0f,glm::vec3(0.0, 2.0, 0.0));
 
 	//ATTRIBUTE DATA:////////////////////////////////////////////////////////////////////
-	GLfloat cube_vertices[] = {
-		// front
-		-1.0, -1.0, 1.0,
-		 1.0, -1.0, 1.0,
-		 1.0,  1.0, 1.0,
-		-1.0,  1.0, 1.0,
-		// back
-		-1.0, -1.0, -1.0,
-		 1.0, -1.0, -1.0,
-		 1.0,  1.0, -1.0,
-		-1.0,  1.0, -1.0,
-	};
-	glGenBuffers(1, &vbo_cube_vertices);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
+//	GLfloat cube_vertices[] = {
+//		// front
+//		-1.0, -1.0, 1.0,
+//		 1.0, -1.0, 1.0,
+//		 1.0,  1.0, 1.0,
+//		-1.0,  1.0, 1.0,
+//		// back
+//		-1.0, -1.0, -1.0,
+//		 1.0, -1.0, -1.0,
+//		 1.0,  1.0, -1.0,
+//		-1.0,  1.0, -1.0,
+//	};
+//	glGenBuffers(1, &vbo_cube_vertices);
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
 
 	GLfloat floor_vertices[] = {
 		-2.0, -2.0, -2.0,
@@ -99,57 +102,57 @@ int init_resources()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_floor_vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floor_vertices), floor_vertices, GL_STATIC_DRAW);
 
-	GLfloat cube_colors[] = {
-		// front colors
-		1.0, 0.0, 0.0,
-		0.0, 1.0, 0.0,
-		1.0, 1.0, 0.0,
-		0.0, 0.0, 1.0,
-		// back colors
-		1.0, 0.0, 1.0,
-		0.0, 1.0, 1.0,
-		1.0, 1.0, 1.0,
-		0.0, 0.0, 0.0,		
-	};
-	glGenBuffers(1, &vbo_cube_colors);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
+//	GLfloat cube_colors[] = {
+//		// front colors
+//		1.0, 0.0, 0.0,
+//		0.0, 1.0, 0.0,
+//		1.0, 1.0, 0.0,
+//		0.0, 0.0, 1.0,
+//		// back colors
+//		1.0, 0.0, 1.0,
+//		0.0, 1.0, 1.0,
+//		1.0, 1.0, 1.0,
+//		0.0, 0.0, 0.0,		
+//	};
+//	glGenBuffers(1, &vbo_cube_colors);
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
+//
+//	GLfloat floor_colors[] = {
+//		// floor colors
+//		1.0, 0.0, 0.0,
+//		0.0, 1.0, 0.0,
+//		0.0, 0.0, 1.0,
+//		1.0, 1.0, 1.0,
+//		
+//	};
+//	glGenBuffers(1, &vbo_floor_colors);
+//	glBindBuffer(GL_ARRAY_BUFFER, vbo_floor_colors);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(floor_colors), floor_colors, GL_STATIC_DRAW);
 
-	GLfloat floor_colors[] = {
-		// floor colors
-		1.0, 0.0, 0.0,
-		0.0, 1.0, 0.0,
-		0.0, 0.0, 1.0,
-		1.0, 1.0, 1.0,
-		
-	};
-	glGenBuffers(1, &vbo_floor_colors);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_floor_colors);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(floor_colors), floor_colors, GL_STATIC_DRAW);
-
-	GLushort cube_elements[] = {
-		// front
-		0, 1, 2,
-		2, 3, 0,
-		// top
-		1, 5, 6,
-		6, 2, 1,
-		// back
-		7, 6, 5,
-		5, 4, 7,
-		// bottom
-		4, 0, 3,
-		3, 7, 4,
-		// left
-		4, 5, 1,
-		1, 0, 4,
-		// right
-		3, 2, 6,
-		6, 7, 3,
-	};
-	glGenBuffers(1, &ibo_cube_elements);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_elements), cube_elements, GL_STATIC_DRAW);
+//	GLushort cube_elements[] = {
+//		// front
+//		0, 1, 2,
+//		2, 3, 0,
+//		// top
+//		1, 5, 6,
+//		6, 2, 1,
+//		// back
+//		7, 6, 5,
+//		5, 4, 7,
+//		// bottom
+//		4, 0, 3,
+//		3, 7, 4,
+//		// left
+//		4, 5, 1,
+//		1, 0, 4,
+//		// right
+//		3, 2, 6,
+//		6, 7, 3,
+//	};
+//	glGenBuffers(1, &ibo_cube_elements);
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
+//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_elements), cube_elements, GL_STATIC_DRAW);
 
 	GLushort floor_elements[] = {
 		//floor
@@ -159,12 +162,6 @@ int init_resources()
 	glGenBuffers(1, &ibo_floor_elements);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_floor_elements);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(floor_elements), floor_elements, GL_STATIC_DRAW);
-
-//	vector<glm::vec3> vertices;
-//	vector<glm::vec3> normals;
-//	vector<GLushort> elements;
-
-//	load_obj("tank.obj",vertices,normals,elements);
 
 //	GLfloat mesh_vertices[vertices.end()];
 //	GLfloat mesh_normals[normals.end()];
@@ -196,17 +193,17 @@ int init_resources()
 
 	//ATTRIBUTE SPEC:////////////////////////////////////////////////////////////////////
 	const char* attribute_name;
-	attribute_name = "coord3d";
-	coord3d = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_vertices,GL_ARRAY_BUFFER);
-	attribute_name = "v_color";
-	vColor = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_colors,GL_ARRAY_BUFFER);
-	attribute_name = "elArr";
-	elArr = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_cube_elements,GL_ELEMENT_ARRAY_BUFFER);
+//	attribute_name = "coord3d";
+//	coord3d = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_vertices,GL_ARRAY_BUFFER);
+////	attribute_name = "v_color";
+////	vColor = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_colors,GL_ARRAY_BUFFER);
+//	attribute_name = "elArr";
+//	elArr = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_cube_elements,GL_ELEMENT_ARRAY_BUFFER);
 
 	attribute_name = "coord3d";
 	coord3df = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_vertices,GL_ARRAY_BUFFER);
-	attribute_name = "v_color";
-	vColorf = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_colors,GL_ARRAY_BUFFER);
+//	attribute_name = "v_color";
+//	vColorf = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_colors,GL_ARRAY_BUFFER);
 	attribute_name = "elArr";
 	elArrf = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_floor_elements,GL_ELEMENT_ARRAY_BUFFER);
 
@@ -214,6 +211,13 @@ int init_resources()
 	uniform_name = "mvp";
 	uniform_mvp = glGetUniformLocation(prog->getProgram(), uniform_name);
 	if (uniform_mvp == -1) {
+		fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
+		return 0;
+	}
+
+	uniform_name = "local";
+	local = glGetUniformLocation(prog->getProgram(), uniform_name);
+	if (local == -1) {
 		fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
 		return 0;
 	}
@@ -232,10 +236,12 @@ void onIdle() {
 	view = c->lookAt(glm::vec3(0.0, 0.0, zoom));
 	projection = c->getProjection();
 
-	glm::mat4 mvp = projection * view * model * anim;
+	glm::mat4 mvp = projection * view * model;
 
 	prog->use();
+	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(anim));
 	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+	glUniform1f(local,0.0);
 	glutPostRedisplay();
 }
 
@@ -249,9 +255,9 @@ void onDisplay()
 	coord3df->enable();
 	coord3df->bind();
 	coord3df->pointer();
-	vColorf->enable();
-	vColorf->bind();
-	vColorf->pointer();
+//	vColorf->enable();
+//	vColorf->bind();
+//	vColorf->pointer();
 
 	/* Push each element in buffer_vertices to the vertex shader */
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_floor_elements);
@@ -260,26 +266,26 @@ void onDisplay()
 	
 	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 	coord3df->disable();
-	vColorf->disable();
+//	vColorf->disable();
 
-	glm::mat4 cube = glm::translate(anim, glm::vec3(shuffle,0.0,0.0));
-	glm::mat4 mvp = projection * view * model * cube;
-	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+//	glm::mat4 cube = glm::translate(anim, glm::vec3(shuffle,0.0,0.0));
+//	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(projection * view * model));
+//	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(cube));
 
-	coord3d->enable();
-	coord3d->bind();
-	coord3d->pointer();
-	vColor->enable();
-	vColor->bind();
-	vColor->pointer();
+//	coord3d->enable();
+//	coord3d->bind();
+//	coord3d->pointer();
+////	vColor->enable();
+////	vColor->bind();
+////	vColor->pointer();
 
-	/* Push each element in buffer_vertices to the vertex shader */
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
-	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-	
-	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-	coord3d->disable();
-	vColor->disable();
+//	/* Push each element in buffer_vertices to the vertex shader */
+//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
+//	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+//	
+//	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+//	coord3d->disable();
+////	vColor->disable();
 
 	glutSwapBuffers();
 }
@@ -408,3 +414,5 @@ int main(int argc, char* argv[])
 	free_resources();
 	return 0;
 }
+
+/*.S.D.G.*/

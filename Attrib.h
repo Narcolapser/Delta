@@ -11,6 +11,8 @@
 
 #include "Program.h"
 
+#ifndef ATTRIB_H
+#define ATTRIB_H
 class Attrib
 {
 public:
@@ -80,3 +82,7 @@ private:
 	int interweave;
 	GLvoid* offset;	
 };
+
+#endif
+
+/*.S.D.G.*/

@@ -10,6 +10,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#ifndef CAMERA_H
+#define CAMERA_H
 class Camera
 {
 public:
@@ -69,3 +71,6 @@ private:
 	int y;
 	int newProj;
 };
+#endif
+
+/*.S.D.G.*/

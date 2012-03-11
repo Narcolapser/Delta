@@ -8,6 +8,9 @@
  *	when I had no idea what I was doing. >.<
  **********************/
 
+#ifndef MESH_H
+#define MESH_H
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -16,6 +19,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <sstream>
 #include <fstream>
 #include <vector>
 
@@ -36,13 +40,16 @@ public:
 	void scaleStatic(glm::vec3& val);
 private:
 	//data members:
-//	Attrib coords;
-	vector<GLfloat> vertices;
-	vector<GLushort> elements;
-	glm::vec4 loc;
-	glm::vec4 rot;
-	glm::vec4 scale;
+	Attrib *coords;
+	Attrib *elements;
+	glm::mat4 loc;
+	glm::mat4 rot;
+	glm::mat4 scale;
+	glm::mat4 trans;
+	int newTrans;
 };
+
+#endif
 /*.S.D.G.*/
 
 /*little references:
@@ -57,3 +64,4 @@ private:
     glVertex3fv(&v[0]);
     glLoadMatrixfv(&m[0][0]); 
 */
+

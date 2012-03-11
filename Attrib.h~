@@ -11,15 +11,17 @@
 
 #include "Program.h"
 
+#ifndef ATTRIB_H
+#define ATTRIB_H
 class Attrib
 {
 public:
 	Attrib(Program *prog, const char* _name, GLenum _type, GLuint bo, GLenum _bufType)
 	{
-		attref = glGetAttribLocation(prog->getProgram(), _name);
-		if (attref == -1) 
+		if (_bufType == GL_ARRAY_BUFFER)
 		{
-			fprintf(stderr, "Could not bind attribute %s\n", _name);
+			attref = glGetAttribLocation(prog->getProgram(), _name);
+			if (attref == -1) fprintf(stderr, "Could not bind attribute %s\n", _name);
 		}
 		name = _name;
 		type = _type;
@@ -80,3 +82,5 @@ private:
 	int interweave;
 	GLvoid* offset;	
 };
+
+#endif

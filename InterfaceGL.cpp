@@ -148,3 +148,5 @@ void InterfaceGL::setReshapeFunc(void(*func)(int width, int height))
 {
 	glutReshapeFunc(func);
 }
+
+/*.S.D.G.*/

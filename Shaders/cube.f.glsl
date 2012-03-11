@@ -1,8 +1,12 @@
 #version 120
 
-varying vec3 f_color;
+
+//varying vec3 f_color;
+//varying vec3 line;
+
+//uniform float local;
 
 void main(void) 
 {
-	gl_FragColor = vec4(f_color.x, f_color.y, f_color.z, 1.0);
+	gl_FragColor = vec4(0.5f,0.5f,1.0f,1.0f);
 }

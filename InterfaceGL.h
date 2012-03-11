@@ -5,6 +5,9 @@
 	This will server also for dealing with any differences between the OSs
  */
 
+#ifndef INTERFACEGL_H
+#define INTERFACEGL_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -60,4 +63,6 @@ private:
 	void (*keyFuncs[256])(void);
 
 };
+#endif
+
 /*.S.D.G.*/
