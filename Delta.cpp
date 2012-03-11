@@ -6,7 +6,7 @@
 
 #include <math.h>
 #include <iostream>
-#include "Mesh.h"
+#include "Mesh.cpp"
 #include "InterfaceGL.cpp"
 #include "Camera.h"
 #include "Program.h"
@@ -18,7 +18,7 @@ Camera *c;
 Program *prog;
 Attrib *coord3d,*vColor,*elArr;
 Attrib *coord3df,*vColorf,*elArrf;
-InterfaceGL* IGL;
+Mesh *cube;
 //GLuint vbo_mesh_vertices, vbo_mesh_normals, ibo_mesh_elements;
 GLuint vbo_cube_vertices, vbo_cube_colors, ibo_cube_elements;
 GLuint vbo_floor_vertices, vbo_floor_colors, ibo_floor_elements;
@@ -38,60 +38,11 @@ bool lclick = false;
 bool rclick = false;
 float shuffle = 0.0;
 
-//void load_obj(const char* filename, vector<glm::vec3> &vertices, vector<glm::vec3> &normals, vector<GLushort> &elements) {
-//  ifstream in(filename, ios::in);
-//  if (!in) { cerr << "Cannot open " << filename << endl; exit(1); }
-// 
-//  string line;
-//  while (getline(in, line)) {
-//    if (line.substr(0,2) == "v ") {
-//      istringstream s(line.substr(2));
-//      glm::vec3 v; s >> v.x; s >> v.y; s >> v.z;
-//      vertices.push_back(v);
-//    }  else if (line.substr(0,2) == "f ") {
-//      istringstream s(line.substr(2));
-//      GLushort a,b,c;
-//      s >> a; s >> b; s >> c;
-//      a--; b--; c--;
-//      elements.push_back(a); elements.push_back(b); elements.push_back(c);
-//    }
-//    else if (line[0] == '#') { /* ignoring this line */ }
-//    else { /* ignoring this line */ }
-//  }
-// 
-//  normals.resize(mesh->vertices.size(), glm::vec3(0.0, 0.0, 0.0));
-//  for (int i = 0; i < elements.size(); i+=3) {
-//    GLushort ia = elements[i];
-//    GLushort ib = elements[i+1];
-//    GLushort ic = elements[i+2];
-//    glm::vec3 normal = glm::normalize(glm::cross(
-//      vertices[ib] - vertices[ia],
-//      vertices[ic] - vertices[ia]));
-//    normals[ia] = normals[ib] = normals[ic] = normal;
-//  }
-//}
-
 int init_resources()
 {
 	c = new Camera(45.0f,800,600,0.1f,1000.0f,glm::vec3(0.0, 2.0, 0.0));
 
 	//ATTRIBUTE DATA:////////////////////////////////////////////////////////////////////
-//	GLfloat cube_vertices[] = {
-//		// front
-//		-1.0, -1.0, 1.0,
-//		 1.0, -1.0, 1.0,
-//		 1.0,  1.0, 1.0,
-//		-1.0,  1.0, 1.0,
-//		// back
-//		-1.0, -1.0, -1.0,
-//		 1.0, -1.0, -1.0,
-//		 1.0,  1.0, -1.0,
-//		-1.0,  1.0, -1.0,
-//	};
-//	glGenBuffers(1, &vbo_cube_vertices);
-//	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
-
 	GLfloat floor_vertices[] = {
 		-2.0, -2.0, -2.0,
 		 2.0, -2.0, -2.0,
@@ -102,58 +53,6 @@ int init_resources()
 	glBindBuffer(GL_ARRAY_BUFFER, vbo_floor_vertices);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(floor_vertices), floor_vertices, GL_STATIC_DRAW);
 
-//	GLfloat cube_colors[] = {
-//		// front colors
-//		1.0, 0.0, 0.0,
-//		0.0, 1.0, 0.0,
-//		1.0, 1.0, 0.0,
-//		0.0, 0.0, 1.0,
-//		// back colors
-//		1.0, 0.0, 1.0,
-//		0.0, 1.0, 1.0,
-//		1.0, 1.0, 1.0,
-//		0.0, 0.0, 0.0,		
-//	};
-//	glGenBuffers(1, &vbo_cube_colors);
-//	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_colors);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(cube_colors), cube_colors, GL_STATIC_DRAW);
-//
-//	GLfloat floor_colors[] = {
-//		// floor colors
-//		1.0, 0.0, 0.0,
-//		0.0, 1.0, 0.0,
-//		0.0, 0.0, 1.0,
-//		1.0, 1.0, 1.0,
-//		
-//	};
-//	glGenBuffers(1, &vbo_floor_colors);
-//	glBindBuffer(GL_ARRAY_BUFFER, vbo_floor_colors);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(floor_colors), floor_colors, GL_STATIC_DRAW);
-
-//	GLushort cube_elements[] = {
-//		// front
-//		0, 1, 2,
-//		2, 3, 0,
-//		// top
-//		1, 5, 6,
-//		6, 2, 1,
-//		// back
-//		7, 6, 5,
-//		5, 4, 7,
-//		// bottom
-//		4, 0, 3,
-//		3, 7, 4,
-//		// left
-//		4, 5, 1,
-//		1, 0, 4,
-//		// right
-//		3, 2, 6,
-//		6, 7, 3,
-//	};
-//	glGenBuffers(1, &ibo_cube_elements);
-//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
-//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_elements), cube_elements, GL_STATIC_DRAW);
-
 	GLushort floor_elements[] = {
 		//floor
 		0, 1, 2,
@@ -163,26 +62,6 @@ int init_resources()
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_floor_elements);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(floor_elements), floor_elements, GL_STATIC_DRAW);
 
-//	GLfloat mesh_vertices[vertices.end()];
-//	GLfloat mesh_normals[normals.end()];
-//	GLfloat mesh_elements[elements.end()];
-//	for(int i = vertices.end(); i-->0; mesh_vertices[i] = vertices[i]);
-//	for(int i = normals.end(); i-->0; mesh_normals[i] = normals[i]);
-//	for(int i = elements.end(); i-->0; mesh_elements[i] = elements[i]);
-
-
-//	glGenBuffers(1, &vbo_mesh_vertices);
-//	glBindBuffer(GL_ARRAY_BUFFER, vbo_mesh_vertices);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(mesh_vertices), mesh_vertices, GL_STATIC_DRAW);
-
-//	glGenBuffers(1, &vbo_mesh_normals);
-//	glBindBuffer(GL_ARRAY_BUFFER, vbo_mesh_normals);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(mesh_normals), mesh_normals, GL_STATIC_DRAW);
-
-//	glGenBuffers(1, &ibo_mesh_elements);
-//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_mesh_elements);
-//	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(mesh_elements), mesh_elements, GL_STATIC_DRAW);
-
 	//PROGRAM:////////////////////////////////////////////////////////////////////
 	prog = new Program();
 	if (prog->loadVertex("Shaders/cube.v.glsl") == 0) return 0;
@@ -190,20 +69,13 @@ int init_resources()
 
 	GLint link_ok = GL_FALSE;
 
+	const char* filename = "sphere.obj";
+	cube = new Mesh(prog,filename);
 
 	//ATTRIBUTE SPEC:////////////////////////////////////////////////////////////////////
 	const char* attribute_name;
-//	attribute_name = "coord3d";
-//	coord3d = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_vertices,GL_ARRAY_BUFFER);
-////	attribute_name = "v_color";
-////	vColor = new Attrib(prog,attribute_name,GL_FLOAT,vbo_cube_colors,GL_ARRAY_BUFFER);
-//	attribute_name = "elArr";
-//	elArr = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_cube_elements,GL_ELEMENT_ARRAY_BUFFER);
-
 	attribute_name = "coord3d";
 	coord3df = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_vertices,GL_ARRAY_BUFFER);
-//	attribute_name = "v_color";
-//	vColorf = new Attrib(prog,attribute_name,GL_FLOAT,vbo_floor_colors,GL_ARRAY_BUFFER);
 	attribute_name = "elArr";
 	elArrf = new Attrib(prog,attribute_name,GL_ELEMENT_ARRAY_BUFFER,ibo_floor_elements,GL_ELEMENT_ARRAY_BUFFER);
 
@@ -255,37 +127,22 @@ void onDisplay()
 	coord3df->enable();
 	coord3df->bind();
 	coord3df->pointer();
-//	vColorf->enable();
-//	vColorf->bind();
-//	vColorf->pointer();
-
-	/* Push each element in buffer_vertices to the vertex shader */
-	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_floor_elements);
 	elArrf->bind();
 	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-	
 	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 	coord3df->disable();
-//	vColorf->disable();
 
-//	glm::mat4 cube = glm::translate(anim, glm::vec3(shuffle,0.0,0.0));
-//	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(projection * view * model));
-//	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(cube));
+	cube->coords->enable();
+	cube->coords->bind();
+	cube->coords->pointer();
+	cube->elements->bind();
+	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+	cube->coords->disable();
 
-//	coord3d->enable();
-//	coord3d->bind();
-//	coord3d->pointer();
-////	vColor->enable();
-////	vColor->bind();
-////	vColor->pointer();
-
-//	/* Push each element in buffer_vertices to the vertex shader */
-//	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_elements);
-//	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-//	
-//	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-//	coord3d->disable();
-////	vColor->disable();
+//	cube->setTrans(glm::translate(glm::mat4(1.0f), glm::vec3(0.0,shuffle,0.0)));
+//	cube->setTrans(anim);
+//	cube->render(local);
 
 	glutSwapBuffers();
 }
@@ -377,12 +234,9 @@ void free_resources()
 int main(int argc, char* argv[]) 
 {
 	glutInit(&argc, argv);
-
-	IGL = new InterfaceGL();
-
 	glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Delta Alpha 3");
+	glutCreateWindow("Delta Alpha 5");
 	glutKeyboardFunc(onNormalKeys);
 	glutMotionFunc(onActiveMotion);
 	glutPassiveMotionFunc(onPassiveMotion);

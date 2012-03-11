@@ -30,7 +30,8 @@ class Mesh
 public:
 	Mesh(Program *prog,const char* filename);
 	~Mesh();
-	void render();
+	void render(GLint local);
+	void setTrans(glm::mat4 val);
 	void moveRelative(glm::vec3& val);
 	void rotateRelative(float by, glm::vec3& val);
 	void scaleRelative(glm::vec3& val);
@@ -38,7 +39,7 @@ public:
 	void moveStatic(glm::vec3& val);
 	void rotateStatic(float by, glm::vec3& val);
 	void scaleStatic(glm::vec3& val);
-private:
+//private:
 	//data members:
 	Attrib *coords;
 	Attrib *elements;
