@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "Program.h"
 #include "Attrib.h"
+#include "Buffer.h"
 
 using namespace std;
 
@@ -21,10 +22,6 @@ Attrib *coord3d,*vColor,*elArr;
 Attrib *coord3df,*vColorf,*elArrf;
 Mesh *cube;
 Mesh *plate;
-
-//GLuint vbo_cube_vertices, vbo_cube_colors, ibo_cube_elements;
-//GLuint vbo_floor_vertices, vbo_floor_colors, ibo_floor_elements;
-
 glm::mat4 model,view,projection,anim;
 
 GLint uniform_mvp;
@@ -41,6 +38,9 @@ float shuffle = 0.0;
 //initalize all the resources for Delta.
 int init_resources()
 {
+	//seed the random number generator.
+	srand(time(NULL));
+
 	//The camera. this is new since my refactoring. 
 	c = new Camera(45.0f,800,600,0.1f,1000.0f,glm::vec3(0.0, 2.0, 0.0));
 
@@ -53,8 +53,10 @@ int init_resources()
 	//MESHES! this is where the meshes get loaded.
 	const char* filename = "sphere.obj";
 	cube = new Mesh(prog,filename);
+	printf("first mesh ID: %i\n",cube->getID());
 	filename = "floor.obj";
 	plate = new Mesh(prog,filename);
+	printf("second mesh ID: %i\n",plate->getID());
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
@@ -220,7 +222,7 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Delta Alpha 5");
+	glutCreateWindow("Delta Alpha 6");
 	glutKeyboardFunc(onNormalKeys);
 	glutMotionFunc(onActiveMotion);
 	glutPassiveMotionFunc(onPassiveMotion);

@@ -33,7 +33,7 @@ Mesh::Mesh(Program *prog, const char* filename)
 		else if (line.substr(0,2) == "f ") //if it starts with "f " it is a face.
 		{
 			istringstream s(line.substr(2));//stream in again for simplicity.
-			GLushort a,b,c;//temp variables to hold face info as it comes in.
+			GLushort a,b,c,d;//temp variables to hold face info as it comes in.
 			s >> a; s >> b; s >> c;//read in the face info.
 			a--; b--; c--;// each one needs to be decrememnted because .obj is 1 
 				//indexed where as vbos are 0 indexed.
@@ -41,6 +41,16 @@ Mesh::Mesh(Program *prog, const char* filename)
 			els.push_back(b);
 			els.push_back(c);
 			elc++;//incrememnt the number of faces.
+			char temp = s.peek();
+			if ((int)temp != -1)
+			{
+				s >> d;
+				d--;
+				els.push_back(a);
+				els.push_back(c);
+				els.push_back(d);
+				elc++;
+			}
 		}
 		else if (line[0] == '#') { /* ignoring this line */ }
 		else { /* ignoring this line */ }
@@ -49,6 +59,7 @@ Mesh::Mesh(Program *prog, const char* filename)
 	//these two loops convert the vectors into arrays so they can be sent to opengl.
 	GLfloat vertarray[vertc*3];
 	GLushort elarray[elc*3];
+
 	for(int i = 0; i < vertc; i++)
 	{
 		vertarray[i*3+0] = verts[i*3+0];
@@ -63,24 +74,19 @@ Mesh::Mesh(Program *prog, const char* filename)
 	}
 
 	//Create Attribute and send data to GPU
-	const char* name = "coord3d";// name of the Attribute of interest.
-
 	//Binding the buffer objects:
-	GLuint vbo_verts, ibo_elements;// holder for the buffers to hold the mesh data.
 
-	glGenBuffers(1, &vbo_verts);//create the vertex buffer.
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_verts);// bind the buffer so it can be worked on.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertarray), vertarray, GL_STATIC_DRAW);
-		//send the information from the vertex array to the buffer.
+	//send the information from the vertex array to the buffer.
+	Buffer* vbo = new Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+	vbo->write(sizeof(vertarray),(GLvoid*)vertarray);
 
 	//same as above.
-	glGenBuffers(1, &ibo_elements);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_elements);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elarray), elarray, GL_STATIC_DRAW);
-
+	elements = new Buffer(GL_ELEMENT_ARRAY_BUFFER,GL_STATIC_DRAW);
+	elements->write(sizeof(elarray),elarray);
+	
 	//create the attribute objects.
-	coords = new Attrib(prog,name,GL_FLOAT,vbo_verts,GL_ARRAY_BUFFER);
-	elements = new Attrib(prog,name,GL_FLOAT,ibo_elements,GL_ELEMENT_ARRAY_BUFFER);
+	const char* name = "coord3d";// name of the Attribute of interest.
+	coords = new Attrib(prog,name,GL_FLOAT,vbo);
 	
 	//set local values to defaults.
 	loc = glm::mat4(1.0f);
@@ -109,25 +115,11 @@ void Mesh::render(GLint local)
 //		newTrans == 1;
 //	}
 //	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(trans));
-	
-	int size;
-//	coords->enable();
-//	coords->bind();
-//	coords->pointer();
-//	elements->bind();
-//	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-//	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-//	coords->disable();
-
 	Mesh *cube = this;
-	cube->coords->enable();
-	cube->coords->bind();
-	cube->coords->pointer();
-	cube->elements->bind();
-	glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
-	glDrawElements(GL_TRIANGLES, size/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-	cube->coords->disable();
-
+	this->coords->enable();
+	this->elements->bind();
+	glDrawElements(GL_TRIANGLES, elements->getSize()/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
+	this->coords->disable();
 }
 void Mesh::setTrans(glm::mat4 val)
 {

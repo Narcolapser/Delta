@@ -13,11 +13,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "Object.h"
 
 //include gaurd.
 #ifndef CAMERA_H
 #define CAMERA_H
-class Camera
+class Camera: public Object
 {
 public:
 	//the constructor. You must name:

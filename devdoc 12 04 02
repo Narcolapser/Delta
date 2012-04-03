@@ -1,0 +1,11 @@
+Fixed the rendering problem. It was that I wasn't sending the right size to the buffer. fixed that and it was all fine and dandy. as well as i fixed some problems with storing size information. the new code is cleaner than even I had imagined it being. this makes me happy. 
+
+All I have left now is the master ancestor class, Object. This should be interesting. Time to go learn how the inheritance works. 
+
+Also, for the interest of the resouce manager manager later, I'm going to get UUIDs into the picture right now. Really, that and parenting is all that the "object" class is going to do at first. Parenting means an object takes its parent's transformations in addition to its own. In this way things like follow cams and peices of a larger object, like the turret on a tank. The turret's parent is the tank.
+
+After a little further thought, I realized that parent hood is not object's responsibility. Reason being, who is the parent of a buffer? and who would a buffer parent? there isn't a transform that a buffer is concerned with. an object is defined as follows:
+
+A location in memory, be it on the GPU or Host memory, that is loaded by the resource manager and uniquely identified through the entirity of the system. 
+
+I'll probably have a 3D object class that will take care of parent hood, but for now, objects are that above, and that only. 

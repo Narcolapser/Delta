@@ -16,6 +16,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Attrib.h"
+#include "Object.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -25,7 +26,7 @@
 
 using namespace std;
 
-class Mesh
+class Mesh: public Object
 {
 public:
 	Mesh(Program *prog,const char* filename);
@@ -42,7 +43,7 @@ public:
 //private:
 	//data members:
 	Attrib *coords;		//attribute containing all the vertex information.
-	Attrib *elements;	//attribute containing all the face information
+	Buffer *elements;	//attribute containing all the face information
 	glm::mat4 loc;		//the current location of the object.
 	glm::mat4 rot;		//the current rotation of the object.
 	glm::mat4 scale;	//the current scaling factor on the object.

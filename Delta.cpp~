@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "Program.h"
 #include "Attrib.h"
+#include "Buffer.h"
 
 using namespace std;
 
@@ -21,10 +22,6 @@ Attrib *coord3d,*vColor,*elArr;
 Attrib *coord3df,*vColorf,*elArrf;
 Mesh *cube;
 Mesh *plate;
-
-//GLuint vbo_cube_vertices, vbo_cube_colors, ibo_cube_elements;
-//GLuint vbo_floor_vertices, vbo_floor_colors, ibo_floor_elements;
-
 glm::mat4 model,view,projection,anim;
 
 GLint uniform_mvp;
@@ -41,6 +38,9 @@ float shuffle = 0.0;
 //initalize all the resources for Delta.
 int init_resources()
 {
+	//seed the random number generator.
+	srand(time(NULL));
+
 	//The camera. this is new since my refactoring. 
 	c = new Camera(45.0f,800,600,0.1f,1000.0f,glm::vec3(0.0, 2.0, 0.0));
 
@@ -53,8 +53,10 @@ int init_resources()
 	//MESHES! this is where the meshes get loaded.
 	const char* filename = "sphere.obj";
 	cube = new Mesh(prog,filename);
+	printf("first mesh ID: %i\n",cube->getID());
 	filename = "floor.obj";
 	plate = new Mesh(prog,filename);
+	printf("plate mesh ID: %i\n",plate->getID());
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
@@ -127,16 +129,18 @@ void onDisplay()
 //	cube->setTrans(glm::translate(glm::mat4(1.0f), glm::vec3(0.0,shuffle,0.0)));	
 	cube->render(local);//render the cube, which is currently a sphere...
 
+	//redrawn, swap the buffers and put this new one to the front.
 	glutSwapBuffers();
 }
 
-void onReshape(int width, int height) {
+void onReshape(int width, int height) 
+{//what to do when the user changes the size of the screen.
 	c->setScreen(width,height);
 	glViewport(0, 0, width, height);
 }
 
 void onNormalKeys(unsigned char key, int x, int y)
-{
+{//what to do on key strokes.
 	if (key == 27) exit(0);
 //	cout << "key: " << (char) key << " Value of: " << (int) key << " x: " << x << " y: " << y << endl;
 	if (key == 'a') shuffle++;
@@ -144,7 +148,7 @@ void onNormalKeys(unsigned char key, int x, int y)
 }
 
 void onActiveMotion(int x, int y)
-{
+{//what to do when the user is clicking and dragging.
 	int dx = x - lx;
 	int dy = y - ly;
 
@@ -189,13 +193,13 @@ void onActiveMotion(int x, int y)
 }
 
 void onPassiveMotion(int x, int y)
-{
+{//what tod o when the user is just running his mouse across the screen.
 	lx = x;
 	ly = y;
 }
 
 void onClick(int button, int state, int x, int y)
-{
+{//what to do when the user clicks.
 	lx = x;
 	ly = y;
 	if (button == GLUT_LEFT_BUTTON)
@@ -206,12 +210,10 @@ void onClick(int button, int state, int x, int y)
 	
 
 void free_resources()
-{
+{//done, free up the resources so there aren't any loose ends.
 	delete prog;
 	delete cube;
-//	glDeleteBuffers(1, &vbo_floor_vertices);
-//	glDeleteBuffers(1, &vbo_floor_colors);
-//	glDeleteBuffers(1, &ibo_floor_elements);
+	delete plate;
 }
 
 
@@ -220,7 +222,7 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Delta Alpha 5");
+	glutCreateWindow("Delta Alpha 6");
 	glutKeyboardFunc(onNormalKeys);
 	glutMotionFunc(onActiveMotion);
 	glutPassiveMotionFunc(onPassiveMotion);

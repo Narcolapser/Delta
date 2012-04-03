@@ -13,6 +13,6 @@ Alpha 2: Create classes for programs, cameras, and attributes. This did not succ
 Alpha 3: Get the classes from Alpha 2 working.
 Alpha 4: Create a mesh class for dynamic loading of meshes.
 Alpha 5: Clean: fix mesh rendering and loading bugs. Comment all the uncommented code files. finish removal of scafolding code. create readme file. Diagram current architecture. update make file.
-Alpha 6: Move all interaction over to buffer objects (uniform buffer objects where nescessary.). introduce resource loading system. add the ability to translate quads to triangles in mesh's load function.
+Alpha 6: Move all interaction over to buffer objects except uniforms. introduce resource loading system. add the ability to translate quads to triangles in mesh's load function.
 Alpha 7: Create GPU class to hold the master "Render" call, as well as all interaction classes and references to GPU resources such as programs, shaders, attribute arrays, etc.
 Alpha 8: Enable openCL openGL interop.
