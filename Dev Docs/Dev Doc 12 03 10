@@ -1,0 +1,8 @@
+Learned about include gaurds today:
+
+#ifndef CLASSORFILENAME_H
+#define CLASSORFILENAME_H
+{class or file stuff}
+#endif
+
+so, how this works is simple. ifndef means if not defined. if that value attribute has not been defined, define it and declare the class, if it has most likly that means this file has been included some where else already and as such can't be included again with out causing a complier error. This is how you can have two files that both need to include one base file with out running into problems with the single declaration rule.
