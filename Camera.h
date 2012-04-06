@@ -13,12 +13,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "Object.h"
+#include "GeoObject.h"
 
 //include gaurd.
 #ifndef CAMERA_H
 #define CAMERA_H
-class Camera: public Object
+class Camera: public GeoObject
 {
 public:
 	//the constructor. You must name:
@@ -42,7 +42,6 @@ public:
 	~Camera()
 	{
 		delete &projection;
-		delete &loc;
 		fov = 0;
 		x = 0;
 		y = 0;
@@ -53,7 +52,17 @@ public:
 	glm::mat4 lookAt(glm::vec3 val)
 	{//wrapper method for glm::lookAt function. this way the camera can be used to wrap this up
 	//neatly. you just have to tell the camera to look at something and it will manage the rest
+		if(parent) return glm::lookAt(loc+parent->getLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 		return glm::lookAt(loc,val,glm::vec3(0.0f,1.0f,0.0f));
+	}
+	glm::mat4 view()
+	{
+		if(focus) return lookAt(focus->getLoc());
+		return lookAt(glm::vec3(1.0f));
+	}
+	void setFocus(GeoObject* _focus)
+	{
+		focus = _focus;
 	}
 
 	glm::mat4 inline getProjection(){if(newProj) return projection; return newProjection();}
@@ -73,7 +82,8 @@ public:
 
 	void inline setLoc(glm::vec3 val) { loc = val;}	//set the location of the camera.
 	void inline setFov(float val) {fov = val; newProj = 0;}	//set the field of vision.
-	void inline setScreen(int valX, int valY) {x = valX; y = valY; newProj = 0;}	//change the size of window
+	void inline setScreen(int valX, int valY) {x = valX; y = valY; newProj = 0;}
+		//change the size of window
 	void inline setNearClip(float val) {near = val; newProj = 0;}	//set the near clipping plane
 	void inline setFarClip(float val) {far = val; newProj = 0;}	//set the far clipping plane
 	
@@ -85,7 +95,8 @@ private:
 		newProj = 1;
 		return projection;
 	}
-	glm::vec3 loc;		//location vector.
+//	glm::vec3 loc;		//location vector.
+	GeoObject *focus;	//something to look at
 	glm::mat4 projection;	//store for the projection matrix.
 	float fov;		//field of vision
 	float near;		//near clipping plane.

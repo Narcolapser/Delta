@@ -89,32 +89,29 @@ Mesh::Mesh(Program *prog, const char* filename)
 	coords = new Attrib(prog,name,GL_FLOAT,vbo);
 	
 	//set local values to defaults.
-	loc = glm::mat4(1.0f);
-	rot = glm::mat4(1.0f);
-	scale = glm::mat4(1.0f);
-	trans = glm::mat4(1.0f);
-	newTrans = 1;
+//	loc = glm::mat4(1.0f);
+//	rot = glm::mat4(1.0f);
+//	scale = glm::mat4(1.0f);
+//	trans = glm::mat4(1.0f);
+//	newTrans = 1;
 }
 Mesh::~Mesh()
 {
 	delete coords;
 	delete elements;
-	loc = glm::mat4(0.0f);
-	rot = glm::mat4(0.0f);
-	scale = glm::mat4(0.0f);
-	trans = glm::mat4(0.0f);
-	newTrans = 0;
+//	loc = glm::mat4(0.0f);
+//	rot = glm::mat4(0.0f);
+//	scale = glm::mat4(0.0f);
+//	trans = glm::mat4(0.0f);
+//	newTrans = 0;
 }
 void Mesh::render(GLint local)
 {
-//	if(newTrans != 1) 
-//	{
-//		trans = glm::mat4(1.0f) * scale;
-//		trans = trans * rot;
-//		trans = trans * loc;
-//		newTrans == 1;
-//	}
-//	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(trans));
+	if(newTrans != 1) 
+	{
+		updateTrans();
+	}
+	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(trans));
 	Mesh *cube = this;
 	this->coords->enable();
 	this->elements->bind();
@@ -126,13 +123,13 @@ void Mesh::setTrans(glm::mat4 val)
 	trans = val;
 	newTrans = 1;
 }
-void Mesh::moveRelative(glm::vec3& val){}
-void Mesh::rotateRelative(float by, glm::vec3& val){}
-void Mesh::scaleRelative(glm::vec3& val){}
-void Mesh::resetAll(){}
-void Mesh::moveStatic(glm::vec3& val){}
-void Mesh::rotateStatic(float by, glm::vec3& val){}
-void Mesh::scaleStatic(glm::vec3& val){}
+//void Mesh::moveRelative(glm::vec3& val){}
+//void Mesh::rotateRelative(float by, glm::vec3& val){}
+//void Mesh::scaleRelative(glm::vec3& val){}
+//void Mesh::resetAll(){}
+//void Mesh::moveStatic(glm::vec3& val){}
+//void Mesh::rotateStatic(float by, glm::vec3& val){}
+//void Mesh::scaleStatic(glm::vec3& val){}
 
 
 //	Attrib coords;

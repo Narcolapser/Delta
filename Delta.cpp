@@ -54,6 +54,8 @@ int init_resources()
 	const char* filename = "sphere.obj";
 	cube = new Mesh(prog,filename);
 	printf("first mesh ID: %i\n",cube->getID());
+	c->setParent(cube);
+	c->setFocus(cube);
 	filename = "floor.obj";
 	plate = new Mesh(prog,filename);
 	printf("second mesh ID: %i\n",plate->getID());
@@ -97,16 +99,17 @@ void onIdle()
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, zoom));
 
 	//get the view and projection matrix from the camera.
-	view = c->lookAt(glm::vec3(0.0, 0.0, zoom));
+//	view = c->lookAt(glm::vec3(0.0, 0.0, zoom));
+	view = c->view();
 	projection = c->getProjection();
 
 	//make the model-view-projection global transformation matrix.
-	glm::mat4 mvp = projection * view * model;
+	glm::mat4 mvp = projection * view * model * anim;
 
 	//declare that we are going to use this program. woohoo and all that.
 	prog->use();
 
-	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(anim));
+	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		//set the uniform "local" to be this anim transform because mesh specific 
 		//	transforms are not currently working.
 
@@ -126,7 +129,13 @@ void onDisplay()
 //	plate->setTrans(anim);
 	plate->render(local);//render the plate.
 
-//	cube->setTrans(glm::translate(glm::mat4(1.0f), glm::vec3(0.0,shuffle,0.0)));	
+//	glm::vec3 axis_x(1, 0, 0);
+//	anim = glm::rotate(glm::mat4(1.0f), angleV, axis_x);
+
+//	glm::vec3 axis_y(0, 1, 0);
+//	anim = glm::rotate(anim, angleH, axis_y);
+//	cube->setTrans(glm::translate(glm::mat4(1.0f), glm::vec3(-shuffle,0.0,0.0)));	
+	cube->setLoc(glm::vec3(-shuffle,0.0,0.0));
 	cube->render(local);//render the cube, which is currently a sphere...
 
 	//redrawn, swap the buffers and put this new one to the front.

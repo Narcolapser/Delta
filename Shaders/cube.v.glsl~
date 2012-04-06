@@ -9,7 +9,7 @@ uniform mat4 local;
 
 void main(void) 
 {
-	gl_Position = mvp * local * vec4(coord3d, 1.0);
+	gl_Position = local * mvp * vec4(coord3d, 1.0);
 
 //	f_color = v_color;
 }
