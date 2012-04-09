@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(Program *prog, const char* filename)
+Mesh::Mesh(const char* filename)
 {
 	//the constructor for the mesh class. This will read in a mesh from a .obj file and send
 	//	the information up to the GPU automatically and then maintains the references to
@@ -86,8 +86,9 @@ Mesh::Mesh(Program *prog, const char* filename)
 	
 	//create the attribute objects.
 	const char* name = "coord3d";// name of the Attribute of interest.
-	coords = new Attrib(prog,name,GL_FLOAT,vbo);
+	coords = new Attrib(name,GL_FLOAT,vbo);
 	
+	local = 0;
 	//set local values to defaults.
 //	loc = glm::mat4(1.0f);
 //	rot = glm::mat4(1.0f);
@@ -105,13 +106,14 @@ Mesh::~Mesh()
 //	trans = glm::mat4(0.0f);
 //	newTrans = 0;
 }
-void Mesh::render(GLint local)
+void Mesh::bindToProg(Program *prog, GLint _local)
 {
-	if(newTrans != 1) 
-	{
-		updateTrans();
-	}
-	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(trans));
+	coords->bindToProg(prog);
+	local = local;
+}
+void Mesh::render()
+{
+	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(getTrans()));
 	Mesh *cube = this;
 	this->coords->enable();
 	this->elements->bind();

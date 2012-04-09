@@ -113,7 +113,7 @@ protected:
 		trans = glm::translate(trans,loc);
 		if (parent) trans = trans * parent->getTrans();
 		newTrans = true;
-		++tranC;
+		tranC++;
 	}
 };
 

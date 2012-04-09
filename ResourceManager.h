@@ -4,16 +4,17 @@
  * This class contains:
  */
 
-#ifndef
+#ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
-#include <stdlib>
-#include <stdio>
+#include <stdlib.h>
+#include <stdio.h>
 #include <vector>
 #include "Buffer.h"
 #include "Attrib.h"
 #include "Mesh.h"
 
+using namespace std;
 
 class ResourceManager
 {

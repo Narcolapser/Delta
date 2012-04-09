@@ -29,10 +29,11 @@ using namespace std;
 class Mesh: public GeoObject
 {
 public:
-	Mesh(Program *prog,const char* filename);
+	Mesh(const char* filename);
 	~Mesh();
-	void render(GLint local);
+	void render();
 	void setTrans(glm::mat4 val);
+	void bindToProg(Program *prog, GLint _local);
 //	void moveRelative(glm::vec3& val);
 //	void rotateRelative(float by, glm::vec3& val);
 //	void scaleRelative(glm::vec3& val);
@@ -43,6 +44,7 @@ public:
 private:
 	//data members:
 	Attrib *coords;		//attribute containing all the vertex information.
+	GLint local;
 	Buffer *elements;	//attribute containing all the face information
 };
 

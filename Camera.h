@@ -52,12 +52,22 @@ public:
 	glm::mat4 lookAt(glm::vec3 val)
 	{//wrapper method for glm::lookAt function. this way the camera can be used to wrap this up
 	//neatly. you just have to tell the camera to look at something and it will manage the rest
-		if(parent) return glm::lookAt(loc+parent->getLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
+		if(parent)
+		{
+			// return glm::lookAt(loc+parent->getLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
+			glm::vec4 temp = getTrans() * glm::vec4(loc,1.0f);
+			return glm::lookAt(glm::vec3(temp.x,temp.y,temp.z),val,glm::vec3(0.0f,1.0f,0.0f));
+		}
 		return glm::lookAt(loc,val,glm::vec3(0.0f,1.0f,0.0f));
 	}
 	glm::mat4 view()
 	{
-		if(focus) return lookAt(focus->getLoc());
+		if(focus) 
+		{
+			glm::vec4 temp = focus->getTrans() * glm::vec4(focus->getLoc(),1.0f);
+			return lookAt(glm::vec3(temp.x,temp.y,temp.z));
+		}
+//		if(focus) return lookAt(glm::vec3(focus->getLoc().x/2,focus->getLoc().y/2,-10.f));
 		return lookAt(glm::vec3(1.0f));
 	}
 	void setFocus(GeoObject* _focus)
