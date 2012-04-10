@@ -10,23 +10,25 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include <iostream>
+#include <sstream>
+#include <fstream>
+#include <string>
+#include <string.h>
+
 #include "Buffer.h"
 #include "Attrib.h"
 #include "Mesh.h"
+
+#include "lib/pugixml/pugixml.hpp"
 
 using namespace std;
 
 class ResourceManager
 {
 public:
-	ResourceManager(const char* config)
-	{
-		
-	}
-	Mesh* loadMesh(Program *prog, const char* fName)
-	{
-	
-	}		
+	ResourceManager(const char* config, bool isFile);
+	Mesh* loadMesh(const char* fName);
 private:
 };
 

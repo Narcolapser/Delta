@@ -1,0 +1,18 @@
+Ok. I've realized that before I get in over my head with this mesh stuff, I need to rework a few little things. Most notably of which is the concept of meshes. Right now while I have 1 mesh everything is fine and dandy. but what happens when I need to move meshes independently? I looked online and appearently it has todo with pushing/popping matricies.... further research i found that has been depricated. So what have we now? well, appearently it works by doing different meshes in different buffers. less than ideal, but i'm going to keep reading and see if this makes more sense.
+
+yea, that is how it works. now I'm trying to think how the transformation will work. ok, so I see now how this is working for the tutorial I'm following. they actually recalculate the mesh and uploaded to the GPU every frame. yea, that can't happen for me. I need a way to have the GPU handle that info. 
+
+So, what I did was change the mvp uniform before each object gets rendered. I'll change the way this works in the future, but right now the whole mvpa get recalculated. I can just have the mvp be calculated once and then add anim to it to get the individual mvp uniforms. 
+
+So now I'm interested in making a mesh class. This class would read data in from a .obj file. but I think I'll push that on to the next alpha. Also, I had been planning on having the vertices and faces stored as local vectors. I now realize a fundamental change that will improve things greatly. I'm not going to store the geometry on system memory, rather, I'm going to read it in and send it straight up to the GPU!I've been trying to think how this would be done. I have a couple ideas. I could:
+1. Read through the file twice, first time counts the vertices and faces and then I can declare the arrays from there.
+2. Use a vector and translate it into an array after they are all read in.
+3. use realloc to change the size of my array if it is too big and shrink it in the end to the exact size. 
+
+I've gone over in my head what would be the most efficient idea. And I'm leaning towards 3. The problem with one is that we want to minimize the amount of ativity we concern the disk with. disks are painfully slow. the second one has potential, and truth be told, it and 3 are at their core the same thing. the one difference is I have greater control over 3. I can go on tendencies with these files. I know that not many objects will have more than 200-300 vertices, and if they do, they will have an order of magnitude or more reater than that. So I'm going to go with option 3. malloc for 1000 verticies (sizeof(GLfloat)*4*1000) (16kB) and if I run out of space I will realloc (sizeof(GLfloat)*4*100000) (1.6 MB). Now, there is theoretically potential for a model to have more than 100,000 vertices or faces, do I care? no! reason being that it isn't going to happen on this scale. In Zeta certainly, maybe even in Epsilon I'll support that, but for now in Delta I'm putting a hard cap of 100,000 verticies or faces. (latter realized that the max is actual 65536 because of the size of GLushort.)
+
+This is the moment I realize that Attrib needs to be a template. 16:09:32
+
+This is the moment I realize that I'm wrong and i just needs another data member. 16:10:26
+
+

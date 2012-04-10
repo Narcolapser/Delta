@@ -1,9 +1,19 @@
-#include <stdio.h>
-#include <iostream>
-#include <sstream>
-#include <fstream>
-#include <vector>
-#include <string>
+#include "ResourceManager.h"
+
+ResourceManager::ResourceManager(const char* config, bool isFile)
+{
+	pugi::xml_document doc;
+	pugi::xml_parse_result result;
+	if(isFile)
+	{
+		result = doc.load_file(config);
+	}
+	else
+	{
+		result = doc.load(config);
+	}
+	
+}
 
 char* file_read(const char* filename)
 {

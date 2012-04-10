@@ -1,0 +1,5 @@
+Alpha 8! woohoo. This Alpha's focus is on the ability to stream scenes in. I'm going to go with THE FUCHAR! I'm going to use XML for the configurations of scenes. I choose this because I can easily extend the abilities of the resource manager by adding more types that the resource manager can parse in. As well as there being a plethora of libraries for reading in xml already. 
+
+I had considered using boost for this, but I think I'm going to go with pugixml after a some trolling the interwebs. 
+
+I've got pugixml into the make file, and resource manager.cpp includes it. so I've got the basics set up. now I just need to learn how the bloody system works. 
