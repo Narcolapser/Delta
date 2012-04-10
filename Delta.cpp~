@@ -12,6 +12,7 @@
 #include "Program.h"
 #include "Attrib.h"
 #include "Buffer.h"
+#include "Scene.cpp"
 
 using namespace std;
 
@@ -21,7 +22,9 @@ Program *prog;
 Attrib *coord3d,*vColor,*elArr;
 Attrib *coord3df,*vColorf,*elArrf;
 Mesh *cube;
+Mesh *child;
 Mesh *plate;
+Scene *foo;
 glm::mat4 model,view,projection,anim;
 
 GLint uniform_mvp;
@@ -29,7 +32,10 @@ GLint local;
 float angle = 0.0;
 float angleV = 0.0;
 float angleH = 0.0;
-float zoom = -4.0;
+float rotx = 0.0;
+float roty = 0.0;
+float rotz = 0.0;
+float zoom = -10.0;
 int lx = -1, ly = -1;
 bool lclick = false;
 bool rclick = false;
@@ -50,13 +56,25 @@ int init_resources()
 	if (prog->loadVertex("Shaders/cube.v.glsl") == 0) return 0;
 	if (prog->loadFragment("Shaders/cube.f.glsl") == 0) return 0;
 
+
 	//MESHES! this is where the meshes get loaded.
-	const char* filename = "sphere.obj";
-	cube = new Mesh(prog,filename);
-	printf("first mesh ID: %i\n",cube->getID());
-	filename = "floor.obj";
-	plate = new Mesh(prog,filename);
-	printf("plate mesh ID: %i\n",plate->getID());
+	const char* filename = "SceneResources/cubequad.obj";
+//	cube = new Mesh(filename);
+//	cube->bindToProg(prog);
+//	printf("first mesh ID: %i\n",cube->getID());
+//	c->setParent(cube);
+//	c->setFocus(cube);
+//	child = new Mesh(filename);
+//	child->bindToProg(prog);
+//	printf("child ID: %i\n",cube->getID());
+//	child->move(-1,3,-1);
+//	child->setParent(cube);
+//	filename = "SceneResources/floor.obj";
+//	plate = new Mesh(filename);
+//	plate->bindToProg(prog);
+//	printf("second mesh ID: %i\n",plate->getID());
+	filename = "Scene";
+	foo = new Scene(filename);
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
@@ -76,6 +94,8 @@ int init_resources()
 		return 0;
 	}
 
+	foo->bindToProgram(prog,local);
+	printf("Resources loaded!\n");
 	return 1;//resources initalized.
 }
 
@@ -98,15 +118,16 @@ void onIdle()
 
 	//get the view and projection matrix from the camera.
 	view = c->lookAt(glm::vec3(0.0, 0.0, zoom));
+//	view = c->view();
 	projection = c->getProjection();
 
 	//make the model-view-projection global transformation matrix.
-	glm::mat4 mvp = projection * view * model;
+	glm::mat4 mvp = projection * view * model * anim;
 
 	//declare that we are going to use this program. woohoo and all that.
 	prog->use();
 
-	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(anim));
+	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		//set the uniform "local" to be this anim transform because mesh specific 
 		//	transforms are not currently working.
 
@@ -122,13 +143,31 @@ void onDisplay()
 		//thats what the alpha channel is for.
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear these buffers.
 	prog->use();//use this program. woohoo and all that.
+	foo->render();
 
 //	plate->setTrans(anim);
-	plate->render(local);//render the plate.
+//	plate->rotate(rotx,roty,rotz);
+//	plate->render(local);//render the plate.
 
-//	cube->setTrans(glm::translate(glm::mat4(1.0f), glm::vec3(0.0,shuffle,0.0)));	
-	cube->render(local);//render the cube, which is currently a sphere...
+//	glm::vec3 axis_x(1, 0, 0);
+//	anim = glm::rotate(glm::mat4(1.0f), angleV, axis_x);
 
+//	glm::vec3 axis_y(0, 1, 0);
+//	anim = glm::rotate(anim, angleH, axis_y);
+//	cube->setTrans(glm::translate(glm::mat4(1.0f), glm::vec3(-shuffle,0.0,0.0)));
+
+//	cube->setLoc(glm::vec3(-shuffle,0.0,0.0));
+//	cube->move(-shuffle,0,0);
+	foo->meshes[2]->move(-shuffle,0,0);
+//	cube->render(local);//render the cube, which is currently a sphere...
+//	child->render(local);
+
+	shuffle *= 0.9;
+	rotx *= 0.9;
+	roty *= 0.9;
+	rotz *= 0.9;
+//	cout << "x: " << rotx << " y: " << roty << " z: " << rotz << endl;
+//	cout << "Shuffle: " << shuffle << endl;
 	//redrawn, swap the buffers and put this new one to the front.
 	glutSwapBuffers();
 }
@@ -145,6 +184,9 @@ void onNormalKeys(unsigned char key, int x, int y)
 //	cout << "key: " << (char) key << " Value of: " << (int) key << " x: " << x << " y: " << y << endl;
 	if (key == 'a') shuffle++;
 	if (key == 'd') shuffle--;
+	if (key == 'x') rotx += 1;
+	if (key == 'y') roty += 1;
+	if (key == 'z') rotz += 1;
 }
 
 void onActiveMotion(int x, int y)
@@ -172,7 +214,7 @@ void onActiveMotion(int x, int y)
 		else if (angleH > 360)
 			angleH -= 360;
 	}
-	else if(rclick)
+	if(rclick)
 	{
 		if (dy > 0)
 		{
@@ -222,7 +264,7 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Delta Alpha 6");
+	glutCreateWindow("Delta Alpha 7");
 	glutKeyboardFunc(onNormalKeys);
 	glutMotionFunc(onActiveMotion);
 	glutPassiveMotionFunc(onPassiveMotion);

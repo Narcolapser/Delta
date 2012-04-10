@@ -16,7 +16,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Attrib.h"
-#include "Object.h"
+#include "GeoObject.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -26,29 +26,26 @@
 
 using namespace std;
 
-class Mesh: public Object
+class Mesh: public GeoObject
 {
 public:
-	Mesh(Program *prog,const char* filename);
+	Mesh(const char* filename);
 	~Mesh();
-	void render(GLint local);
+	void render();
 	void setTrans(glm::mat4 val);
-	void moveRelative(glm::vec3& val);
-	void rotateRelative(float by, glm::vec3& val);
-	void scaleRelative(glm::vec3& val);
-	void resetAll();
-	void moveStatic(glm::vec3& val);
-	void rotateStatic(float by, glm::vec3& val);
-	void scaleStatic(glm::vec3& val);
-//private:
+	void bindToProg(Program *prog, GLint _local);
+//	void moveRelative(glm::vec3& val);
+//	void rotateRelative(float by, glm::vec3& val);
+//	void scaleRelative(glm::vec3& val);
+//	void resetAll();
+//	void moveStatic(glm::vec3& val);
+//	void rotateStatic(float by, glm::vec3& val);
+//	void scaleStatic(glm::vec3& val);
+private:
 	//data members:
 	Attrib *coords;		//attribute containing all the vertex information.
+	GLint local;
 	Buffer *elements;	//attribute containing all the face information
-	glm::mat4 loc;		//the current location of the object.
-	glm::mat4 rot;		//the current rotation of the object.
-	glm::mat4 scale;	//the current scaling factor on the object.
-	glm::mat4 trans;	//the current local transform matrix.
-	int newTrans;		//sentinal value for the local transform matrix.
 };
 
 #endif

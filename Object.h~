@@ -14,13 +14,13 @@
 #include <stdlib.h>
 #include <time.h>
 
+typedef int UUID;
 
 class Object
 {
 public:
 	Object()
 	{
-		srand(time(NULL));
 		ID = rand();
 	}
 	int getID()

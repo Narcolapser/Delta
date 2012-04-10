@@ -8,11 +8,19 @@ Features:
 	Every frame location information will be sent back to the CPU to deal with as it needs. This will allow for the use of openAL for audio. AI may be supported, but no plans as of yet. The UI is point and click with key board support. because of the usage of GLUT as the windowing system, mouse looking will not be supported. The engine will be complined to a single standalone file. when you want to play a game you send commandline args that point to the game's config file which lead the engine through loading resources and initial states. 
 
 Road map:
+Arch 1: getting off the ground.
 Alpha 1: Initial work with openGL. Get objects to display.
 Alpha 2: Create classes for programs, cameras, and attributes. This did not succeed entirely.
 Alpha 3: Get the classes from Alpha 2 working.
 Alpha 4: Create a mesh class for dynamic loading of meshes.
 Alpha 5: Clean: fix mesh rendering and loading bugs. Comment all the uncommented code files. finish removal of scafolding code. create readme file. Diagram current architecture. update make file.
-Alpha 6: Move all interaction over to buffer objects except uniforms. introduce resource loading system. add the ability to translate quads to triangles in mesh's load function.
-Alpha 7: Create GPU class to hold the master "Render" call, as well as all interaction classes and references to GPU resources such as programs, shaders, attribute arrays, etc.
-Alpha 8: Enable openCL openGL interop.
+
+Arch 2: Class structure.
+Alpha 6: Move all interaction over to buffer objects except uniforms. add the ability to translate quads to triangles in mesh's load function. Create master ancestor class "Object"
+Alpha 7: Create construct of "Scenes" as well as 3D objects which allow for objects to parent other objects. for example, follow cams. and lastly, get objects moving again. 
+Alpha 8: Create resource loading system.
+Alpha 9: Create GPU class to hold the master "Render" call, as well as all interaction classes and references to GPU resources such as programs, shaders, attribute arrays, etc.
+Alpha 10: Clean up
+
+Arch 3: tentatively, the openCL arch.
+Alpha ?: Enable openCL openGL interop.

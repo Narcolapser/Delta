@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+typedef int UID;
 
 class Object
 {
@@ -22,12 +23,12 @@ public:
 	{
 		ID = rand();
 	}
-	int getID()
+	UID getID()
 	{
 		return ID;
 	}
 protected:
-	int ID;
+	UID ID;
 };
 
 #endif

@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(Program *prog, const char* filename)
+Mesh::Mesh(const char* filename)
 {
 	//the constructor for the mesh class. This will read in a mesh from a .obj file and send
 	//	the information up to the GPU automatically and then maintains the references to
@@ -86,35 +86,34 @@ Mesh::Mesh(Program *prog, const char* filename)
 	
 	//create the attribute objects.
 	const char* name = "coord3d";// name of the Attribute of interest.
-	coords = new Attrib(prog,name,GL_FLOAT,vbo);
+	coords = new Attrib(name,GL_FLOAT,vbo);
 	
+	local = 0;
 	//set local values to defaults.
-	loc = glm::mat4(1.0f);
-	rot = glm::mat4(1.0f);
-	scale = glm::mat4(1.0f);
-	trans = glm::mat4(1.0f);
-	newTrans = 1;
+//	loc = glm::mat4(1.0f);
+//	rot = glm::mat4(1.0f);
+//	scale = glm::mat4(1.0f);
+//	trans = glm::mat4(1.0f);
+//	newTrans = 1;
 }
 Mesh::~Mesh()
 {
 	delete coords;
 	delete elements;
-	loc = glm::mat4(0.0f);
-	rot = glm::mat4(0.0f);
-	scale = glm::mat4(0.0f);
-	trans = glm::mat4(0.0f);
-	newTrans = 0;
+//	loc = glm::mat4(0.0f);
+//	rot = glm::mat4(0.0f);
+//	scale = glm::mat4(0.0f);
+//	trans = glm::mat4(0.0f);
+//	newTrans = 0;
 }
-void Mesh::render(GLint local)
+void Mesh::bindToProg(Program *prog, GLint _local)
 {
-//	if(newTrans != 1) 
-//	{
-//		trans = glm::mat4(1.0f) * scale;
-//		trans = trans * rot;
-//		trans = trans * loc;
-//		newTrans == 1;
-//	}
-//	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(trans));
+	coords->bindToProg(prog);
+	local = local;
+}
+void Mesh::render()
+{
+	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(getTrans()));
 	Mesh *cube = this;
 	this->coords->enable();
 	this->elements->bind();
@@ -126,13 +125,13 @@ void Mesh::setTrans(glm::mat4 val)
 	trans = val;
 	newTrans = 1;
 }
-void Mesh::moveRelative(glm::vec3& val){}
-void Mesh::rotateRelative(float by, glm::vec3& val){}
-void Mesh::scaleRelative(glm::vec3& val){}
-void Mesh::resetAll(){}
-void Mesh::moveStatic(glm::vec3& val){}
-void Mesh::rotateStatic(float by, glm::vec3& val){}
-void Mesh::scaleStatic(glm::vec3& val){}
+//void Mesh::moveRelative(glm::vec3& val){}
+//void Mesh::rotateRelative(float by, glm::vec3& val){}
+//void Mesh::scaleRelative(glm::vec3& val){}
+//void Mesh::resetAll(){}
+//void Mesh::moveStatic(glm::vec3& val){}
+//void Mesh::rotateStatic(float by, glm::vec3& val){}
+//void Mesh::scaleStatic(glm::vec3& val){}
 
 
 //	Attrib coords;
