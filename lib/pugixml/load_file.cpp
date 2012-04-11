@@ -1,4 +1,4 @@
-#include "pugixml.hpp"
+#include "pugixml.cpp"
 
 #include <iostream>
 

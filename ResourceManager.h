@@ -20,9 +20,10 @@
 #include "Attrib.h"
 #include "Mesh.h"
 
-#include "lib/pugixml/pugixml.hpp"
+#include "lib/pugixml/pugixml.cpp"
 
 using namespace std;
+using namespace pugi;
 
 class ResourceManager
 {

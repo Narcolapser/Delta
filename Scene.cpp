@@ -66,6 +66,7 @@ Scene::Scene(const char* config)
 //		printf("Check point 9\n");
 	}
 }
+//Scene::Scene(xml_node config);
 void Scene::render()
 {
 	for(int i = 0; i < meshes.size(); i++)

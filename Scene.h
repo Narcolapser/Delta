@@ -20,13 +20,16 @@
 #include "Camera.h"
 #include "ResourceManager.cpp"
 #include "Program.h"
+#include "lib/pugixml/pugixml.cpp"
 
 using namespace std;
+using namespace pugi;
 
 class Scene: public Object //yup, scenes are objects to, they need to be globably adressable.
 {
 public:
 	Scene(const char* config);
+	Scene(xml_node config);
 	void update();//advised to call before calling render.
 	void render();
 	void bindToProgram(Program *prog, GLint local);

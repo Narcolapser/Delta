@@ -1,0 +1,27 @@
+I've hit an interesting road block. I was planning on having being initiated by the resource manager, and then the scene make requests to the resource manager to load the rest of the scene. problem. that is a circular dependency. well piss. so how do I get around this then? ideas:
+
+Just have a circular dependency. O_O not a good plan, never a good plan. for no other reason than I'll never be able to build after i clean.
+Have resource manager treat everything as objects.
+Have resource manager manage everything, and no objects ever have access to the resouce manager. 
+
+If I have resource manager be "dumb" so to speak, I can have various resources manager their sub resources. Also, how each resource is loaded can be self contained. which will help keep the size of resource manager down.
+
+The advangate of the master resource manager is that it would take care of everything. which would keep all of the resources simple. 
+
+So it begs the question, what is the purpose of the resource manager? It loads resources, and frees them, and it maintains a global identifier. What must it know inorder to do this? Are there any objects that it must anything about before it can load it? Well. My thoughts were that i would have to do things like: Mesh cube* = new Mesh; or Scene menu* = new Scene; which would require knowledge of the classes being made. But if I choose to just have the resource manager maintain only object types, then how do I deal with getting the derived classes the objects. 
+
+As a side note, this would also mean that the parent class would have to be able to delete the derived classes. This is done through making the destructor virtual. 
+
+I had a simple realization. The object class currently is what gets its ID. The resource manager is what is going to be responsible for IDs in the future. and by future I mean now. I don't want the resource manager to hand out an ID with out something to give it to immediately. but what this means is that I need object to make a call to the resource manager to get its ID. This means that Object must include the resource manager class. AAAAAAAAAAAAAAAAAAH! But that means that that resource manager can't include the object class. grr. ok. so Object class gets included by the resource manager. The difficulty is how do I get the ID to the object then? It would seem I will have a seperate method calls for requeting an ID and then assigning it. 
+
+So the resource manager is starting to shape up to be something like so:
+Request ID
+Assign ID (increments pointer counter, fails if counter != 0.)
+Increment ID (increments pointer counter, fails if counter = 0.)
+Release ID (decrements pointer counter, GC'ed when counter hits 0)
+GetObjectIncrementing (gets an object and increments pointer counter)
+GetObjectNonIncrementing (gets an object using a weak reference)
+
+That should be the majority of the resource manager. It seems like I may have to have another seperate class that will take care of managing the program as a whole. This may be Delta itself. but for now, it is clear that loading entire games is beyond the scope of the resource manager. It will load resources, not entire systems. 
+
+Gonna try and do daily commits from now on, try and encourage small steps of progress constantly.

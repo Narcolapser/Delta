@@ -2,8 +2,8 @@
 
 ResourceManager::ResourceManager(const char* config, bool isFile)
 {
-	pugi::xml_document doc;
-	pugi::xml_parse_result result;
+	xml_document doc;
+	xml_parse_result result;
 	if(isFile)
 	{
 		result = doc.load_file(config);
@@ -12,7 +12,11 @@ ResourceManager::ResourceManager(const char* config, bool isFile)
 	{
 		result = doc.load(config);
 	}
+	cout << result << endl;
 	
+	xml_node scene = doc.child("Scene");
+	cout << scene.attribute("name").value() << endl;
+	cout << scene.child().attribute("file").value() << endl;
 }
 
 char* file_read(const char* filename)
