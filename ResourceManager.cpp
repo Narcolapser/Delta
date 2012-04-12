@@ -21,22 +21,31 @@
 ResourceManager::ResourceManager()
 {
 	IDc = 0;
+	freeCount = 1;
 }
 UID ResourceManager::RequestID()
 {
 	++IDc;
 	Lease *temp = new Lease(IDc);
 	leases.push_back(temp);
+//	printf("IDc: %i, ID given to temp: %i\n",IDc,temp->ID);
 	return(IDc);
 }
 bool ResourceManager::AssignID(UID val, Object* foo)
 {
+//	printf("Check point 1, %i\n",(int)leases.size());
 	int idLoc =  findLease(val);
+//	printf("Check point 2, %i\n",idLoc);
 	if(idLoc == -1) return false;
+//	printf("Check point 3\n");
 	Lease *temp = leases[idLoc];
+//	printf("Check point 4\n");
 	if(temp->refCount != 0) return false;
+//	printf("Check point 5\n");
 	temp->pointer = foo;
+//	printf("Check point 6\n");
 	++(temp->refCount);
+//	printf("Check point 7\n");
 	return true;
 }
 bool ResourceManager::RetainID(UID val)
@@ -74,12 +83,12 @@ void ResourceManager::Release(UID val)
 }
 int ResourceManager::findLease(UID val)
 {
-	unsigned int high = val;
-	unsigned int low = val - freeCount;
-	unsigned int mid;
-	for(mid = low + ((high - low)/2); 
-		mid != low && leases[mid]->ID != val;)
+	int high = val;
+	int low = val - freeCount;
+	int mid;
+	for(mid = low + ((high - low)/2);mid != low && leases[mid]->ID != val;)
 	{
+		printf("high: %i mid: %i low %i val %i\n",high,mid,low,val);
 		if(leases[mid]->ID > val) low = mid;
 		else if(leases[mid]->ID < val) high = mid;
 		else return mid;
@@ -87,6 +96,28 @@ int ResourceManager::findLease(UID val)
 	}
 	if(leases[mid]->ID == val) return mid;
 	return -1;
+}
+UID ResourceManager::isDuplicate(const char* val)
+{
+	return false;//place holder function, i'll flush this out later.
+}
+UID ResourceManager::LoadMesh(const char* filename)
+{
+//	printf("Check point 1\n");
+	UID temp = isDuplicate(filename);
+//	printf("Check point 2\n");
+	if(temp != 0) return temp;
+//	printf("Check point 3\n");
+	Mesh* val = new Mesh(filename);
+//	printf("Check point 4\n");
+	temp = RequestID();
+//	printf("Check point 5\n");
+	val->assignID(temp);
+//	printf("Check point 6\n");
+	if(AssignID(temp,val))
+		return temp;
+//	printf("Check point 7\n");
+	return 0;
 }
 ResourceManager::Lease::Lease(UID val, Object* foo, unsigned short int bar)
 {

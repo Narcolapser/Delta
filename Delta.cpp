@@ -1,7 +1,6 @@
 /**
  * This file is in the public domain.
- * Contributors: Toben "Littlefoot" Archer
- * 	Sylvain Beucler
+ * Programmer: Toben "Littlefoot" Archer
  */
 
 #include <math.h>
@@ -45,6 +44,7 @@ float shuffle = 0.0;
 //initalize all the resources for Delta.
 int init_resources()
 {
+	globalRM = new ResourceManager();
 	//seed the random number generator.
 	srand(time(NULL));
 
@@ -59,7 +59,7 @@ int init_resources()
 
 
 	//MESHES! this is where the meshes get loaded.
-//	const char* filename = "SceneResources/cubequad.obj";
+	const char* filename = "SceneResources/cubequad.obj";
 //	cube = new Mesh(filename);
 //	cube->bindToProg(prog);
 //	printf("first mesh ID: %i\n",cube->getID());
@@ -74,10 +74,9 @@ int init_resources()
 //	plate = new Mesh(filename);
 //	plate->bindToProg(prog);
 //	printf("second mesh ID: %i\n",plate->getID());
-//	filename = "Scene";
-//	foo = new Scene(filename);
-	const char* filename = "Scene.xml";
-	bar = new ResourceManager();
+	filename = "Scene";
+	foo = new Scene(filename);
+//	const char* filename = "Scene.xml";
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
@@ -97,7 +96,7 @@ int init_resources()
 		return 0;
 	}
 
-//	foo->bindToProgram(prog,local);
+	foo->bindToProgram(prog,local);
 	//printf("Resources loaded!\n");
 	return 1;//resources initalized.
 }
@@ -146,7 +145,7 @@ void onDisplay()
 		//thats what the alpha channel is for.
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear these buffers.
 	prog->use();//use this program. woohoo and all that.
-//	foo->render();
+	foo->render();
 
 //	plate->setTrans(anim);
 //	plate->rotate(rotx,roty,rotz);
@@ -161,7 +160,7 @@ void onDisplay()
 
 //	cube->setLoc(glm::vec3(-shuffle,0.0,0.0));
 //	cube->move(-shuffle,0,0);
-//	foo->meshes[1]->move(-shuffle,0,0);
+	foo->meshes[1]->move(-shuffle,0,0);
 //	cube->render(local);//render the cube, which is currently a sphere...
 //	child->render(local);
 

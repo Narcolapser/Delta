@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef unsigned int UID;
+typedef int UID;
 
 class Object
 {

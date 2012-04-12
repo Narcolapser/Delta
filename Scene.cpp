@@ -9,6 +9,7 @@ Scene::Scene(const char* config)
 	string line;
 	stack<GeoObject*> parenting;
 	Mesh *temp;
+	UID tempUID;
 	unsigned int parLevel = 0;
 	unsigned int pltemp;
 //	printf("Check point 2\n");
@@ -36,8 +37,7 @@ Scene::Scene(const char* config)
 //		pltemp = (unsigned int)oFile.find_first_not_of("\t");
 //		oFile = oFile.substr(pltemp);
 
-//		printf("Check point 6\n");
-//		printf("Check point 7\n");
+
 		printf("pltemp: %i parLevel: %i\n",pltemp,parLevel);
 		if(pltemp > parLevel)
 		{
@@ -50,7 +50,12 @@ Scene::Scene(const char* config)
 			pltemp = parLevel;
 		}
 
-		temp = new Mesh(oFile.c_str());
+//		temp = new Mesh(oFile.c_str());
+//		printf("Check point 6\n");
+		tempUID = globalRM->LoadMesh(oFile.c_str());
+//		printf("Check point 6.5\n");
+		temp = (Mesh*)globalRM->GetIDNonRetaining(tempUID);
+//		printf("Check point 7\n");
 		temp->move(trans[0],trans[1],trans[2]);
 		temp->rotate(trans[3],trans[4],trans[5]);
 

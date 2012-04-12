@@ -111,6 +111,10 @@ void Mesh::bindToProg(Program *prog, GLint _local)
 	coords->bindToProg(prog);
 	local = local;
 }
+void Mesh::assignID(UID val)
+{
+	ID = val;
+}
 void Mesh::render()
 {
 	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(getTrans()));

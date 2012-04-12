@@ -1,0 +1,19 @@
+I just realized a fundumental problem with my former statement of the resource manager. There was one thing I left out, the resource manager exists to prevent duplicate data from being loaded. in this case, the first sphere and the second should be able to share buffer objects. The way this would work is that objects would be loaded through the resource manager and thus when a request for "sphere.obj" is passed to the ResourceManager for a second time, a copy to the pointer location is returned and no extra information is loaded. this saves space and time. but right now, the loading process is managed by other resources, so that's no good. 
+
+Alright, so I need to figure out a way around that. And this lead me to this thought. There are two kinds of objects:
+First, static objects:
+	These objects don't really change through out the course of the program, additionally, they also don't tend to /do/ anything, rather they are more often the those which things are done to or by. buffer objects, textures, sound bytes, etc. 
+	Additionally, these objects lend them selves greatly to reuse. Take a grass detail model for example. that one model might get used 200-2000 times in one level, it need not be loaded 200-2000 times. 
+Second, acting objects:
+	These objects not only change, but are frequently changing every frame. These are those which do to static objects.
+	Additionally, these objects don't gain much from deduplication. They aren't loaded from a file exactly. For example, a Mesh may be loaded from a file, but what is loaded is actually a couple buffer objects and the mesh wraps them. the mesh itself isn't loaded.
+
+With that in mind, i see the pattern of childlessness. Static objects never have children. A buffer object is only that, a texture is only that. a mesh is a couple of buffer objects and textures and normal maps and all sorts of other things. But those which have no children are my static objects, and are thus those which I can reuse. 
+
+So, expanding my original design for the ResourceManager a bit, add this function UID LoadVBO(filename); into it. Which makes me aware of another problem. this function creates 2 objects. the VBO and the Element Array. These two objects however are linked in a way that one does not make sense with out the other. So what do? With functions such as "LoadTexture" that can be all off on its own whilly nilly, only one BO is created. Certainly it would seem that things aren't as neat as I first had hoped.
+
+Ok, refactoring a little here. Static objects may have children. But they still are as I said, unchanging and candidates for duplication. The big differences that should be mentioned here is that static objects are to be loaded by the resource manager, acting objects are to tend to their loading themselves. Static objects are data that is loaded, acting objects are data that are changing and created. 
+
+What this is really boiling down to is I will have break Mesh apart from what I had originally envisioned it to be. I was thinking that it was going to be the houser for 3D geometry and all that goes with it. I must break from that now. the Mesh class will house the geometry, but a new class, I think I'll call it "Model" will house the associated information like materials, textures, normal maps, etc. I don't think I'll need to bother with that model class just yet, I might, but for now, at least I know better one important detail, the ResourceManager must include Meshes and Buffer objects.
+
+Let me put it this way, if it is loaded from XML it is not the ResourceManager's job. 

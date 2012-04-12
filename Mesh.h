@@ -34,6 +34,7 @@ public:
 	void render();
 	void setTrans(glm::mat4 val);
 	void bindToProg(Program *prog, GLint _local);
+	void assignID(UID val);
 //	void moveRelative(glm::vec3& val);
 //	void rotateRelative(float by, glm::vec3& val);
 //	void scaleRelative(glm::vec3& val);

@@ -19,7 +19,7 @@ Arch 2: Class structure.
 Alpha 6: Move all interaction over to buffer objects except uniforms. add the ability to translate quads to triangles in mesh's load function. Create master ancestor class "Object"
 Alpha 7: Create construct of "Scenes" as well as 3D objects which allow for objects to parent other objects. And lastly, get objects moving again. 
 Alpha 8: Create resource loading system.
-Alpha 9: ???
+Alpha 9: Fix parenting and get follow cams working. 
 Alpha 10: Clean up
 
 Arch 3: tentatively, the openCL arch.

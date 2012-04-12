@@ -20,7 +20,7 @@
 #include "Camera.h"
 #include "ResourceManager.cpp"
 #include "Program.h"
-#include "lib/pugixml/pugixml.cpp"
+//#include "lib/pugixml/pugixml.cpp"
 
 using namespace std;
 using namespace pugi;
