@@ -14,14 +14,18 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef int UID;
+typedef unsigned int UID;
 
 class Object
 {
 public:
 	Object()
 	{
-		ID = rand();
+		ID = 0;
+	}
+	virtual ~Object()
+	{
+		ID = 0;
 	}
 	UID getID()
 	{

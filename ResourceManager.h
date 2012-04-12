@@ -16,21 +16,40 @@
 #include <string>
 #include <string.h>
 
-#include "Buffer.h"
-#include "Attrib.h"
-#include "Mesh.h"
+#include "Object.h"
+//typedef unsigned int UID;
 
-#include "lib/pugixml/pugixml.cpp"
+//#include "lib/pugixml/pugixml.cpp"
 
 using namespace std;
-using namespace pugi;
+//using namespace pugi;
 
 class ResourceManager
 {
 public:
-	ResourceManager(const char* config, bool isFile);
-	Mesh* loadMesh(const char* fName);
+	ResourceManager();
+//	~ResourceManager();
+	UID RequestID();
+	bool AssignID(UID val, Object* foo);
+	bool RetainID(UID val);
+	void Release(UID val);
+	Object* GetIDRetaining(UID val);
+	Object* GetIDNonRetaining(UID val);
 private:
+	struct Lease
+	{
+		UID ID;
+		Object* pointer;
+		unsigned short int refCount;
+		Lease(UID val, Object* foo, unsigned short int bar);
+		Lease(UID val);
+		~Lease();
+	};
+	vector<Lease*> leases;
+	unsigned int IDc;
+	unsigned int freeCount;
+	void freeLease(UID val);
+	int findLease(UID val);
 };
 
 #endif

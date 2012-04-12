@@ -7,7 +7,7 @@
 #include <math.h>
 #include <iostream>
 #include "Mesh.cpp"
-#include "InterfaceGL.cpp"
+//#include "InterfaceGL.cpp"
 #include "Camera.h"
 #include "Program.h"
 #include "Attrib.h"
@@ -77,7 +77,7 @@ int init_resources()
 //	filename = "Scene";
 //	foo = new Scene(filename);
 	const char* filename = "Scene.xml";
-	bar = new ResourceManager(filename,true);
+	bar = new ResourceManager();
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain

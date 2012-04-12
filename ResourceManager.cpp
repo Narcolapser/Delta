@@ -1,22 +1,110 @@
 #include "ResourceManager.h"
-
-ResourceManager::ResourceManager(const char* config, bool isFile)
+//typedef unsigned int UID;
+//ResourceManager::ResourceManager(const char* config, bool isFile)
+//{
+//	xml_document doc;
+//	xml_parse_result result;
+//	if(isFile)
+//	{
+//		result = doc.load_file(config);
+//	}
+//	else
+//	{
+//		result = doc.load(config);
+//	}
+//	cout << result << endl;
+//	
+//	xml_node scene = doc.child("Scene");
+//	cout << scene.attribute("name").value() << endl;
+//	cout << scene.child().attribute("file").value() << endl;
+//}
+ResourceManager::ResourceManager()
 {
-	xml_document doc;
-	xml_parse_result result;
-	if(isFile)
+	IDc = 0;
+}
+UID ResourceManager::RequestID()
+{
+	++IDc;
+	Lease *temp = new Lease(IDc);
+	leases.push_back(temp);
+	return(IDc);
+}
+bool ResourceManager::AssignID(UID val, Object* foo)
+{
+	int idLoc =  findLease(val);
+	if(idLoc == -1) return false;
+	Lease *temp = leases[idLoc];
+	if(temp->refCount != 0) return false;
+	temp->pointer = foo;
+	++(temp->refCount);
+	return true;
+}
+bool ResourceManager::RetainID(UID val)
+{
+	int idLoc = findLease(val);
+	if(idLoc == -1) return false;
+	Lease *temp = leases[idLoc];
+	if(temp->refCount == 0) return false;
+	++(temp->refCount);
+	return true;
+}
+Object* ResourceManager::GetIDRetaining(UID val)
+{
+	int idLoc = findLease(val);
+	if(idLoc == -1) return NULL;
+	Lease *temp = leases[idLoc];
+	if(temp->refCount == 0) return NULL;
+	++(temp->refCount);
+	return temp->pointer;
+}
+Object* ResourceManager::GetIDNonRetaining(UID val)
+{
+	int idLoc = findLease(val);
+	if(idLoc == -1) return NULL;
+	Lease *temp = leases[idLoc];
+	if(temp->refCount == 0) return NULL;
+	return temp->pointer;
+}
+void ResourceManager::Release(UID val)
+{
+	int idLoc = findLease(val);
+	if(idLoc == -1) return;
+	Lease *temp = leases[idLoc];
+	if(temp->refCount == 0) return;
+}
+int ResourceManager::findLease(UID val)
+{
+	unsigned int high = val;
+	unsigned int low = val - freeCount;
+	unsigned int mid;
+	for(mid = low + ((high - low)/2); 
+		mid != low && leases[mid]->ID != val;)
 	{
-		result = doc.load_file(config);
+		if(leases[mid]->ID > val) low = mid;
+		else if(leases[mid]->ID < val) high = mid;
+		else return mid;
+		mid = low + ((high - low)/2);
 	}
-	else
-	{
-		result = doc.load(config);
-	}
-	cout << result << endl;
-	
-	xml_node scene = doc.child("Scene");
-	cout << scene.attribute("name").value() << endl;
-	cout << scene.child().attribute("file").value() << endl;
+	if(leases[mid]->ID == val) return mid;
+	return -1;
+}
+ResourceManager::Lease::Lease(UID val, Object* foo, unsigned short int bar)
+{
+	ID = val;
+	pointer = foo;
+	refCount = bar;
+}
+ResourceManager::Lease::Lease(UID val)
+{
+	ID = val;
+	pointer = NULL;
+	refCount = 0;
+}
+ResourceManager::Lease::~Lease()
+{
+	ID = 0;
+	pointer = NULL;
+	refCount = 0;
 }
 
 char* file_read(const char* filename)
