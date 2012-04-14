@@ -135,7 +135,7 @@ void onIdle()
 
 	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
 		//set the global trasnform
-	printf("end idle\n");
+//	printf("end idle\n");
 	glutPostRedisplay();//request a redraw.
 }
 
@@ -145,9 +145,9 @@ void onDisplay()
 		//thats what the alpha channel is for.
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear these buffers.
 	prog->use();//use this program. woohoo and all that.
-	printf("pre render\n");
+//	printf("pre render\n");
 	foo->render();
-	printf("post render\n");
+//	printf("post render\n");
 
 //	plate->setTrans(anim);
 //	plate->rotate(rotx,roty,rotz);
@@ -162,7 +162,9 @@ void onDisplay()
 
 //	cube->setLoc(glm::vec3(-shuffle,0.0,0.0));
 //	cube->move(-shuffle,0,0);
+
 	foo->meshes[1]->move(-shuffle,0,0);
+
 //	cube->render(local);//render the cube, which is currently a sphere...
 //	child->render(local);
 
@@ -174,7 +176,7 @@ void onDisplay()
 //	cout << "Shuffle: " << shuffle << endl;
 	//redrawn, swap the buffers and put this new one to the front.
 	glutSwapBuffers();
-	printf("end render\n");
+//	printf("end render\n");
 }
 
 void onReshape(int width, int height) 

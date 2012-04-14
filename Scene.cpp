@@ -18,8 +18,8 @@ Scene::Scene(const char* config)
 	istringstream cs(inconfig,istringstream::in);
 	string line;
 	stack<GeoObject*> parenting;
-	Mesh *temp;
-	UID tempUID;
+	Model *temp;
+	UID meshUID;
 	unsigned int parLevel = 0;
 	unsigned int pltemp;
 //	printf("Check point 2\n");
@@ -63,10 +63,11 @@ Scene::Scene(const char* config)
 
 //		temp = new Mesh(oFile.c_str());
 //		printf("Check point 6\n");
-		tempUID = globalRM->LoadMesh(oFile.c_str());
-//		printf("Check point 6.5\n");
-		temp = (Mesh*)globalRM->GetIDNonRetaining(tempUID);
-//		printf("Check point 7\n");
+		meshUID = globalRM->LoadMesh(oFile.c_str());
+//		printf("Check point 6.5, ID of: %i\n",tempUID);
+		temp = new Model(meshUID);
+//		temp = (Mesh*)globalRM->GetIDNonRetaining(tempUID);
+//		printf("Check point 7, pointer to: %li\n\n",(long int)temp);
 		temp->move(trans[0],trans[1],trans[2]);
 //		printf("x: %f y: %f z: %f",trans[0],trans[1],trans[2]);
 		temp->rotate(trans[3],trans[4],trans[5]);
@@ -88,15 +89,17 @@ void Scene::render()
 {
 	for(int i = 0; i < meshes.size(); i++)
 	{
-		printf("rendering %i\n",i);
+//		printf("rendering %i\n",i);
 		meshes[i]->render();
+//		printf("Pointer: %li\n",(long int)meshes[i]);
 	}
 }
 void Scene::bindToProgram(Program *prog, GLint local)
 {
 	for(int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i]->bindToProg(prog,local);
+//		printf("Pointer: %li\n",(long int)meshes[i]);
+		meshes[i]->bindToProgram(prog,local);
 	}
 }
 /*.S.D.G.*/

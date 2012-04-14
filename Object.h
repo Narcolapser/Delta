@@ -35,4 +35,6 @@ protected:
 	UID ID;
 };
 
+/*.S.D.G.*/
+
 #endif

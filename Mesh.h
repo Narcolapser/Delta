@@ -26,14 +26,14 @@
 
 using namespace std;
 
-class Mesh: public GeoObject
+class Mesh: public Object
 {
 public:
 	Mesh(const char* filename);
 	~Mesh();
 	void render();
 	void setTrans(glm::mat4 val);
-	void bindToProg(Program *prog, GLint _local);
+	void bindToProgram(Program *prog);
 	void assignID(UID val);
 //	void moveRelative(glm::vec3& val);
 //	void rotateRelative(float by, glm::vec3& val);
@@ -45,7 +45,6 @@ public:
 private:
 	//data members:
 	Attrib *coords;		//attribute containing all the vertex information.
-	GLint local;
 	Buffer *elements;	//attribute containing all the face information
 };
 

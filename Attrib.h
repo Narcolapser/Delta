@@ -47,7 +47,7 @@ public:
 		offset = 0;//starting the data right at the begining. again, can be changed later.
 		buffer = bo;//the reference to the actual buffer object.
 	}
-	void bindToProg(Program *prog)
+	void bindToProgram(Program *prog)
 	{
 		canBind = true;
 		//of the most common field's values. you can change these later.

@@ -117,4 +117,5 @@ protected:
 	}
 };
 
+/*.S.D.G.*/
 #endif

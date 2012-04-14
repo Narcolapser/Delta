@@ -20,6 +20,7 @@
 #include "Camera.h"
 #include "ResourceManager.cpp"
 #include "Program.h"
+#include "Model.h"
 //#include "lib/pugixml/pugixml.cpp"
 
 using namespace std;
@@ -34,7 +35,7 @@ public:
 	void render();
 	void bindToProgram(Program *prog, GLint local);
 //private:
-	vector<Mesh*> meshes;
+	vector<Model*> meshes;
 	vector<Camera*> cameras;
 };
 

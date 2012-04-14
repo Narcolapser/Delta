@@ -1,4 +1,7 @@
 #include "ResourceManager.h"
+
+#ifndef RESOURCEMANAGER_CPP
+#define RESOURCEMANAGER_CPP
 //typedef unsigned int UID;
 //ResourceManager::ResourceManager(const char* config, bool isFile)
 //{
@@ -99,8 +102,9 @@ int ResourceManager::findLease(UID val)
 }
 UID ResourceManager::isDuplicate(const char* val)
 {
-	printf("%s shows up %i times\n",val,loaded.count(val));
+	printf("%s shows up %i times\n",val,(int)loaded.count(val));
 	if(loaded.count(val)==0) return false;//place holder function, i'll flush this out later.
+	printf("%s has the ID of: %i\n",val,loaded[val]);
 	return loaded[val];
 }
 UID ResourceManager::LoadMesh(const char* filename)
@@ -170,3 +174,5 @@ char* file_read(const char* filename)
 	res[nb_read_total] = '\0';
 	return res;
 }
+#endif
+/*.S.D.G.*/

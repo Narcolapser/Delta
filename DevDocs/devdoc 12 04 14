@@ -1,0 +1,7 @@
+So, The need to seperate mesh's from models seems to be very present now. Something very strange is happening in the mesh's rendering call because one mesh is being referenced more than once. 
+
+This also begs now what goes where for mesh vs model?
+
+obviously, the VBO and Element array go to mesh. But transforms belong to the model, this also means that the assigning of the uniform must be something model does. Further, that means that mesh isn't a GeoObject, it is just an object.
+
+Well, thanks to inheiritance, the model class was a quick make and almost everything lined back up almost immediately. Awesome sauce. That's it. Alpha 8 is done! 
