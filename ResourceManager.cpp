@@ -37,7 +37,7 @@ bool ResourceManager::AssignID(UID val, Object* foo)
 	int idLoc =  findLease(val);
 //	printf("Check point 2, %i\n",idLoc);
 	if(idLoc == -1) return false;
-//	printf("Check point 3\n");
+//	printf("Check point 3, loading new mesh\n");
 	Lease *temp = leases[idLoc];
 //	printf("Check point 4\n");
 	if(temp->refCount != 0) return false;
@@ -88,7 +88,7 @@ int ResourceManager::findLease(UID val)
 	int mid;
 	for(mid = low + ((high - low)/2);mid != low && leases[mid]->ID != val;)
 	{
-		printf("high: %i mid: %i low %i val %i\n",high,mid,low,val);
+//		printf("high: %i mid: %i low %i val %i\n",high,mid,low,val);
 		if(leases[mid]->ID > val) low = mid;
 		else if(leases[mid]->ID < val) high = mid;
 		else return mid;
@@ -99,7 +99,9 @@ int ResourceManager::findLease(UID val)
 }
 UID ResourceManager::isDuplicate(const char* val)
 {
-	return false;//place holder function, i'll flush this out later.
+	printf("%s shows up %i times\n",val,loaded.count(val));
+	if(loaded.count(val)==0) return false;//place holder function, i'll flush this out later.
+	return loaded[val];
 }
 UID ResourceManager::LoadMesh(const char* filename)
 {
@@ -107,7 +109,7 @@ UID ResourceManager::LoadMesh(const char* filename)
 	UID temp = isDuplicate(filename);
 //	printf("Check point 2\n");
 	if(temp != 0) return temp;
-//	printf("Check point 3\n");
+//	printf("Check point 3, loading new mesh\n");
 	Mesh* val = new Mesh(filename);
 //	printf("Check point 4\n");
 	temp = RequestID();
@@ -115,7 +117,11 @@ UID ResourceManager::LoadMesh(const char* filename)
 	val->assignID(temp);
 //	printf("Check point 6\n");
 	if(AssignID(temp,val))
+	{
+		loaded[filename] = temp;
 		return temp;
+	}
+	delete val;
 //	printf("Check point 7\n");
 	return 0;
 }

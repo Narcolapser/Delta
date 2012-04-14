@@ -14,14 +14,18 @@
 #include <fstream>
 #include <string>
 #include <string.h>
+#include <map>
 
 #include "Object.h"
 //typedef unsigned int UID;
 
 #include "lib/pugixml/pugixml.cpp"
+//#include <boost/bimap.hpp>
 
 using namespace std;
 using namespace pugi;
+
+//typedef boost::bimap< string , UID > bm_type;
 
 class ResourceManager
 {
@@ -46,8 +50,10 @@ private:
 		~Lease();
 	};
 	vector<Lease*> leases;
+	map<string,UID> loaded;
 	int IDc;
 	int freeCount;
+
 	UID isDuplicate(const char* val);
 	void freeLease(UID val);
 	int findLease(UID val);

@@ -17,3 +17,7 @@ Ok, refactoring a little here. Static objects may have children. But they still 
 What this is really boiling down to is I will have break Mesh apart from what I had originally envisioned it to be. I was thinking that it was going to be the houser for 3D geometry and all that goes with it. I must break from that now. the Mesh class will house the geometry, but a new class, I think I'll call it "Model" will house the associated information like materials, textures, normal maps, etc. I don't think I'll need to bother with that model class just yet, I might, but for now, at least I know better one important detail, the ResourceManager must include Meshes and Buffer objects.
 
 Let me put it this way, if it is loaded from XML it is not the ResourceManager's job. 
+
+I fixed the loading problem for objects in scene. that was caused by an off by 1 error in the parsing. While I am going to just replace this all with XML, that was such a quick fix that I didn't bother just yet. 
+
+
