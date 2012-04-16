@@ -5,18 +5,19 @@ Scene::Scene(const char* config)
 //	printf("Check point 1\n");
 	char* inconfig = file_read(config);
 
-//	xml_document doc;
-//	xml_parse_result result;
-//	if(isFile)
-//	{
-//		result = doc.load_file(config);
-//	}
-//	else
-//	{
-//		result = doc.load(config);
-//	}
+/*	xml_document doc;
+	xml_parse_result result;
+	if(isFile)
+	{
+		result = doc.load_file(config);
+	}
+	else
+	{
+		result = doc.load(config);
+	}*/
 	istringstream cs(inconfig,istringstream::in);
 	string line;
+
 	stack<GeoObject*> parenting;
 	Model *temp;
 	UID meshUID;
@@ -75,7 +76,7 @@ Scene::Scene(const char* config)
 //		printf("parent level is: %i\n",pltemp);
 //		printf("Check point 8\n");
 
-		meshes.push_back(temp);
+		models.push_back(temp);
 		if(!(parenting.empty()))
 		{
 //			printf("Parenting baby!\n");
@@ -84,22 +85,53 @@ Scene::Scene(const char* config)
 //		printf("Check point 9\n");
 	}
 }
-//Scene::Scene(xml_node config);
+Scene::Scene(xml_node config)
+{
+	string path = config.attribute("path").value() + string("/");
+	printf("The path is: %s\n",path.c_str());
+	for(xml_node i = config.first_child(); i; i = i.next_sibling())
+	{
+		load(i,NULL,path);
+	}
+}
+
+void Scene::load(xml_node self, GeoObject* parent, string path)
+{
+	delta_t name = stringToEnum(self.name());
+	printf("node to load: %s valued at: %i\n",self.name(),name);
+	GeoObject* temp;
+	switch(name)
+	{
+	case MODEL:
+		temp = new Model(self,path);
+		models.push_back((Model*)temp);
+		break;
+	default:
+		printf("Defaulted! %s\n",enumToString(name).c_str());
+		break;
+	}
+	temp->setParent(parent);
+	for(xml_node i = self.first_child(); i; i = i.next_sibling())
+	{
+		load(i,temp,path);
+	}
+}
+
 void Scene::render()
 {
-	for(int i = 0; i < meshes.size(); i++)
+	for(int i = 0; i < models.size(); i++)
 	{
 //		printf("rendering %i\n",i);
-		meshes[i]->render();
-//		printf("Pointer: %li\n",(long int)meshes[i]);
+		models[i]->render();
+//		printf("Pointer: %li\n",(long int)models[i]);
 	}
 }
 void Scene::bindToProgram(Program *prog, GLint local)
 {
-	for(int i = 0; i < meshes.size(); i++)
+	for(int i = 0; i < models.size(); i++)
 	{
-//		printf("Pointer: %li\n",(long int)meshes[i]);
-		meshes[i]->bindToProgram(prog,local);
+//		printf("Pointer: %li\n",(long int)models[i]);
+		models[i]->bindToProgram(prog,local);
 	}
 }
 /*.S.D.G.*/

@@ -1,6 +1,6 @@
-<Scene name="Scene">
-	<Mesh file="SceneResources/floor.obj"/>
-	<Mesh file="SceneResrouces/sphere.obj">
-		<Mesh file="SceneResources/sphere.obj" locX="-1" locY="3" locZ="-1"/>
-	</Mesh>
+<Scene path="Scene">
+	<Model path="floor.obj"/>
+	<Model path="sphere.obj">
+		<Model path="sphere.obj" locX="-1" locY="3" locZ="-1"/>
+	</Model>
 </Scene>

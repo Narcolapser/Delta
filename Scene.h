@@ -31,11 +31,12 @@ class Scene: public Object //yup, scenes are objects to, they need to be globabl
 public:
 	Scene(const char* config);
 	Scene(xml_node config);
+	void load(xml_node self, GeoObject* parent, string path);
 	void update();//advised to call before calling render.
 	void render();
 	void bindToProgram(Program *prog, GLint local);
 //private:
-	vector<Model*> meshes;
+	vector<Model*> models;
 	vector<Camera*> cameras;
 };
 

@@ -5,3 +5,7 @@ This also begs now what goes where for mesh vs model?
 obviously, the VBO and Element array go to mesh. But transforms belong to the model, this also means that the assigning of the uniform must be something model does. Further, that means that mesh isn't a GeoObject, it is just an object.
 
 Well, thanks to inheiritance, the model class was a quick make and almost everything lined back up almost immediately. Awesome sauce. That's it. Alpha 8 is done! 
+
+Ok. pressing on now after a night's sleep to Alpha 9. I'm starting with the XML parsing. And I'm trying to figure out if this should be done recursively or what. And the conclusion I'm coming to is I don't think so, I'll just use the loop like I've been doing. 
+
+

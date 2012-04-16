@@ -10,13 +10,6 @@
 #include "GeoObject.h"
 #include "Program.h"
 
-#include <GL/glew.h>
-#include <GL/glut.h>
-
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-
 class Model: public GeoObject
 {
 public:
@@ -24,6 +17,23 @@ public:
 	{
 		mesh = (Mesh*)globalRM->GetIDRetaining(_meshID);
 		meshID = _meshID;
+		local = 0;
+		ID = globalRM->RequestID();
+	}
+	Model(xml_node& self, string path)
+	{
+		printf("Loading: %s\n",(path + self.attribute("path").value()).c_str());
+		mesh = new Mesh((path + self.attribute("path").value()).c_str());
+		meshID = globalRM->RequestID();
+		mesh->assignID(meshID);
+		globalRM->AssignID(meshID,mesh);
+		move(self.attribute("locX").as_float(),
+			self.attribute("locY").as_float(),
+			self.attribute("locZ").as_float());
+		printf("Move: x: %f y: %f z: %f\n",
+			self.attribute("locX").as_float(),
+			self.attribute("locY").as_float(),
+			self.attribute("locZ").as_float());
 		local = 0;
 		ID = globalRM->RequestID();
 	}

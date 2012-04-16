@@ -16,6 +16,13 @@
 #include <string.h>
 #include <map>
 
+#include <GL/glew.h>
+#include <GL/glut.h>
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include "Object.h"
 //typedef unsigned int UID;
 
@@ -27,11 +34,13 @@ using namespace pugi;
 
 //typedef boost::bimap< string , UID > bm_type;
 
+enum delta_t {FAIL,OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE};
+
 class ResourceManager
 {
 public:
 	ResourceManager();
-//	~ResourceManager();
+	~ResourceManager();
 	UID RequestID();
 	bool AssignID(UID val, Object* foo);
 	bool RetainID(UID val);

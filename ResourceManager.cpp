@@ -26,6 +26,11 @@ ResourceManager::ResourceManager()
 	IDc = 0;
 	freeCount = 1;
 }
+ResourceManager::~ResourceManager()
+{
+	IDc = 0;
+	freeCount = -1;
+}
 UID ResourceManager::RequestID()
 {
 	++IDc;
@@ -173,6 +178,33 @@ char* file_read(const char* filename)
 	res = (char*)realloc(res, nb_read_total + 1);
 	res[nb_read_total] = '\0';
 	return res;
+}
+
+//enum delta_t {OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE};
+delta_t stringToEnum(string val)
+{
+	if(val.compare("Object")==0) return OBJECT;
+	if(val.compare("Buffer")==0) return BUFFER;
+	if(val.compare("Camera")==0) return CAMERA;
+	if(val.compare("GeoObject")==0) return GEOOBJECT;
+	if(val.compare("Mesh")==0) return MESH;
+	if(val.compare("Model")==0) return MODEL;
+	if(val.compare("Scene")==0) return SCENE;
+	if(val.compare("Fail")==0) return FAIL;
+}
+string enumToString(delta_t val)
+{
+	switch(val)
+	{
+		case BUFFER: return "Buffer";
+		case CAMERA: return "Camera";
+		case GEOOBJECT: return "GeoObject";
+		case MESH: return "Mesh";
+		case MODEL: return "Model";
+		case SCENE: return "Scene";
+		case OBJECT: return "Object";
+		default: return "Fail";
+	}
 }
 #endif
 /*.S.D.G.*/

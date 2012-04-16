@@ -24,7 +24,7 @@ Mesh *cube;
 Mesh *child;
 Mesh *plate;
 Scene *foo;
-ResourceManager *bar;
+Scene *bar;
 glm::mat4 model,view,projection,anim;
 
 GLint uniform_mvp;
@@ -74,8 +74,13 @@ int init_resources()
 //	plate = new Mesh(filename);
 //	plate->bindToProg(prog);
 //	printf("second mesh ID: %i\n",plate->getID());
-	filename = "Scene";
-	foo = new Scene(filename);
+//	filename = "SceneOld";
+//	foo = new Scene(filename);
+	filename = "Scene.xml";
+	xml_document doc;
+	xml_parse_result result;
+	result = doc.load_file(filename);
+	foo = new Scene(doc.first_child());
 //	const char* filename = "Scene.xml";
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
@@ -163,7 +168,7 @@ void onDisplay()
 //	cube->setLoc(glm::vec3(-shuffle,0.0,0.0));
 //	cube->move(-shuffle,0,0);
 
-	foo->meshes[1]->move(-shuffle,0,0);
+	foo->models[1]->rotate(rotx,roty,rotz);
 
 //	cube->render(local);//render the cube, which is currently a sphere...
 //	child->render(local);

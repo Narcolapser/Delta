@@ -1,0 +1,11 @@
+After much effort, I think I'm going to switch over to a recursive approach to loading in from the XML. The looping approach just is proving to be to complicated which intoduces to many opporunities for bugs.
+
+I got the recursive model working. it was a lot more straight forward than the itterative. and because it only recurses on children, i'm not going to have a large performance hit because the recursion doesn't go very deep. 
+
+I had an odd problem with my second sphere for a little while, turns out I forgot to change the attribute "file" to path. derp. so, in a very basic, but very easy to extend way, I've now got xml loading for my level descriptions. woohoo! a nice simple standardized way of discribing levels, and the xml need not be from a file, so I can have it stored in strings internally if that works well for the developer down the road. 
+
+Next I want to get follow cams working, as well as make cameras part of the XML. 
+
+So, I'm looking into what is wrong with follow cams. my first priority is getting the positioning of the camera right, and then I'll get the camera looking fixed. I started by looking at making sure parenting is working properly with my spheres. it isn't. The rotation is doing weird things. instead of the sphere spinning, it is circling around some arbitrary point. The childed sphere is also circling around off set rather than circling around its parent. so I need to figure out what is up with rotation, and what is wrong with the parenting. 
+
+fixed the parenting issue. the transforms weren't in the right order, was doing child then parent. I'm wondering if the offset issue I'm having with child object has something to do with it. hmmm. oh well. I will figure it out tomorrow. sleep time.

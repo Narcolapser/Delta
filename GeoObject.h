@@ -111,7 +111,7 @@ protected:
 		trans = glm::rotate(trans,rotX,glm::vec3(0.0f,1.0f,0.0f));
 		trans = glm::rotate(trans,rotZ,glm::vec3(0.0f,0.0f,1.0f));
 		trans = glm::translate(trans,loc);
-		if (parent) trans = trans * parent->getTrans();
+		if (parent) trans = parent->getTrans() * trans;
 		newTrans = true;
 		++tranC;
 	}
