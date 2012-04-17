@@ -28,9 +28,9 @@ Mesh::Mesh(const char* filename)
 			istringstream s(line.substr(2));//read the info in through a stream.
 			GLfloat x,y,z;//temp variables to hold the vertex data as it comes in.
 			s >> x; s >> y; s >> z;//read in the vertex info
-			verts.push_back(x);//push the info onto the vector
-			verts.push_back(y);
-			verts.push_back(z);
+			verts.push_back(x-1);//push the info onto the vector
+			verts.push_back(y-1);
+			verts.push_back(z-1);
 			vertc++;//increment the number of vertices.
 		}
 		else if (line.substr(0,2) == "f ") //if it starts with "f " it is a face.

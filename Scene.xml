@@ -1,6 +1,6 @@
 <Scene path="Scene">
 	<Model path="floor.obj"/>
 	<Model path="sphere.obj">
-		<Model path="sphere.obj" locX="-1" locY="3" locZ="-1"/>
+		<Model path="sphere.obj" locX="3" locY="3" locZ="3"/>
 	</Model>
 </Scene>

@@ -1,0 +1,3 @@
+I hit a really really hard point. 3D rotation. I've got it all squared away now, but it launched me into a whole new section of math called "quaternions" to get the rotations working as it would be expected to work. it's not entirely intuitive and I'll probably understand it more after I document its face off next alpha.
+
+next I'm going to describe cameras in the XML and create the ability to shift between them. now that rotation is squared away, I've got the follow part of follow cams, now I need them to focus. but progress none the less is being made!
