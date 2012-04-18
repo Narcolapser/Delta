@@ -49,7 +49,7 @@ int init_resources()
 	srand(time(NULL));
 
 	//The camera. this is new since my refactoring. 
-	c = new Camera(45.0f,800,600,0.1f,1000.0f,glm::vec3(0.0, 2.0, 0.0));
+	c = new Camera(45.0f,800,600,0.1f,1000.0f);
 
 	//PROGRAM:////////////////////////////////////////////////////////////////////
 	//this handles the creation of the program. loading the shaders and linking.
@@ -82,6 +82,8 @@ int init_resources()
 	result = doc.load_file(filename);
 	foo = new Scene(doc.first_child());
 //	const char* filename = "Scene.xml";
+//	c->setParent(foo->models[1]);
+	c->setFocus(foo->models[1]);
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
@@ -169,6 +171,7 @@ void onDisplay()
 //	cube->move(-shuffle,0,0);
 
 	foo->models[1]->rotate(rotx,roty,rotz);
+	foo->models[1]->move(0.0,0.0,shuffle);
 
 //	cube->render(local);//render the cube, which is currently a sphere...
 //	child->render(local);

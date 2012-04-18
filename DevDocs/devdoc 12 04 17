@@ -1,3 +1,9 @@
 I hit a really really hard point. 3D rotation. I've got it all squared away now, but it launched me into a whole new section of math called "quaternions" to get the rotations working as it would be expected to work. it's not entirely intuitive and I'll probably understand it more after I document its face off next alpha.
 
 next I'm going to describe cameras in the XML and create the ability to shift between them. now that rotation is squared away, I've got the follow part of follow cams, now I need them to focus. but progress none the less is being made!
+
+So, I made the main sphere the parent of the camera as well as its focus, that broke it. so I took the focus away and the screen drew again. the parenting of the camera is a little wonky yet because of the way the camera is created. but what is worth noteing here is that my new quaternion based rotation system removed the off by 1 error that my previous system had. upon first seeing this i was quite depressed! OH NO! my system is broken again. i took the negative ones out, and it was fine. happy day! speaks to the importance of proper maths. :)
+
+I also discovered where the parenting offset was coming from. I had location default as a unit vector, which offset a model by the unit vector. derpa derp. i now have the default location as the zero vector. much improved. 
+
+There are some deep set problems with the camera system. I need to rewrite alot of how it works to reflect changes since it was last changed... in alpha 4. So my work is cut out for me there. but that seems relatively straight forward. 

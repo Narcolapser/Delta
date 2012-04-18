@@ -28,14 +28,13 @@ public:
 	//	clipping near and far: these are the clipping planes. anything closer than near
 	//		will not get rendered, and anything further than far is out of sight.
 	//	loc: the initial location of the camera. 
-	Camera(int _fov, int _x, int _y, float _near, float _far, glm::vec3 _loc)
+	Camera(int _fov, int _x, int _y, float _near, float _far)
 	{
 		fov = _fov;
 		x = _x;
 		y = _y;
 		near = _near;
 		far = _far;
-		loc = _loc;
 		newProj = 0;
 	}
 	//destructor. is as you would expect.

@@ -25,7 +25,7 @@ class GeoObject: public Object
 public:
 	GeoObject()
 	{
-		loc = glm::vec3(1.0f);
+		loc = glm::vec3(0.0f);
 		rotX = 0;
 		rotY = 0;
 		rotZ = 0;
@@ -161,8 +161,8 @@ protected:
 //				glm::vec3(0.0,0.0,sin(rotZ * 0.00872664626)));
 //		glm::gtc::quaternion::quat rotquat = glm::gtc::quaternion::normalize(xq * yq * zq);
 
-		trans = glm::gtc::quaternion::mat4_cast(rotquat);
-		trans = glm::translate(trans,loc);
+		trans = glm::translate(glm::mat4(1.0f),loc);
+		trans = trans * glm::gtc::quaternion::mat4_cast(rotquat);
 		if (parent) trans = parent->getTrans() * trans;
 		newTrans = true;
 		++tranC;
