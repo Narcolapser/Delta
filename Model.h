@@ -36,6 +36,7 @@ public:
 			self.attribute("locZ").as_float());
 		local = 0;
 		ID = globalRM->RequestID();
+		globalRM->AssignID(ID,this);
 	}
 	~Model()
 	{

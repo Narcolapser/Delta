@@ -10,6 +10,7 @@
 //road if I move the cameras as a concept up into openCL. I may still be able to use glm there, but
 //for this application, I think I could get more effecient code if I hand wrote it to optimize the
 //particulars of the situation. So for now, here are the gl math libraries:
+#include "ResourceManager.cpp"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -37,6 +38,24 @@ public:
 		far = _far;
 		newProj = 0;
 	}
+	Camera(xml_node self)
+	{//<Camera locX="0" locY="0" locZ="0" fov="45" dimX="800" dimY="600" clipNear="0.1" clipFar="1000"/>
+		fov = self.attribute("fov").as_float();
+		x = self.attribute("dimX").as_float();
+		y = self.attribute("dimY").as_float();
+		near = self.attribute("clipNear").as_float();
+		far = self.attribute("clipFar").as_float();
+		newProj = 0;
+		move(self.attribute("locX").as_float(),
+			self.attribute("locY").as_float(),
+			self.attribute("locZ").as_float());
+		printf("Move: x: %f y: %f z: %f\n",
+			self.attribute("locX").as_float(),
+			self.attribute("locY").as_float(),
+			self.attribute("locZ").as_float());
+		ID = globalRM->RequestID();
+		globalRM->AssignID(ID,this);
+	}
 	//destructor. is as you would expect.
 	~Camera()
 	{
@@ -54,20 +73,25 @@ public:
 		if(parent)
 		{
 			// return glm::lookAt(loc+parent->getLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
-			glm::vec4 temp = getTrans() * glm::vec4(loc,1.0f);
-			return glm::lookAt(glm::vec3(temp.x,temp.y,temp.z),val,glm::vec3(0.0f,1.0f,0.0f));
+			//glm::vec4 temp = getTrans() * glm::vec4(loc,1.0f);
+			return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 		}
-		return glm::lookAt(loc,val,glm::vec3(0.0f,1.0f,0.0f));
+		return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 	}
 	glm::mat4 view()
 	{
 		if(focus) 
 		{
-			glm::vec4 temp = focus->getTrans() * glm::vec4(focus->getLoc(),1.0f);
-			return lookAt(glm::vec3(temp.x,temp.y,temp.z));
+//			glm::vec4 temp = focus->getTrans() * glm::vec4(focus->getLoc(),1.0f);
+//			return lookAt(glm::vec3(temp.x,temp.y,temp.z));
+			return lookAt(focus->getGlobalLoc());
 		}
 //		if(focus) return lookAt(glm::vec3(focus->getLoc().x/2,focus->getLoc().y/2,-10.f));
 		return lookAt(glm::vec3(1.0f));
+	}
+	glm::mat4 model()
+	{
+		return glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, loc.z));
 	}
 	void setFocus(GeoObject* _focus)
 	{

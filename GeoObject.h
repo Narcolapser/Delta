@@ -52,6 +52,11 @@ public:
 		updateTrans();
 		return trans;
 	}
+	glm::vec3 getGlobalLoc()
+	{
+		glm::vec4 temp = getTrans() * glm::vec4(1.0f);
+		return glm::vec3(temp.x/temp.w,temp.y/temp.w,temp.z/temp.w);
+	}
 	void move(float x, float y, float z)
 	{
 		if(!(x == 0 && y == 0 && z == 0))

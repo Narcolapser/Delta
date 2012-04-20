@@ -24,6 +24,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Object.h"
+#include "Mesh.h"
 //typedef unsigned int UID;
 
 #include "lib/pugixml/pugixml.cpp"

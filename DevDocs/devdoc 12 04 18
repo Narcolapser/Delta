@@ -1,0 +1,3 @@
+so, in delta where I create the "model" transform, I refered to it as the "Global" transform. turns out there isn't really any such thing. The "Global" transform is local to the camera. So i can therefore pull that transform in, local to the camera. 
+
+uuuuu. everything is getting flipped on its head now. As I move the camera away from being the global transformer to an object in the scene that gets transformed as well, it is forcing me to rework a lot of the way i have thought and worked this. Right now my problem is that the camera gets pushed out by it's parent's movement along the axis that the camera is rotated by. so it causes the camera to move away from its parent.

@@ -35,7 +35,7 @@ float angleH = 0.0;
 float rotx = 0.0;
 float roty = 0.0;
 float rotz = 0.0;
-float zoom = -10.0;
+float zoom = 0.0;
 int lx = -1, ly = -1;
 bool lclick = false;
 bool rclick = false;
@@ -49,7 +49,7 @@ int init_resources()
 	srand(time(NULL));
 
 	//The camera. this is new since my refactoring. 
-	c = new Camera(45.0f,800,600,0.1f,1000.0f);
+//	c = new Camera(45.0f,800,600,0.1f,1000.0f);
 
 	//PROGRAM:////////////////////////////////////////////////////////////////////
 	//this handles the creation of the program. loading the shaders and linking.
@@ -82,8 +82,10 @@ int init_resources()
 	result = doc.load_file(filename);
 	foo = new Scene(doc.first_child());
 //	const char* filename = "Scene.xml";
+	c = foo->cameras[0];
 //	c->setParent(foo->models[1]);
 	c->setFocus(foo->models[1]);
+//	c->move(10.0,10.0,10.0);
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
@@ -116,22 +118,23 @@ void onIdle()
 
 	//these two rotates deal with rotating the camera on the vertical axis and horizontal axis.
 	//	I'm going to have to figure out how to reimplement them later.
-	glm::vec3 axis_x(1, 0, 0);
-	anim = glm::rotate(glm::mat4(1.0f), angleV, axis_x);
+//	glm::vec3 axis_x(1, 0, 0);
+//	anim = glm::rotate(glm::mat4(1.0f), angleV, axis_x);
 
-	glm::vec3 axis_y(0, 1, 0);
-	anim = glm::rotate(anim, angleH, axis_y);
+//	glm::vec3 axis_y(0, 1, 0);
+//	anim = glm::rotate(anim, angleH, axis_y);
 
 	//make the global move. right now it just manages the zooming in and out of the camera.
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, zoom));
+//	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, 0.0));
+//	model = c->model();
 
 	//get the view and projection matrix from the camera.
-	view = c->lookAt(glm::vec3(0.0, 0.0, zoom));
-//	view = c->view();
+//	view = c->lookAt(glm::vec3(0.0, 0.0, zoom));
+	view = c->view();
 	projection = c->getProjection();
 
 	//make the model-view-projection global transformation matrix.
-	glm::mat4 mvp = projection * view * model * anim;
+	glm::mat4 mvp = projection * view;// * model;// * anim;
 
 	//declare that we are going to use this program. woohoo and all that.
 	prog->use();
@@ -172,6 +175,7 @@ void onDisplay()
 
 	foo->models[1]->rotate(rotx,roty,rotz);
 	foo->models[1]->move(0.0,0.0,shuffle);
+	c->move(0.0,0.0,zoom);
 
 //	cube->render(local);//render the cube, which is currently a sphere...
 //	child->render(local);
@@ -180,6 +184,7 @@ void onDisplay()
 	rotx *= 0.9;
 	roty *= 0.9;
 	rotz *= 0.9;
+	zoom *= 0.9;
 //	cout << "x: " << rotx << " y: " << roty << " z: " << rotz << endl;
 //	cout << "Shuffle: " << shuffle << endl;
 	//redrawn, swap the buffers and put this new one to the front.

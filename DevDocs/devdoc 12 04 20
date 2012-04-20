@@ -1,0 +1,18 @@
+Camera's are requireing me to radically rethink things. Cameras are going from being the global transform, to being in the global transform. But it remains that everything needs to be mapped into a camera's view space. so how does this work?
+
+Camera's need to be transformed by their parents frequently. follow cams are a large part of First person, third person, and many other aspects of games. So their singular coordinate has to be transformable. But the transform of coordinate can't be allowed to change where the camera is looking. 
+
+I think I see how I can get the info I need. the function I'm using, glm::lookat, takes a vec3 coord for where the camera is, a vec3 coord for where to look at, and then an assignment of "up" another 3D vector where x rotates the camera left and right, y rotates the camera up and down, and z spings the camera around. 
+
+Right now the camera gives me 3 matricies:
+Model
+View
+Projection.
+
+Projection deals with culling, the frustram, FoV, and things of that nature.
+View is the result of the glm::lookat, it deals with the global move and rotate to get everything oriented for the camera. 
+Model is actually then technically the same as view. The model matrix was also providing a global move. The kicker is that up till now the Model matrix would move the scene, and look at would rotate it. This is changing now because the camera is moving and so glm::lookat takes care of the rotate and translate in one fell swoop.
+
+So, I think what will fix a lot of things for me is dropping this down to the projection and the view matrix. Second, I need a way to query GeoObjects for their location vector. The glm::lookat function takes the coordinates of the camera and the coordinates of what it is looking at. This will make follow cams stupid simple if I could just ask for what something's global coordinates are.
+
+And bam! follow cams now work and cameras can be loaded in from xml. I think there might be some offset loading issues with cameras and their placements. but I've got to go now so I'm going to call i good and say alpha 9 is done.

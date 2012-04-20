@@ -106,6 +106,10 @@ void Scene::load(xml_node self, GeoObject* parent, string path)
 		temp = new Model(self,path);
 		models.push_back((Model*)temp);
 		break;
+	case CAMERA:
+		temp = new Camera(self);
+		cameras.push_back((Camera*)temp);
+		break;
 	default:
 		printf("Defaulted! %s\n",enumToString(name).c_str());
 		break;
