@@ -16,6 +16,34 @@ using namespace std;
 class Program
 {
 public:
+	Program();
+	~Program();
+	
+	//another trick like i used in the camera class. I'd hope that eventually I could remove 
+	//this function, but for now it remains to fill in the gaps where necessary.
+	GLuint inline getProgram() { return newProg ? prog : updateProg(); }
+	int loadVertex(const char* fileName);
+	int loadFragment(const char* fileName);
+	void inline use();
+private:
+	//data members:
+	//int usingGeom;
+	//GLuint gs, vs, fs;
+	GLuint vs, fs;	//pointers to the shanders on the gpu.
+	GLuint prog;	//pointer to the program on the gpu.
+	int newProg;	//sentinal value for if the program needs to be updated or not.
+
+	//member functions:
+	GLuint updateProg();
+	char* file_read(const char* filename);
+	GLint create_shader(const char* filename, GLenum type);
+	void print_log(GLuint object);
+};
+
+
+/*class Program
+{
+public:
 	Program()
 	{//default contructor, everything is initially empty.
 		newProg = 0;
@@ -171,6 +199,6 @@ private:
 		free(log);
 	}
 };
-#endif
-
+*/
 /*.S.D.G.*/
+#endif

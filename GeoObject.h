@@ -54,6 +54,9 @@ public:
 	}
 	glm::vec3 getGlobalLoc()
 	{
+		//this method returns an object in model space. regaurdless of camera or anything,
+		//it just gets where the object is. because these are homogeneous coordinates, the
+		//first 3 components of the vector get divided by the 4th to get consistency.
 		glm::vec4 temp = getTrans() * glm::vec4(1.0f);
 		return glm::vec3(temp.x/temp.w,temp.y/temp.w,temp.z/temp.w);
 	}
@@ -67,6 +70,7 @@ public:
 	}
 	void rotate(float _x, float _y, float _z)
 	{
+		//these calculations are the same as below, follow link below for detail.
 		if(!(_x == 0 && _y == 0 && _z == 0))
 		{
 			newTrans=false;
@@ -89,7 +93,10 @@ public:
 		
 			glm::gtc::quaternion::quat local = glm::gtc::quaternion::normalize(
 				glm::gtc::quaternion::quat(qw,qx,qy,qz));
-		
+
+			//this is the important difference between rotate and setRot. this line
+			//chains the rotations together allowing for an object to be rotated from 
+			//it's current position at will in a logical way.
 			rotquat = local * rotquat;
 		}
 	}
@@ -119,6 +126,11 @@ public:
 		newTrans = newTrans && rotZ == _z;
 		rotZ = _z;
 
+
+	//this is a set of calculations i found here:
+	//http://content.gpwiki.org/index.php/OpenGL:Tutorials:Using_Quaternions_to_represent_rotation
+	//it is a lot of maths, how exactly it works I'm not entirely positive. but it does.
+	//let a sleeping dog lie!
 		float p = rotX * 0.00872664626;
 		float y = rotY * 0.00872664626;
 		float r = rotZ * 0.00872664626;
@@ -153,10 +165,17 @@ protected:
 	glm::gtc::quaternion::quat rotquat;
 	void updateTrans()
 	{
+		//get the translation matrix.
 		trans = glm::translate(glm::mat4(1.0f),loc);
+
+		//because of order of operations. the translation matrix is applied to the rotation
+		//matrix not the other way around. so rotation is done first here. 
 		trans = trans * glm::gtc::quaternion::mat4_cast(rotquat);
+
+		//lastly apply the parent transform.
 		if (parent) trans = parent->getTrans() * trans;
 		newTrans = true;
+
 		++tranC;
 	}
 };

@@ -6,6 +6,7 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
+//RESOURCE MANAGER! ONE INCLUDE TO RULE THEM ALL!!!
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
@@ -25,15 +26,12 @@
 
 #include "Object.h"
 #include "Mesh.h"
-//typedef unsigned int UID;
+#include "Buffer.h"
 
 #include "lib/pugixml/pugixml.cpp"
-//#include <boost/bimap.hpp>
 
 using namespace std;
 using namespace pugi;
-
-//typedef boost::bimap< string , UID > bm_type;
 
 enum delta_t {FAIL,OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE};
 

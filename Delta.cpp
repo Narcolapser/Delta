@@ -5,12 +5,8 @@
 
 #include <math.h>
 #include <iostream>
-#include "Mesh.cpp"
-//#include "InterfaceGL.cpp"
 #include "Camera.h"
-#include "Program.h"
-#include "Attrib.h"
-#include "Buffer.h"
+#include "ResourceManager.cpp"
 #include "Scene.cpp"
 
 using namespace std;
@@ -18,17 +14,12 @@ using namespace std;
 //hopefully these global variables will be going away soon.
 Camera *c;
 Program *prog;
-//Attrib *coord3d,*vColor,*elArr;
-//Attrib *coord3df,*vColorf,*elArrf;
-//Mesh *cube;
-//Mesh *child;
-//Mesh *plate;
 Scene *foo;
-//Scene *bar;
-glm::mat4 projection,view;//,model,anim;
+glm::mat4 projection,view;
 
 GLint uniform_mvp;
 GLint local;
+
 float angle = 0.0;
 float angleV = 0.0;
 float angleH = 0.0;
@@ -128,14 +119,8 @@ void onDisplay()
 	foo->models[1]->rotate(rotx,roty,rotz);
 	foo->models[1]->move(0.0,0.0,shuffle);
 	c->move(0.0,0.0,zoom);
+	shuffle *= 0.9;rotx *= 0.9;roty *= 0.9;rotz *= 0.9;zoom *= 0.9;
 
-	shuffle *= 0.9;
-	rotx *= 0.9;
-	roty *= 0.9;
-	rotz *= 0.9;
-	zoom *= 0.9;
-//	cout << "x: " << rotx << " y: " << roty << " z: " << rotz << endl;
-//	cout << "Shuffle: " << shuffle << endl;
 	//redrawn, swap the buffers and put this new one to the front.
 	glutSwapBuffers();
 //	printf("end render\n");
@@ -185,18 +170,19 @@ void onActiveMotion(int x, int y)
 	}
 	if(rclick)
 	{
-		if (dy > 0)
-		{
-			dy *= (-1);
-			if (dy <= 1) dy = 2;
-			zoom += log10(dy);
-		}
-		else
-		{
-			if (dy <= 1) dy = 2;
-			zoom += log10(dy) * (-1);
-		}
-		if (zoom > -1.5) zoom = -1.5;
+		zoom += dy;
+//		if (dy > 0)
+//		{
+//			dy *= (-1);
+//			if (dy <= 1) dy = 2;
+//			zoom += log10(dy);
+//		}
+//		else
+//		{
+//			if (dy <= 1) dy = 2;
+//			zoom += log10(dy) * (-1);
+//		}
+//		if (zoom > -1.5) zoom = -1.5;
 	}
 		
 	lx = x;
@@ -223,8 +209,7 @@ void onClick(int button, int state, int x, int y)
 void free_resources()
 {//done, free up the resources so there aren't any loose ends.
 	delete prog;
-//	delete cube;
-//	delete plate;
+	delete foo;
 }
 
 
@@ -233,7 +218,7 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Delta Alpha 8");
+	glutCreateWindow("Delta Alpha 10");
 	glutKeyboardFunc(onNormalKeys);
 	glutMotionFunc(onActiveMotion);
 	glutPassiveMotionFunc(onPassiveMotion);

@@ -16,12 +16,10 @@
 
 #include "Object.h"
 #include "GeoObject.h"
-#include "Mesh.h"
 #include "Camera.h"
 #include "ResourceManager.cpp"
-#include "Program.h"
+#include "Program.cpp"
 #include "Model.h"
-//#include "lib/pugixml/pugixml.cpp"
 
 using namespace std;
 using namespace pugi;
