@@ -34,10 +34,6 @@ public:
 	//this function, but for now it remains to fill in the gaps where necessary.
 	GLuint inline getProgram() { return newProg ? prog : updateProg(); }
 
-//	void loadGeometry()
-//	{
-//		usingGeom = 1;		
-//	}I'm not looking to support geometry shaders in delta right now, this may be trashed.
 	int loadVertex(const char* fileName)
 	{//loads a vertex shader using the function I borrowed from wiki books.
 		vs = create_shader(fileName, GL_VERTEX_SHADER);

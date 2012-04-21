@@ -39,7 +39,7 @@ public:
 		newProj = 0;
 	}
 	Camera(xml_node self)
-	{//<Camera locX="0" locY="0" locZ="0" fov="45" dimX="800" dimY="600" clipNear="0.1" clipFar="1000"/>
+	{
 		fov = self.attribute("fov").as_float();
 		x = self.attribute("dimX").as_float();
 		y = self.attribute("dimY").as_float();
@@ -47,10 +47,6 @@ public:
 		far = self.attribute("clipFar").as_float();
 		newProj = 0;
 		move(self.attribute("locX").as_float(),
-			self.attribute("locY").as_float(),
-			self.attribute("locZ").as_float());
-		printf("Move: x: %f y: %f z: %f\n",
-			self.attribute("locX").as_float(),
 			self.attribute("locY").as_float(),
 			self.attribute("locZ").as_float());
 		ID = globalRM->RequestID();
@@ -72,8 +68,6 @@ public:
 	//neatly. you just have to tell the camera to look at something and it will manage the rest
 		if(parent)
 		{
-			// return glm::lookAt(loc+parent->getLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
-			//glm::vec4 temp = getTrans() * glm::vec4(loc,1.0f);
 			return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 		}
 		return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
@@ -82,11 +76,8 @@ public:
 	{
 		if(focus) 
 		{
-//			glm::vec4 temp = focus->getTrans() * glm::vec4(focus->getLoc(),1.0f);
-//			return lookAt(glm::vec3(temp.x,temp.y,temp.z));
 			return lookAt(focus->getGlobalLoc());
 		}
-//		if(focus) return lookAt(glm::vec3(focus->getLoc().x/2,focus->getLoc().y/2,-10.f));
 		return lookAt(glm::vec3(1.0f));
 	}
 	glm::mat4 model()
@@ -139,5 +130,4 @@ private:
 	int newProj;		//is the projection matrix the most recent one? yes=1, no=0
 };
 #endif
-
 /*.S.D.G.*/

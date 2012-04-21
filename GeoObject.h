@@ -70,32 +70,30 @@ public:
 		if(!(_x == 0 && _y == 0 && _z == 0))
 		{
 			newTrans=false;
-//			rotX += x;
-//			rotY += y;
-//			rotZ += z;
 
-		float p = _y * 0.00872664626;
-		float y = _z * 0.00872664626;
-		float r = _x * 0.00872664626;
+			float p = _y * 0.00872664626;
+			float y = _z * 0.00872664626;
+			float r = _x * 0.00872664626;
 
-		float sinp = sin(p);
-		float siny = sin(y);
-		float sinr = sin(r);
-		float cosp = cos(p);
-		float cosy = cos(y);
-		float cosr = cos(r);
+			float sinp = sin(p);
+			float siny = sin(y);
+			float sinr = sin(r);
+			float cosp = cos(p);
+			float cosy = cos(y);
+			float cosr = cos(r);
 
-		float qx = sinr * cosp * cosy - cosr * sinp * siny;
-		float qy = cosr * sinp * cosy + sinr * cosp * siny;
-		float qz = cosr * cosp * siny - sinr * sinp * cosy;
-		float qw = cosr * cosp * cosy + sinr * sinp * siny;
+			float qx = sinr * cosp * cosy - cosr * sinp * siny;
+			float qy = cosr * sinp * cosy + sinr * cosp * siny;
+			float qz = cosr * cosp * siny - sinr * sinp * cosy;
+			float qw = cosr * cosp * cosy + sinr * sinp * siny;
 		
-		glm::gtc::quaternion::quat local = glm::gtc::quaternion::normalize(
-			glm::gtc::quaternion::quat(qw,qx,qy,qz));
+			glm::gtc::quaternion::quat local = glm::gtc::quaternion::normalize(
+				glm::gtc::quaternion::quat(qw,qx,qy,qz));
 		
-		rotquat = local * rotquat;
+			rotquat = local * rotquat;
 		}
 	}
+
 	void setLoc(glm::vec3 _loc)
 	{
 		if(loc!=_loc)
@@ -139,7 +137,9 @@ public:
 
 		rotquat = glm::gtc::quaternion::normalize(glm::gtc::quaternion::quat(qw,qx,qy,qz));
 	}
+
 	glm::vec3 inline getLoc(){return loc;}
+
 protected:
 	glm::mat4 trans;
 	glm::vec3 loc;
@@ -153,19 +153,6 @@ protected:
 	glm::gtc::quaternion::quat rotquat;
 	void updateTrans()
 	{
-//		trans = glm::rotate(glm::mat4(1.0f),rotY,glm::vec3(1.0f,0.0f,0.0f));
-//		trans = glm::rotate(trans,rotX,glm::vec3(0.0f,1.0f,0.0f));
-//		trans = glm::rotate(trans,rotZ,glm::vec3(0.0f,0.0f,1.0f));
-//		trans = glm::rotate(glm::mat4(1.0f),1.0f,glm::vec3(rotX,rotY,rotZ));
-
-//		glm::gtc::quaternion::quat xq(cos(rotX * 0.00872664626), 
-//				glm::vec3(sin(rotX * 0.00872664626),0.0,0.0));
-//		glm::gtc::quaternion::quat yq(cos(rotY * 0.00872664626), 
-//				glm::vec3(0.0,sin(rotY * 0.00872664626),0.0));
-//		glm::gtc::quaternion::quat zq(cos(rotZ * 0.00872664626), 
-//				glm::vec3(0.0,0.0,sin(rotZ * 0.00872664626)));
-//		glm::gtc::quaternion::quat rotquat = glm::gtc::quaternion::normalize(xq * yq * zq);
-
 		trans = glm::translate(glm::mat4(1.0f),loc);
 		trans = trans * glm::gtc::quaternion::mat4_cast(rotquat);
 		if (parent) trans = parent->getTrans() * trans;

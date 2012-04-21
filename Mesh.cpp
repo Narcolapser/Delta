@@ -90,29 +90,15 @@ Mesh::Mesh(const char* filename)
 	//create the attribute objects.
 	const char* name = "coord3d";// name of the Attribute of interest.
 	coords = new Attrib(name,GL_FLOAT,vbo);
-	
-//	local = 0;
-	//set local values to defaults.
-//	loc = glm::mat4(1.0f);
-//	rot = glm::mat4(1.0f);
-//	scale = glm::mat4(1.0f);
-//	trans = glm::mat4(1.0f);
-//	newTrans = 1;
 }
 Mesh::~Mesh()
 {
 	delete coords;
 	delete elements;
-//	loc = glm::mat4(0.0f);
-//	rot = glm::mat4(0.0f);
-//	scale = glm::mat4(0.0f);
-//	trans = glm::mat4(0.0f);
-//	newTrans = 0;
 }
 void Mesh::bindToProgram(Program *prog)
 {
 	coords->bindToProgram(prog);
-//	local = local;
 }
 void Mesh::assignID(UID val)
 {
@@ -120,42 +106,12 @@ void Mesh::assignID(UID val)
 }
 void Mesh::render()
 {
-//	printf("Starting to render!\n");
-//	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(getTrans()));
-//	printf("check point 1\n");
 	Mesh *cube = this;
-//	printf("check point 2\n");
 	this->coords->enable();
-//	printf("check point 3\n");
 	this->elements->bind();
-//	printf("check point 4\n");
 	glDrawElements(GL_TRIANGLES, elements->getSize()/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
-//	printf("check point 5\n");
 	this->coords->disable();
-//	printf("done with render\n");
 }
-//void Mesh::setTrans(glm::mat4 val)
-//{
-//	trans = val;
-//	newTrans = 1;
-//}
-//void Mesh::moveRelative(glm::vec3& val){}
-//void Mesh::rotateRelative(float by, glm::vec3& val){}
-//void Mesh::scaleRelative(glm::vec3& val){}
-//void Mesh::resetAll(){}
-//void Mesh::moveStatic(glm::vec3& val){}
-//void Mesh::rotateStatic(float by, glm::vec3& val){}
-//void Mesh::scaleStatic(glm::vec3& val){}
-
-
-//	Attrib coords;
-//	Attrib elements;
-//	glm::mat4 loc;
-//	glm::mat4 rot;
-//	glm::mat4 scale;
-//	glm::mat4 trans;
-//	int newTrans;
-
 #endif
 
 /*.S.D.G.*/

@@ -2,25 +2,6 @@
 
 #ifndef RESOURCEMANAGER_CPP
 #define RESOURCEMANAGER_CPP
-//typedef unsigned int UID;
-//ResourceManager::ResourceManager(const char* config, bool isFile)
-//{
-//	xml_document doc;
-//	xml_parse_result result;
-//	if(isFile)
-//	{
-//		result = doc.load_file(config);
-//	}
-//	else
-//	{
-//		result = doc.load(config);
-//	}
-//	cout << result << endl;
-//	
-//	xml_node scene = doc.child("Scene");
-//	cout << scene.attribute("name").value() << endl;
-//	cout << scene.child().attribute("file").value() << endl;
-//}
 ResourceManager::ResourceManager()
 {
 	IDc = 0;
@@ -36,24 +17,16 @@ UID ResourceManager::RequestID()
 	++IDc;
 	Lease *temp = new Lease(IDc);
 	leases.push_back(temp);
-//	printf("IDc: %i, ID given to temp: %i\n",IDc,temp->ID);
 	return(IDc);
 }
 bool ResourceManager::AssignID(UID val, Object* foo)
 {
-//	printf("Check point 1, %i\n",(int)leases.size());
 	int idLoc =  findLease(val);
-//	printf("Check point 2, %i\n",idLoc);
 	if(idLoc == -1) return false;
-//	printf("Check point 3, loading new mesh\n");
 	Lease *temp = leases[idLoc];
-//	printf("Check point 4\n");
 	if(temp->refCount != 0) return false;
-//	printf("Check point 5\n");
 	temp->pointer = foo;
-//	printf("Check point 6\n");
 	++(temp->refCount);
-//	printf("Check point 7\n");
 	return true;
 }
 bool ResourceManager::RetainID(UID val)
@@ -96,7 +69,6 @@ int ResourceManager::findLease(UID val)
 	int mid;
 	for(mid = low + ((high - low)/2);mid != low && leases[mid]->ID != val;)
 	{
-//		printf("high: %i mid: %i low %i val %i\n",high,mid,low,val);
 		if(leases[mid]->ID > val) low = mid;
 		else if(leases[mid]->ID < val) high = mid;
 		else return mid;
@@ -114,24 +86,17 @@ UID ResourceManager::isDuplicate(const char* val)
 }
 UID ResourceManager::LoadMesh(const char* filename)
 {
-//	printf("Check point 1\n");
 	UID temp = isDuplicate(filename);
-//	printf("Check point 2\n");
 	if(temp != 0) return temp;
-//	printf("Check point 3, loading new mesh\n");
 	Mesh* val = new Mesh(filename);
-//	printf("Check point 4\n");
 	temp = RequestID();
-//	printf("Check point 5\n");
 	val->assignID(temp);
-//	printf("Check point 6\n");
 	if(AssignID(temp,val))
 	{
 		loaded[filename] = temp;
 		return temp;
 	}
 	delete val;
-//	printf("Check point 7\n");
 	return 0;
 }
 ResourceManager::Lease::Lease(UID val, Object* foo, unsigned short int bar)
@@ -179,8 +144,6 @@ char* file_read(const char* filename)
 	res[nb_read_total] = '\0';
 	return res;
 }
-
-//enum delta_t {OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE};
 delta_t stringToEnum(string val)
 {
 	if(val.compare("Object")==0) return OBJECT;

@@ -29,7 +29,6 @@ public:
 		}	
 		name = _name;//name of the attribute.
 		type = _type;//what is the type of data stored in it? GLfloat, GLint, etc.
-//		bufType = _bufType;//what type of buffer? GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER
 		numEl = 3;//the number of elements. assumed 3, as 3 is normal for 3D games.
 		interweave = 0;//assumes that there is no interweave on these arrays.
 		offset = 0;//starting the data right at the begining. again, can be changed later.
@@ -41,7 +40,6 @@ public:
 		canBind = false;
 		name = _name;//name of the attribute.
 		type = _type;//what is the type of data stored in it? GLfloat, GLint, etc.
-//		bufType = _bufType;//what type of buffer? GL_ARRAY_BUFFER, GL_ELEMENT_ARRAY_BUFFER
 		numEl = 3;//the number of elements. assumed 3, as 3 is normal for 3D games.
 		interweave = 0;//assumes that there is no interweave on these arrays.
 		offset = 0;//starting the data right at the begining. again, can be changed later.
@@ -61,7 +59,6 @@ public:
 	~Attrib()
 	{//deconstructor. all that needs to be deleted is the name and the buffere freed.
 		delete name;
-		//glDeleteBuffers(1,&buffer);
 		delete buffer;
 	}
 	void inline enable()
@@ -112,7 +109,6 @@ private:
 	Buffer* buffer;		//the buffer in use.
 	int numEl;		//the number of elements per vertex.
 	GLenum type;		//the type of data stored in the buffer.
-//	GLenum bufType;		//the type buffer object it is.
 	int interweave;		//the amount of inter weave.
 	GLvoid* offset;		//the offset to the first element.
 };

@@ -18,14 +18,14 @@ using namespace std;
 //hopefully these global variables will be going away soon.
 Camera *c;
 Program *prog;
-Attrib *coord3d,*vColor,*elArr;
-Attrib *coord3df,*vColorf,*elArrf;
-Mesh *cube;
-Mesh *child;
-Mesh *plate;
+//Attrib *coord3d,*vColor,*elArr;
+//Attrib *coord3df,*vColorf,*elArrf;
+//Mesh *cube;
+//Mesh *child;
+//Mesh *plate;
 Scene *foo;
-Scene *bar;
-glm::mat4 model,view,projection,anim;
+//Scene *bar;
+glm::mat4 projection,view;//,model,anim;
 
 GLint uniform_mvp;
 GLint local;
@@ -48,9 +48,6 @@ int init_resources()
 	//seed the random number generator.
 	srand(time(NULL));
 
-	//The camera. this is new since my refactoring. 
-//	c = new Camera(45.0f,800,600,0.1f,1000.0f);
-
 	//PROGRAM:////////////////////////////////////////////////////////////////////
 	//this handles the creation of the program. loading the shaders and linking.
 	prog = new Program();
@@ -59,33 +56,13 @@ int init_resources()
 
 
 	//MESHES! this is where the meshes get loaded.
-	const char* filename = "SceneResources/cubequad.obj";
-//	cube = new Mesh(filename);
-//	cube->bindToProg(prog);
-//	printf("first mesh ID: %i\n",cube->getID());
-//	c->setParent(cube);
-//	c->setFocus(cube);
-//	child = new Mesh(filename);
-//	child->bindToProg(prog);
-//	printf("child ID: %i\n",cube->getID());
-//	child->move(-1,3,-1);
-//	child->setParent(cube);
-//	filename = "SceneResources/floor.obj";
-//	plate = new Mesh(filename);
-//	plate->bindToProg(prog);
-//	printf("second mesh ID: %i\n",plate->getID());
-//	filename = "SceneOld";
-//	foo = new Scene(filename);
-	filename = "Scene.xml";
+	const char* filename = "Scene.xml";
 	xml_document doc;
 	xml_parse_result result;
 	result = doc.load_file(filename);
 	foo = new Scene(doc.first_child());
-//	const char* filename = "Scene.xml";
 	c = foo->cameras[0];
-//	c->setParent(foo->models[1]);
 	c->setFocus(foo->models[1]);
-//	c->move(10.0,10.0,10.0);
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
@@ -118,18 +95,7 @@ void onIdle()
 
 	//these two rotates deal with rotating the camera on the vertical axis and horizontal axis.
 	//	I'm going to have to figure out how to reimplement them later.
-//	glm::vec3 axis_x(1, 0, 0);
-//	anim = glm::rotate(glm::mat4(1.0f), angleV, axis_x);
-
-//	glm::vec3 axis_y(0, 1, 0);
-//	anim = glm::rotate(anim, angleH, axis_y);
-
-	//make the global move. right now it just manages the zooming in and out of the camera.
-//	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0, 0.0, 0.0));
-//	model = c->model();
-
 	//get the view and projection matrix from the camera.
-//	view = c->lookAt(glm::vec3(0.0, 0.0, zoom));
 	view = c->view();
 	projection = c->getProjection();
 
@@ -159,26 +125,9 @@ void onDisplay()
 	foo->render();
 //	printf("post render\n");
 
-//	plate->setTrans(anim);
-//	plate->rotate(rotx,roty,rotz);
-//	plate->render(local);//render the plate.
-
-//	glm::vec3 axis_x(1, 0, 0);
-//	anim = glm::rotate(glm::mat4(1.0f), angleV, axis_x);
-
-//	glm::vec3 axis_y(0, 1, 0);
-//	anim = glm::rotate(anim, angleH, axis_y);
-//	cube->setTrans(glm::translate(glm::mat4(1.0f), glm::vec3(-shuffle,0.0,0.0)));
-
-//	cube->setLoc(glm::vec3(-shuffle,0.0,0.0));
-//	cube->move(-shuffle,0,0);
-
 	foo->models[1]->rotate(rotx,roty,rotz);
 	foo->models[1]->move(0.0,0.0,shuffle);
 	c->move(0.0,0.0,zoom);
-
-//	cube->render(local);//render the cube, which is currently a sphere...
-//	child->render(local);
 
 	shuffle *= 0.9;
 	rotx *= 0.9;
@@ -274,8 +223,8 @@ void onClick(int button, int state, int x, int y)
 void free_resources()
 {//done, free up the resources so there aren't any loose ends.
 	delete prog;
-	delete cube;
-	delete plate;
+//	delete cube;
+//	delete plate;
 }
 
 
