@@ -16,7 +16,26 @@ Program::~Program()
 	glDeleteShader(fs);
 	glDeleteProgram(prog);
 }
+Program::Program(xml_node self, string path)
+{
+	vs = create_shader((path + self.attribute("VertexShader").value()).c_str(),GL_VERTEX_SHADER);
+	fs = create_shader((path + self.attribute("FragmentShader").value()).c_str(),GL_FRAGMENT_SHADER);
+	updateProg();
 
+	const char* uniform_name;
+	uniform_name = self.attribute("VP").value();
+	VP = glGetUniformLocation(prog, uniform_name);
+	if (VP == -1) 
+	{
+		printf("Could not bind uniform %s\n", uniform_name);
+	}
+	uniform_name = self.attribute("local").value();
+	local = glGetUniformLocation(prog, uniform_name);
+	if (local == -1) 
+	{
+		printf("Could not bind uniform %s\n", uniform_name);
+	}
+}
 //another trick like i used in the camera class. I'd hope that eventually I could remove 
 //this function, but for now it remains to fill in the gaps where necessary.
 int Program::loadVertex(const char* fileName)

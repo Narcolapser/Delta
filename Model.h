@@ -26,10 +26,6 @@ public:
 		//load the mesh, but do so through the resource manager to prevent duplicates.
 		mesh = (Mesh*)globalRM->GetIDNonRetaining(
 				globalRM->LoadMesh((path + self.attribute("path").value()).c_str()));
-//		mesh = new Mesh((path + self.attribute("path").value()).c_str());
-//		meshID = globalRM->RequestID();
-//		mesh->assignID(meshID);
-//		globalRM->AssignID(meshID,mesh);
 
 		//move it according to what is given in the xml.
 		move(self.attribute("locX").as_float(),

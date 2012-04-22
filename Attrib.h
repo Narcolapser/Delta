@@ -24,7 +24,7 @@ public:
 		attref = glGetAttribLocation(prog->getProgram(), _name);
 		if (attref == -1) 
 		{
-			fprintf(stderr, "Could not bind attribute %s\n", _name);
+			fprintf(stderr, "Could not bind attribute %s in the constructor\n", _name);
 			canBind = false;
 		}	
 		name = _name;//name of the attribute.
@@ -52,7 +52,7 @@ public:
 		attref = glGetAttribLocation(prog->getProgram(), name);
 		if (attref == -1) 
 		{
-			fprintf(stderr, "Could not bind attribute %s\n", name);
+			fprintf(stderr, "Could not bind attribute %s post constructor\n", name);
 			canBind = false;
 		}
 	}

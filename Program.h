@@ -8,16 +8,18 @@
 #define PROGRAM_H
 #include <stdio.h>
 #include <stdlib.h>
+#include "Object.h"
 
 #include <GL/glew.h>
 #include <GL/glut.h>
 
 using namespace std;
-class Program
+class Program: public Object
 {
 public:
 	Program();
 	~Program();
+	Program(xml_node self, string path);
 	
 	//another trick like i used in the camera class. I'd hope that eventually I could remove 
 	//this function, but for now it remains to fill in the gaps where necessary.
@@ -25,6 +27,8 @@ public:
 	int loadVertex(const char* fileName);
 	int loadFragment(const char* fileName);
 	void inline use();
+	GLint inline getVP(){return VP;}
+	GLint inline getLocal(){return local;}
 private:
 	//data members:
 	//int usingGeom;
@@ -32,6 +36,8 @@ private:
 	GLuint vs, fs;	//pointers to the shanders on the gpu.
 	GLuint prog;	//pointer to the program on the gpu.
 	int newProg;	//sentinal value for if the program needs to be updated or not.
+	GLint VP;
+	GLint local;
 
 	//member functions:
 	GLuint updateProg();

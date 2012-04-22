@@ -13,8 +13,11 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include "lib/pugixml/pugixml.cpp"
 
 typedef int UID;
+
+enum delta_t {FAIL,OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE,PROGRAM};
 
 class Object
 {
@@ -34,6 +37,7 @@ public:
 protected:
 	UID ID;
 };
+
 
 /*.S.D.G.*/
 

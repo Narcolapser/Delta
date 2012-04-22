@@ -151,7 +151,6 @@ public:
 	}
 
 	glm::vec3 inline getLoc(){return loc;}
-
 protected:
 	glm::mat4 trans;
 	glm::vec3 loc;

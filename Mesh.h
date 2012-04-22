@@ -34,10 +34,11 @@ public:
 	void render();
 	void setTrans(glm::mat4 val);
 	void bindToProgram(Program *prog);
-	void assignID(UID val);
+	void assignID(UID val);	
 private:
 	//data members:
 	Attrib *coords;		//attribute containing all the vertex information.
+	Attrib *normals;	//attribute containing all the vertex normals.
 	Buffer *elements;	//attribute containing all the face information
 };
 

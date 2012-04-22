@@ -1,0 +1,10 @@
+Polymorphism. it is about to save me a lot of work. I was trying to implement a methodology of being able to know at run time what an object is. meta code. I was going to make a big ass look up table that would be serve to keep track of what is what. This was starting to look painfully difficult to do. while it provided quick and easy look ups, maintaining that table sounded like a nightmare. hence, Polymorphism. This is really easy to implement a method of telling wheter something is of a certain delta_t or one of the decendants. I think the top most method gets called, in which case the proper drill down always happens. Even if it doesn't it, it should be to hard to get the drill down working right through some other mechanism. 
+
+*tears* that didn't work. I starts only with the height for which it knows. ok. I'll revisit this another alpha. 
+
+Ok. I got the camera officially out of Delta.cpp, as well as the uniforms. these are now all in Scene.
+
+Next I'm moving on to normalization. I'm going to make a new buffer in the mesh object that is a normal map. these maps will start adding up in the future I'm sure, but for now, here's normal mapping! decribed by wolfire:
+http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-2/
+
+

@@ -76,12 +76,56 @@ Mesh::Mesh(const char* filename)
 		elarray[i*3+2] = els[i*3+2];
 	}
 
+	//calculate the normals:
+	GLfloat vertNorms[vertc*4];
+	GLfloat faceNorms[elc*3];
+	for(int i = 0; i <elc; i++)
+	{
+		glm::vec3 a(vertarray[elarray[i*3]*3],vertarray[elarray[i]*3+1],vertarray[elarray[i]*3+2]);
+		glm::vec3 b(vertarray[elarray[i*3+1]*3],vertarray[elarray[i*3+1]*3+1],vertarray[elarray[i*3+1]*3+2]);
+		glm::vec3 c(vertarray[elarray[i*3+2]*3],vertarray[elarray[i*3+2]*3+1],vertarray[elarray[i*3+2]*3+2]);
+		glm::vec3 e1 = b - a;
+		glm::vec3 e2 = c - a;
+		glm::vec3 normal = glm::core::function::geometric::cross(e1,e2);
+		faceNorms[i*3] = normal.x;
+		faceNorms[i*3+1] = normal.y;
+		faceNorms[i*3+2] = normal.z;
+	}
+
+	for(int i = vertc*4; i-->0;vertNorms[i] = 0);
+	for(int i = 0; i < elc; i++)
+	{
+		vertNorms[elarray[i*3]*4] += faceNorms[i*3];
+		vertNorms[elarray[i*3]*4+1] += faceNorms[i*3+1];
+		vertNorms[elarray[i*3]*4+2] += faceNorms[i*3+2];
+		vertNorms[elarray[i*3]*4+3] += 1;
+
+		vertNorms[elarray[i*3+1]*4] += faceNorms[i*3];
+		vertNorms[elarray[i*3+1]*4+1] += faceNorms[i*3+1];
+		vertNorms[elarray[i*3+1]*4+2] += faceNorms[i*3+2];
+		vertNorms[elarray[i*3+1]*4+3] += 1;
+
+		vertNorms[elarray[i*3+2]*4] += faceNorms[i*3];
+		vertNorms[elarray[i*3+2]*4+1] += faceNorms[i*3+1];
+		vertNorms[elarray[i*3+2]*4+2] += faceNorms[i*3+2];
+		vertNorms[elarray[i*3+2]*4+3] += 1;
+	}
+	GLfloat vNorm[vertc*3];
+	for(int i = 0; i < vertc; i++)
+	{
+		vNorm[i*3] = vertNorms[i*4] / vertNorms[i*4+3];
+		vNorm[i*3+1] = vertNorms[i*4+1] / vertNorms[i*4+3];
+		vNorm[i*3+2] = vertNorms[i*4+2] / vertNorms[i*4+3];
+	}
 	//Create Attribute and send data to GPU
 	//Binding the buffer objects:
 
 	//send the information from the vertex array to the buffer.
 	Buffer* vbo = new Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
 	vbo->write(sizeof(vertarray),(GLvoid*)vertarray);
+
+	Buffer* norms = new Buffer(GL_ARRAY_BUFFER, GL_STATIC_DRAW);
+	norms->write(sizeof(vNorm),(GLvoid*)vNorm);
 
 	//same as above.
 	elements = new Buffer(GL_ELEMENT_ARRAY_BUFFER,GL_STATIC_DRAW);
@@ -90,11 +134,14 @@ Mesh::Mesh(const char* filename)
 	//create the attribute objects.
 	const char* name = "coord3d";// name of the Attribute of interest.
 	coords = new Attrib(name,GL_FLOAT,vbo);
+	name = "vNorm";
+	normals = new Attrib(name,GL_FLOAT,norms);	
 }
 Mesh::~Mesh()
 {
 	delete coords;
 	delete elements;
+	delete normals;
 }
 void Mesh::bindToProgram(Program *prog)
 {

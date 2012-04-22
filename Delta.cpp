@@ -54,11 +54,12 @@ int init_resources()
 	foo = new Scene(doc.first_child());
 	c = foo->cameras[0];
 	c->setFocus(foo->models[1]);
+	foo->bindToProgram(0);
 
 	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
 	//	them because uniform buffer objects will be imlemented soon. so these will remain
 	//	for the time being.
-	const char* uniform_name;
+/*	const char* uniform_name;
 	uniform_name = "mvp";
 	uniform_mvp = glGetUniformLocation(prog->getProgram(), uniform_name);
 	if (uniform_mvp == -1) {
@@ -72,8 +73,8 @@ int init_resources()
 		fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
 		return 0;
 	}
-
-	foo->bindToProgram(prog,local);
+*/
+//	foo->bindToProgram(prog,local);
 	printf("Resources loaded!\n");
 	return 1;//resources initalized.
 }
@@ -87,20 +88,20 @@ void onIdle()
 	//these two rotates deal with rotating the camera on the vertical axis and horizontal axis.
 	//	I'm going to have to figure out how to reimplement them later.
 	//get the view and projection matrix from the camera.
-	view = c->view();
-	projection = c->getProjection();
+//	view = c->view();
+//	projection = c->getProjection();
 
 	//make the model-view-projection global transformation matrix.
-	glm::mat4 mvp = projection * view;// * model;// * anim;
+//	glm::mat4 mvp = projection * view;// * model;// * anim;
 
 	//declare that we are going to use this program. woohoo and all that.
-	prog->use();
+//	prog->use();
 
-	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+//	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		//set the uniform "local" to be this anim transform because mesh specific 
 		//	transforms are not currently working.
 
-	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
+//	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
 		//set the global trasnform
 //	printf("end idle\n");
 	glutPostRedisplay();//request a redraw.
@@ -111,7 +112,7 @@ void onDisplay()
 	glClearColor(0.0, 0.0, 0.0, 1.0);//set the color to clear too. not the color that is clear.
 		//thats what the alpha channel is for.
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear these buffers.
-	prog->use();//use this program. woohoo and all that.
+//	prog->use();//use this program. woohoo and all that.
 //	printf("pre render\n");
 	foo->render();
 //	printf("post render\n");

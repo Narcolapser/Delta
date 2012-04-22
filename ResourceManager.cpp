@@ -222,6 +222,7 @@ delta_t stringToEnum(string val)
 	if(val.compare("Mesh")==0) return MESH;
 	if(val.compare("Model")==0) return MODEL;
 	if(val.compare("Scene")==0) return SCENE;
+	if(val.compare("Program")==0) return PROGRAM;
 	if(val.compare("Fail")==0) return FAIL;
 }
 string enumToString(delta_t val)
@@ -235,6 +236,7 @@ string enumToString(delta_t val)
 		case MODEL: return "Model";
 		case SCENE: return "Scene";
 		case OBJECT: return "Object";
+		case PROGRAM: return "Program";
 		default: return "Fail";
 	}
 }
