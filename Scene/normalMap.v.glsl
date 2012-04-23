@@ -8,6 +8,6 @@ varying vec4 color;
 
 void main(void) 
 {
-	color = vec4(vNorm,1.0);
+	color = vec4(-vNorm,1.0);
 	gl_Position = mvp * local * vec4(coord3d, 1.0);	
 }

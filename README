@@ -24,4 +24,31 @@ Alpha 10: Clean up. Take out scafolding. Comment the uncommented. Update make so
 
 Arch 3: Interactivity Arch
 Alpha 11: Get the shaders fixed so something can be blood seen other than blue.
-Alpha 12-14: Get interaction to be loadable from XML.
+Alpha 12: Setup trigger and interface classes.
+Alpha 13: Create PhysicsManger class and get bounding sphere collision detection working.
+Alpha 14: Create forces class to Allow the physical system to be manipulated by triggers.
+Alpha 15: Clean up.
+
+Arch 4: OpenCL
+Alpha 16: Initial movement of physics system to GPU. basically Alpha 13 on the GPU.
+Alpha 17: Create more bounding types and improve Collision detection octrees.
+Alpha 18: Create system for the physics system to spawn new objects.
+Alpha 19: Create system for the physics system to spawn new objects where the request originates from the GPU.
+Alpha 20: Clean up.
+
+Arch 5: Prettifying.
+Alpha 21: Create system for geometry shaders to allow greater flexability in texturing and shading.
+Alpha 22: Get system for textures working. Improve lighting system, allow for shadows.
+Alpha 23: Tesselation.
+Alpha 24: Radiocity. This is kind of an intense one. But because my tank game will use it a lot for it's artistic look and feel, necessary.
+Alpha 25: Clean up.
+
+Arch 6: Finishing up.
+Alpha 26: Create system for fracturing and objects falling apart.
+Alpha 27: Create UI system for score keeping and menus, as well as a window system.
+Alpha 28: Figure out how to do split screen.
+Alpha 29: Final Shader work.
+Alpha 30: Clean up.
+
+Arch 7: Retrospective.
+I'm done when I get here. 30 Alphas and I have a system that works decently well for my needs of showing I can make a game engine. With additionally showing off that I'm using some of the most cutting edge technology out there. This is my hope, this is my goal.

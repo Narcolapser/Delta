@@ -6,24 +6,8 @@ uniform mat4 mvp;
 uniform mat4 local;
 varying vec4 color;
 
-struct lightSource
-{
-  vec4 position;
-  vec4 diffuse;
-};
-lightSource light0 = lightSource(
-    vec4(0.0, -1.0, 0.0, 0.0),
-    vec4(1.0, 1.0, 1.0, 1.0)
-);
- 
-struct material
-{
-  vec4 diffuse;
-};
-material mymaterial = material(vec4(1.0, 1.0, 1.0, 1.0));
-
 void main(void) 
 {
 	color = vec4(vNorm,1.0);
-	gl_Position = mvp * local * vec4(coord3d, 1.0);	
+	gl_Position = mvp * local * vec4(-coord3d, 1.0);	
 }

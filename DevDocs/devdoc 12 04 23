@@ -1,0 +1,16 @@
+August. That is my current projection for the completion of this project giving myself 1 week for each alpha (minus the mod5 alphas). That seems crazy intense, but so far, some of the things I thought would be really hard have been shockingly easy. Though not to mention, vice versa. But I've made great progress in the last few alphas, and today I start work on alpha 12, which will begin to give delta some semblance of a game engine. 
+
+Today I begin working on the interface class and the trigger class. the interface class is the parent of all triggers and will replace delta's call backs for keyboarding and mouse movements. the trigger class will be described in the xml and will serve the purpose of allowing the UI to be defined in data. A trigger will act on its parent and has the following definition:
+<parent>
+	<Trigger action="action_name" event="event_name" argument="space seperated argument list"/>
+</parent>
+
+or specifically:
+<Model path="sphere.obj>
+	<Trigger action="move" event="key_a" argument="0 -1 0"/>
+</Model>
+
+This says that when i press the 'a' key, the model should be moved -1 on the global y axis. straight forward no?
+
+
+I'm hitting an unfortunate problem: how do I know which method to call, and how do I send arguments that might be anything?

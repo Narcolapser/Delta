@@ -12,7 +12,7 @@ Attrib.o : Program.o Buffer.o Attrib.h
 	g++ -c Attrib.h -lglut -lGLEW -lGL -lm
 Camera.o : GeoObject.o ResourceManager.o Camera.h
 	g++ -c Camera.h -lm
-Scene.o : GeoObject.o Camera.o Model.h ResourceManager.o Scene.h Scene.cpp
+Scene.o : GeoObject.o Camera.o Model.h ResourceManager.o Trigger.o Scene.h Scene.cpp
 	g++ -c Scene.h -lm
 Buffer.o : Object.o Buffer.h
 	g++ -c Buffer.h -lglut -lGlew -lGL -lm
@@ -24,6 +24,10 @@ Object.o : Object.h
 	g++ -c Object.h -lm
 pugixml.o: lib/pugixml/pugixml.hpp
 	g++ -c lib/pugixml/pugixml.hpp -lm
+Trigger.o: Object.o ResourceManager.o Model.o Camera.o GeoObject.o Program.o Trigger.h Trigger.cpp
+	g++ -c Trigger.h Trigger.cpp -lm
+Model.o: ResourceManager.o Mesh.o GeoObject.o Program.o Model.h
+	g++ -c Model.h -lm
 
 clean :
 	rm *.gch *~ Delta ./lib/*/*.gch ./DevDocs/*~
