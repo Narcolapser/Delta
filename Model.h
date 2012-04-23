@@ -10,6 +10,9 @@
 #include "GeoObject.h"
 #include "Program.cpp"
 
+#ifndef MODEL_H
+#define MODEL_H
+
 class Model: public GeoObject
 {
 public:
@@ -69,3 +72,4 @@ private:
 };
 
 /*.S.D.G.*/
+#endif

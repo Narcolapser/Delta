@@ -14,7 +14,7 @@ struct lightSource
   vec4 diffuse;
 };
 lightSource light0 = lightSource(
-    vec4(-1.0, -1.0, -1.0, 0.0),
+    vec4(-0.2, -1.0, -0.5, 0.0),
     vec4(1.0, 1.0, 1.0, 1.0)
 );
  

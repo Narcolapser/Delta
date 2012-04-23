@@ -5,5 +5,5 @@
 		<Model path="sphere.obj" locX="5" locY="4" locZ="0"/>
 	</Model>
 	<Model path="level.obj" locY="-10"/>
-	<Program VertexShader="normalMap.v.glsl" FragmentShader="cube.f.glsl" VP="mvp" local="local"/>
+	<Program VertexShader="cube.v.glsl" FragmentShader="cube.f.glsl" VP="mvp" local="local"/>
 </Scene>

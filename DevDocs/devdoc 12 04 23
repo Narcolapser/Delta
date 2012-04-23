@@ -14,3 +14,7 @@ This says that when i press the 'a' key, the model should be moved -1 on the glo
 
 
 I'm hitting an unfortunate problem: how do I know which method to call, and how do I send arguments that might be anything?
+
+As a side note. Talking to John and reading some stuff on Wolfire gave me a dose of reality. I'm a fool to believe I could come anywhere near the capabilities of Physics libraries like ODE or Bullet. So for Delta I've decided to use the ODE library. This, by nature, forces me to give up on OpenCL. ODE doesn't support it. (Bullet does, but I'm waiting till Epsilon to use bullet so I can get familiar with physics engines with a less complicated engine first.) With no OpenCL that narrows the scope of this project significantly. So Cheers, here's to a shorter time developing maybe? back to coding. (well, actually, I'm off to band. maybe coding tonight, we shall see.)
+
+
