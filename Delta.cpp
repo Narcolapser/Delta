@@ -31,6 +31,7 @@ int lx = -1, ly = -1;
 bool lclick = false;
 bool rclick = false;
 float shuffle = 0.0;
+float downShuf = 0.0;
 
 //initalize all the resources for Delta.
 int init_resources()
@@ -118,9 +119,9 @@ void onDisplay()
 //	printf("post render\n");
 
 	foo->models[1]->rotate(rotx,roty,rotz);
-	foo->models[1]->move(0.0,0.0,shuffle);
+	foo->models[1]->move(0.0,downShuf,shuffle);
 	c->move(0.0,0.0,zoom);
-	shuffle *= 0.9;rotx *= 0.9;roty *= 0.9;rotz *= 0.9;zoom *= 0.9;
+	shuffle *= 0.9;rotx *= 0.9;roty *= 0.9;rotz *= 0.9;zoom *= 0.9;downShuf*=0.9;
 
 	//redrawn, swap the buffers and put this new one to the front.
 	glutSwapBuffers();
@@ -139,6 +140,8 @@ void onNormalKeys(unsigned char key, int x, int y)
 //	cout << "key: " << (char) key << " Value of: " << (int) key << " x: " << x << " y: " << y << endl;
 	if (key == 'a') shuffle++;
 	if (key == 'd') shuffle--;
+	if (key == 'w') downShuf++;
+	if (key == 's') downShuf--;
 	if (key == 'x') rotx += 1;
 	if (key == 'y') roty += 1;
 	if (key == 'z') rotz += 1;
@@ -219,7 +222,7 @@ int main(int argc, char* argv[])
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Delta Alpha 10");
+	glutCreateWindow("Delta Alpha 11");
 	glutKeyboardFunc(onNormalKeys);
 	glutMotionFunc(onActiveMotion);
 	glutPassiveMotionFunc(onPassiveMotion);

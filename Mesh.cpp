@@ -81,11 +81,18 @@ Mesh::Mesh(const char* filename)
 	GLfloat faceNorms[elc*3];
 	for(int i = 0; i <elc; i++)
 	{
-		glm::vec3 a(vertarray[elarray[i*3]*3],vertarray[elarray[i]*3+1],vertarray[elarray[i]*3+2]);
-		glm::vec3 b(vertarray[elarray[i*3+1]*3],vertarray[elarray[i*3+1]*3+1],vertarray[elarray[i*3+1]*3+2]);
-		glm::vec3 c(vertarray[elarray[i*3+2]*3],vertarray[elarray[i*3+2]*3+1],vertarray[elarray[i*3+2]*3+2]);
-		glm::vec3 e1 = b - a;
-		glm::vec3 e2 = c - a;
+		int vert = elarray[i*3];
+		glm::vec3 a(vertarray[vert*3],vertarray[vert*3+1],vertarray[vert*3+2]);
+
+		vert = elarray[i*3+1];
+		glm::vec3 b(vertarray[vert*3],vertarray[vert*3+1],vertarray[vert*3+2]);
+
+		vert = elarray[i*3+2];
+		glm::vec3 c(vertarray[vert*3],vertarray[vert*3+1],vertarray[vert*3+2]);
+
+
+		glm::vec3 e1 = a - b;
+		glm::vec3 e2 = c - b;
 		glm::vec3 normal = glm::core::function::geometric::cross(e1,e2);
 		faceNorms[i*3] = normal.x;
 		faceNorms[i*3+1] = normal.y;
@@ -116,6 +123,10 @@ Mesh::Mesh(const char* filename)
 		vNorm[i*3] = vertNorms[i*4] / vertNorms[i*4+3];
 		vNorm[i*3+1] = vertNorms[i*4+1] / vertNorms[i*4+3];
 		vNorm[i*3+2] = vertNorms[i*4+2] / vertNorms[i*4+3];
+		GLfloat mag = sqrt(vNorm[i*3]*vNorm[i*3] + vNorm[i*3+1]*vNorm[i*3+1] + vNorm[i*3+2]*vNorm[i*3+2]);
+		vNorm[i*3] /= mag;
+		vNorm[i*3+1] /= mag;
+		vNorm[i*3+2] /= mag;
 	}
 	//Create Attribute and send data to GPU
 	//Binding the buffer objects:
@@ -146,6 +157,7 @@ Mesh::~Mesh()
 void Mesh::bindToProgram(Program *prog)
 {
 	coords->bindToProgram(prog);
+	normals->bindToProgram(prog);
 }
 void Mesh::assignID(UID val)
 {
@@ -153,8 +165,9 @@ void Mesh::assignID(UID val)
 }
 void Mesh::render()
 {
-	Mesh *cube = this;
+//	Mesh *cube = this;
 	this->coords->enable();
+	this->normals->enable();
 	this->elements->bind();
 	glDrawElements(GL_TRIANGLES, elements->getSize()/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 	this->coords->disable();

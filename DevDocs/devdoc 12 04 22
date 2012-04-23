@@ -7,4 +7,6 @@ Ok. I got the camera officially out of Delta.cpp, as well as the uniforms. these
 Next I'm moving on to normalization. I'm going to make a new buffer in the mesh object that is a normal map. these maps will start adding up in the future I'm sure, but for now, here's normal mapping! decribed by wolfire:
 http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-2/
 
+So I fiddled for a while and finally got the math behind normalization working. diffuse lighting has been enabled in Delta. I also created a normal map shader that can be used for debugging purposes. 
 
+I'm not sure if this Alpha was just simply so small that I could swollow it in a day, or if my life is just being consumed by this project in crazy amounts. either way, I'm making amazing progress. Onward!
