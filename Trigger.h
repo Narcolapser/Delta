@@ -9,8 +9,8 @@
 #include "ResourceManager.cpp"
 #include "Model.h"
 #include "Camera.h"
-#include "GeoObject.h"
-#include "Program.h"
+#include "GeoObject.cpp"
+#include "Program.cpp"
 
 typedef void arg;
 

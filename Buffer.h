@@ -26,7 +26,7 @@ public:
 	~Buffer();
 	bool write(int _size, GLvoid* data);
 	void* Read(int amount, int offSet);
-	GLvoid* read(int amount, int offSet);
+	GLvoid* read(int amount, int offSet){}
 	void bind();
 	int inline getSize(){return size;}
 private:

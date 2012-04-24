@@ -5,7 +5,7 @@
 
 #include <math.h>
 #include <iostream>
-#include "Camera.h"
+#include "Camera.cpp"
 #include "ResourceManager.cpp"
 #include "Scene.cpp"
 

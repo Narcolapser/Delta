@@ -15,11 +15,11 @@
 #include <stack>
 
 #include "Object.cpp"
-#include "GeoObject.h"
-#include "Camera.h"
+#include "GeoObject.cpp"
+#include "Camera.cpp"
 #include "ResourceManager.cpp"
 #include "Program.cpp"
-#include "Model.h"
+#include "Model.cpp"
 #include "Trigger.cpp"
 
 using namespace std;

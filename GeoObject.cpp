@@ -21,7 +21,7 @@ GeoObject::GeoObject()
 	ptranC = 0;
 	tranC = 0;
 }
-glm::mat4 getTrans()
+glm::mat4 GeoObject::getTrans()
 {
 //	if (parent)
 //	{

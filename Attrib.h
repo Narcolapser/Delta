@@ -24,7 +24,7 @@
  */
 
 #include "Program.cpp"
-#include "Buffer.h"
+#include "Buffer.cpp"
 
 #ifndef ATTRIB_H
 #define ATTRIB_H

@@ -16,6 +16,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Attrib.cpp"
+#include "Buffer.cpp"
 #include "GeoObject.h"
 
 #include <stdio.h>
