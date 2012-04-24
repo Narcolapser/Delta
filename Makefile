@@ -4,6 +4,7 @@
 
 Delta : Camera.o ResourceManager.o Scene.o Delta.cpp
 	g++ Delta.cpp -o Delta -lglut -lGLEW -lGL -lm
+	rm *.gch
 ResourceManager.o : Object.o Buffer.o Mesh.o pugixml.o ResourceManager.cpp ResourceManager.h
 	g++ -c ResourceManager.h ResourceManager.cpp -lm
 Mesh.o : GeoObject.o Attrib.o Mesh.h Mesh.cpp

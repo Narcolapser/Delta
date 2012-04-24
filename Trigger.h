@@ -23,7 +23,7 @@ public:
 	~Trigger();
 	void trip();
 	void setParent(Object* val);
-private:
+//private:
 	Object* parent;
 	delta_t parentType;
 	xml_node arg;

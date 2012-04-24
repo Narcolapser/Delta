@@ -1,1 +1,3 @@
 The realization last night as to why I had to rebuild my project every time has lead to a dramatic shift in my code this morning. From now own each .h file must be accompanied by a .cpp file so that g++ can properly create each .o file and prevent me from having to do a total recompilation every time. If I type in make twice in a row now it says "Delta is up to date." woohoo. But in the process somethings seem to have gotten broked. So I'll have to work on that when I get to my deskktop later. 
+
+Testament to the importance of cleaning. Got to my desktop, built, ran, no problem. so the new making is working just fine. woohoo.

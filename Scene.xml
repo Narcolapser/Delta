@@ -1,7 +1,9 @@
 <Scene path="Scene">
 	<Model path="floor.obj"/>
 	<Model path="sphere.obj">
-		<Camera locX="0" locY="0" locZ="-30" fov="45" dimX="800" dimY="600" clipNear="0.1" clipFar="1000"/>
+		<Camera locX="0" locY="0" locZ="-30" fov="45" dimX="800" dimY="600" clipNear="0.1" clipFar="1000">
+			<Trigger action="0" event="key_a" args="0 1 0"/>
+		</Camera>
 		<Model path="sphere.obj" locX="5" locY="4" locZ="0"/>
 	</Model>
 	<Model path="level.obj" locY="-10"/>

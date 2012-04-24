@@ -39,6 +39,7 @@ public:
 	vector<Model*> models;
 	vector<Camera*> cameras;
 	vector<Program*> programs;
+	vector<Trigger*> triggers;
 	Camera* viewPoint;
 	Program* renderer;
 };

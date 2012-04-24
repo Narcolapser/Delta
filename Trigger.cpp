@@ -4,10 +4,11 @@ Trigger::Trigger(xml_node val)
 {
 	arg = val;
 	parentType = stringToEnum(val.parent().name());
+	globalRM->AssignID(globalRM->RequestID(),this);
 }
 Trigger::~Trigger()
 {
-
+	globalRM->Release(ID);
 }
 void Trigger::trip()
 {
