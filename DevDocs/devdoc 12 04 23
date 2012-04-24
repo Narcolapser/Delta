@@ -2,12 +2,12 @@ August. That is my current projection for the completion of this project giving 
 
 Today I begin working on the interface class and the trigger class. the interface class is the parent of all triggers and will replace delta's call backs for keyboarding and mouse movements. the trigger class will be described in the xml and will serve the purpose of allowing the UI to be defined in data. A trigger will act on its parent and has the following definition:
 <parent>
-	<Trigger action="action_name" event="event_name" argument="space seperated argument list"/>
+	<Trigger action="action_name" event="event_name" args="space seperated argument list"/>
 </parent>
 
 or specifically:
 <Model path="sphere.obj>
-	<Trigger action="move" event="key_a" argument="0 -1 0"/>
+	<Trigger action="move" event="key_a" args="0 -1 0"/>
 </Model>
 
 This says that when i press the 'a' key, the model should be moved -1 on the global y axis. straight forward no?
@@ -17,4 +17,4 @@ I'm hitting an unfortunate problem: how do I know which method to call, and how 
 
 As a side note. Talking to John and reading some stuff on Wolfire gave me a dose of reality. I'm a fool to believe I could come anywhere near the capabilities of Physics libraries like ODE or Bullet. So for Delta I've decided to use the ODE library. This, by nature, forces me to give up on OpenCL. ODE doesn't support it. (Bullet does, but I'm waiting till Epsilon to use bullet so I can get familiar with physics engines with a less complicated engine first.) With no OpenCL that narrows the scope of this project significantly. So Cheers, here's to a shorter time developing maybe? back to coding. (well, actually, I'm off to band. maybe coding tonight, we shall see.)
 
-
+So. I've got an Idea. Triggers are aware of what all the object types are. Objects up are aware of what xml is. Why not use this to route my triggers and have it be a polymorphic call? All objects will have a "Do" method which recieves a xml node. with in it there are instructions as to what exactly they are to do. So, I shall have each object tend to its own action, it just gets informed of it via the trigger. Because of the way the xml_node works, I can actually figure out what type each object's parent is, and use that to route information properly.

@@ -8,7 +8,7 @@
 #define PROGRAM_H
 #include <stdio.h>
 #include <stdlib.h>
-#include "Object.h"
+#include "Object.cpp"
 
 #include <GL/glew.h>
 #include <GL/glut.h>
@@ -29,6 +29,7 @@ public:
 	void inline use();
 	GLint inline getVP(){return VP;}
 	GLint inline getLocal(){return local;}
+	void trip(xml_node arg);
 private:
 	//data members:
 	//int usingGeom;

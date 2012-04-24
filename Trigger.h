@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "Object.h"
+#include "Object.cpp"
 #include "ResourceManager.cpp"
 #include "Model.h"
 #include "Camera.h"
@@ -19,14 +19,14 @@ using namespace std;
 class Trigger: public Object
 {
 public:
-	Trigger(xml_node);
+	Trigger(xml_node val);
 	~Trigger();
 	void trip();
+	void setParent(Object* val);
 private:
 	Object* parent;
 	delta_t parentType;
-	void (*callFunc)(void);
-	vector<arg*> args;
+	xml_node arg;
 };
 
 /*.S.D.G.*/

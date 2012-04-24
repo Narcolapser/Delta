@@ -14,13 +14,13 @@
 #include <fstream>
 #include <stack>
 
-#include "Object.h"
+#include "Object.cpp"
 #include "GeoObject.h"
 #include "Camera.h"
 #include "ResourceManager.cpp"
 #include "Program.cpp"
 #include "Model.h"
-//#include "Trigger.cpp"
+#include "Trigger.cpp"
 
 using namespace std;
 using namespace pugi;

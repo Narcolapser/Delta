@@ -8,60 +8,28 @@
  * a mesh HAS-A material. 
  */
 
-#ifndef OBJECT_H
-#define OBJECT_H
+#ifndef OBJECT_CPP
+#define OBJECT_CPP
 
-#include <stdlib.h>
-#include <time.h>
-#include <iostream>
-#include <sstream>
-#include "lib/pugixml/pugixml.cpp"
+#include "Object.h"
 
-using namespace std;
-
-typedef int UID;
-
-enum delta_t {FAIL,OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE,PROGRAM};
-
-class Object
+Object::Object()
 {
-public:
-	Object();
-	virtual ~Object();
-	UID getID();
-	void trip(xml_node arg);
-protected:
-	UID ID;
-	//delta_t type;
-};
-
-#endif
-/*
-class Object
+	ID = 0;
+}
+Object::~Object()
 {
-public:
-	Object()
-	{
-		ID = 0;
-	}
-	virtual ~Object()
-	{
-		ID = 0;
-	}
-	UID getID()
-	{
-		return ID;
-	}
-	void trip(xml_node arg)
-	{//there really isn't anything that an object can do...
-		return;
-	}
-protected:
-	UID ID;
-	//delta_t type;
-};
-
+	ID = 0;
+}
+UID Object::getID()
+{
+	return ID;
+}
+void Object::trip(xml_node arg)
+{//there really isn't anything that an object can do...
+	return;
+}
 
 /*.S.D.G.*/
 
-//#endif
+#endif

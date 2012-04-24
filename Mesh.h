@@ -15,7 +15,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Attrib.h"
+#include "Attrib.cpp"
 #include "GeoObject.h"
 
 #include <stdio.h>
@@ -35,6 +35,7 @@ public:
 	void setTrans(glm::mat4 val);
 	void bindToProgram(Program *prog);
 	void assignID(UID val);	
+	void trip(xml_node arg);
 private:
 	//data members:
 	Attrib *coords;		//attribute containing all the vertex information.

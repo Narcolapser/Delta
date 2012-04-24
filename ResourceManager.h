@@ -24,7 +24,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Object.h"
+#include "Object.cpp"
 #include "Mesh.h"
 #include "Buffer.h"
 

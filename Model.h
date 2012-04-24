@@ -9,6 +9,9 @@
 #include "Mesh.cpp"
 #include "GeoObject.h"
 #include "Program.cpp"
+#include <stdio.h>
+#include <iostream>
+#include <sstream>
 
 #ifndef MODEL_H
 #define MODEL_H
@@ -64,6 +67,30 @@ public:
 	{//render this model!
 		glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(getTrans()));
 		mesh->render();
+	}
+	void trip(xml_node arg)
+	{
+		float x,y,z;
+		stringstream args(arg.attribute("args").value());
+		switch(arg.attribute("action").as_int())
+		{
+			case 0:
+				args >> x >> y >> z;
+				move(x,y,z);
+				break;
+			case 1:
+				args >> x >> y >> z;
+				move(x,y,z);
+				break;
+//			case 2:
+//				float x,y,z;
+//				stringstream args (arg.attribute("args").value());
+//				args >> x >> y >> z;
+//				move(x,y,z);
+//				break;
+			default:
+				break;
+		}
 	}
 private:
 	Mesh* mesh;
