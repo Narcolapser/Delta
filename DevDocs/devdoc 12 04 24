@@ -1,3 +1,13 @@
 The realization last night as to why I had to rebuild my project every time has lead to a dramatic shift in my code this morning. From now own each .h file must be accompanied by a .cpp file so that g++ can properly create each .o file and prevent me from having to do a total recompilation every time. If I type in make twice in a row now it says "Delta is up to date." woohoo. But in the process somethings seem to have gotten broked. So I'll have to work on that when I get to my deskktop later. 
 
 Testament to the importance of cleaning. Got to my desktop, built, ran, no problem. so the new making is working just fine. woohoo.
+
+This may or may not have been a good choice, but i'm starting my new interface class using the existing interfaceGL files. I've just renamed them to "Interface" I'm going to start by gutting large portions of it, but there might be somethings I could keep. The idea is that it might save me some time. But that scares me. I'm affraid that my time saved working with this pre-existing code might just cost me time down the road. So I'm proceeding with caution.
+
+So, I originally stored the methods for call backs in the interface class. A lot of these I think still could be used, and I think it will still serve to be the one that routes to GLUT. At least the majority of the functions as it is the class that will be aware of interaction. 
+
+Now, what I'm envisioning is that after a scene is loaded the interface class queries the scene for all of its triggers. It maps the triggers to a SceneAction class which will wrap the function routing to the appropriate trigger in the scene. The importance of this is it allows scenes to 1. be swapped out with the change of a pointer. 2. but running at the same time, or not at the same time. Point being, if i have more than 1 scene in the currently active scene vector in interface, multiple scenes can run at once. 
+
+On that note. I plan for having the ability for multiple scenes to run at once. reason, overlays. Rather than trying to shoove everything into one scene. render multiple scenes, perhaps clearing the depth buffer, perhaps not, one after another. This allows for special effects, post processing, as well as HUDs and things like xray vision, etc. 
+
+So I've got another class coming my way for routing purposes. SceneAction class. woohoo. I shall begin work on it tomorrow. now bed. 
