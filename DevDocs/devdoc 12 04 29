@@ -1,0 +1,11 @@
+I'm back, after a bit of a hiatus for linear algebra and now I'm single again. anyway.
+
+I'm starting to rethink how I'm doing this whole system for user input. I asked about it on truegamedev on reddit and one guy said that Unity uses message passing. This took me back. Message passing? That sounds incredibly slow. Typical message passing, at least as I understand it, requires lots of string comparisons. This I'm none to keen on. But appearently it isn't that slow as a AAA studio would use it.
+
+So, what is message passing and how does it work? After some quick searching on wikipedia I've choosen to define message passing as such:
+
+Any Mechanism for indirect calling or passing of information.
+
+My triggers do not fall under this defination because they are direct calls. The main difference between direct and indirect calls is who starts conversation going. sure, the caller/sender always starts the conversation. but with direct calling the caller starts the conversation going as well. conversely, a sender can only start the conversation. Meaning that the conversation doesn't happen until the reciving end decideds to start it going. 
+
+What I like about message passing is its flexibility. My triggers feel very stiff. Getting them to work with other things is going to be very hard and even still, it doesn't do everything I want. So now what? What would be a good solution? Message passing systems fix this, but how should I go about creating one that has decent speed in my current architecture. 

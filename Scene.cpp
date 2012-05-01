@@ -41,12 +41,6 @@ void Scene::load(xml_node self, Object* parent, string path)
 		programs.push_back((Program*)temp);
 		globalRM->AssignID(globalRM->RequestID(),temp);
 		break;
-	case TRIGGER:
-		temp = new Trigger(self);
-		triggers.push_back((Trigger*)temp);
-		((Trigger*)temp)->setParent(parent);
-		printf("Loaded the trigger! Parent type: %s \n",enumToString(((Trigger*)temp)->parentType).c_str());
-		break;
 	default:
 		break;
 	}

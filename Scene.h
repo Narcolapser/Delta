@@ -20,7 +20,6 @@
 #include "ResourceManager.cpp"
 #include "Program.cpp"
 #include "Model.cpp"
-#include "Trigger.cpp"
 
 using namespace std;
 using namespace pugi;
@@ -39,7 +38,6 @@ public:
 	vector<Model*> models;
 	vector<Camera*> cameras;
 	vector<Program*> programs;
-	vector<Trigger*> triggers;
 	Camera* viewPoint;
 	Program* renderer;
 };

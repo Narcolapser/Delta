@@ -1,0 +1,11 @@
+So, I've done a fair bit of research into event systems. And it looks like they will cure a lot that aills me and Delta. What it comes down to is Object will now have a virtual method called "onEvent" which takes an event object. This event object will contain all the information about an event, and what type of event it is. This will allow for me to have Event objects be arbitrary. The reciever is the one who figures out how to interpret the data. This can be useful for things like area of effect events like explosions or area of effect weaponry such as a shock wave. 
+
+What I'm also considering doing is some sort of broadcasting system, where objects subscribe to non-specific eminating events. For example. A explosion comes from something, it has a location in geometry and something that declared its existance. A key stroke however does not. When you press a key down there isn't a particular thing, unless I were to make a key class, that eminates the key stroke. So What I want to do instead is have a broad cast to all objects that are concerned, such and such key is pressed. This, in contrast to events, is polled. So the object checks for whether or not the key is pressed rather than the key pressing telling the object.
+
+This further sheds some light on how I'm supposed to have multiple keys being able pressed at once. http://www.zeuscmd.com/tutorials/glut/02-KeyboardInput.php I'll come back to this later.
+
+So, I think what I'm going to work on now, as painful as this is, Is I'm going to remove the Trigger class. Entirely, and restart with an event class. There are only two classes I need to introduce with this. The event class which is consumed by everything, and the broadcast class, also consumed by everthing. Which will make these classes kind of nice as they don't have to work with any of the currently existing classes, and event only gets passed around. super simple.
+
+HAHA! Because i wanted triggers aware of so much, only scene actually did anything with Triggers. this will make clean up easy. Man, the one thing that will suck about Events being so low in the class dependency chart is that the entire program must be recompiled, Every change I make. *sigh*
+
+This is proving to be a lot harder than it seemed. I must think about this all more.:x
