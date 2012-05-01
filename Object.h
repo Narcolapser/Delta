@@ -19,8 +19,6 @@
 
 using namespace std;
 
-typedef int UID;
-
 enum delta_t {FAIL,OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE,PROGRAM};
 
 class Object

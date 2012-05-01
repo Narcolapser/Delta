@@ -1,0 +1,23 @@
+Holy crap its May.
+
+So I'm not making any progress on events. I'm not entirely sure what needs to be done, but I'm starting to fall into the trap of thinking to much. So I'm just going to press forward and I'll fix it later, that approach has worked well in the past. 
+
+To start I'm going to declare that events carry with them 4 argument sets. each argument set is a struct consiting of a 32-bit enum, and 128-bit variant. making for each argument set being 160-bits, and all of them together are 720-bits, or 90 bytes. Events will also contain a 32-bit enum for event type, and lastly a 32-bit UID for the object that the event originated from. 
+
+The 128-bit variant was choosen because of the flexibility it would provide. I may change that though. It may be dropped to a 32-bit variant. The idea is as follows:
+128 bit variant:
+16	16	16	16	16	16	16	16
+2 char	2 char	2 char	2 char	2 char	2 char	2 char	2 char
+short	short	short	short	short	short	short	short	
+int		int		int		int	
+float		float		float		float
+long int			long int		
+double				double			
+
+Here, 128-bits was choosen because it can wrapp 4 floats. x,y,z,w. I had thought maybe this would be the only arg, just one of these, but then I thought I might need the ability to send more information, and I accidentally flipped over into thinking in doubles, 64-bits, and decided on 4 sets of 128. certainly 4 sets of 128 will be sufficent, 16 bytes. But I'm starting to wonder if perhaps that is way to much. i mean 90+4+4=98 bytes is a lot of information for just a simple event. But I don't want to have to rework my entire program later if that is insufficent. 98 bytes... recalculated, I missed up there. not 720-bits, but 640, which is 80 bytes, + 4 is 88 bytes. it is 64-bit aligned. I think I'm going to give it another 64-bits, so it becomes 96, 8*12. I'm going to guess that will just come in on its own. 
+
+So why am I making a big deal about the size? These will be created and deleted alot, so I don't want their allocation to be done dynamically. now, that isn't something I'm going to do right away, but eventually the resouce manager will have a large pool allocation for a couple thousand events, (even at 96 bytes, If I have storage for 10,000 events, more than I'll probably ever need, that isn't even 1 meg of storage. that puts some perspective on it.) and events will all be stored there so no allocation needs to be done at real time. 
+
+I just realized why I must have args have 4. If I ever want a matrix to be what is sent, I need all of args. That seals it. Args is at minimum 4. 
+
+Alright. I've got arg creation done. I don't know what is needed in the other classes just yet. But I will figure that out as I go. right now I'm a go get food, and give Kodachi a charge. poor thing has had a good work out over the last couple hours. 
