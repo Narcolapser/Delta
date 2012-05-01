@@ -114,9 +114,9 @@ void onDisplay()
 		//thats what the alpha channel is for.
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear these buffers.
 //	prog->use();//use this program. woohoo and all that.
-//	printf("pre render\n");
+	printf("pre render\n");
 	foo->render();
-//	printf("post render\n");
+	printf("post render\n");
 
 	foo->models[1]->rotate(rotx,roty,rotz);
 	foo->models[1]->move(0.0,downShuf,shuffle);

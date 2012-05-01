@@ -21,14 +21,16 @@ GeoObject.o : Object.o GeoObject.h GeoObject.cpp
 	g++ -c GeoObject.h GeoObject.cpp -lm
 Program.o : Program.h Program.cpp
 	g++ -c Program.h Program.cpp -lglut -lGLEW -lGL -lm
-Object.o : Object.h Object.cpp
+Object.o : Object.h Object.cpp Event.o pugixml.o
 	g++ -c Object.h Object.cpp -lm
 pugixml.o: lib/pugixml/pugixml.hpp lib/pugixml/pugixml.cpp
 	g++ -c lib/pugixml/pugixml.hpp lib/pugixml/pugixml.cpp -lm
 Model.o: ResourceManager.o Mesh.o GeoObject.o Program.o Model.h
 	g++ -c Model.h Model.cpp -lm
+Event.o: Event.h Event.cpp
+	g++ -c Event.h Event.cpp -lm
 
 clean :
-	rm *~ Delta ./lib/*/*.o ./DevDocs/*~ *.o *.gch ./lib/*/*.gch
+	rm *~ Delta ./lib/*/*.o ./DevDocs/*~ *.o ./lib/*/*.gch
 
 #http://www.eng.hawaii.edu/Tutor/Make/

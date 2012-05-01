@@ -16,6 +16,7 @@
 #include <iostream>
 #include <sstream>
 #include "lib/pugixml/pugixml.cpp"
+#include "Event.cpp"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ public:
 	virtual ~Object();
 	UID getID();
 	void trip(xml_node arg);
+	bool virtual onEvent(Event& event);
 protected:
 	UID ID;
 	//delta_t type;
