@@ -21,3 +21,7 @@ So why am I making a big deal about the size? These will be created and deleted 
 I just realized why I must have args have 4. If I ever want a matrix to be what is sent, I need all of args. That seals it. Args is at minimum 4. 
 
 Alright. I've got arg creation done. I don't know what is needed in the other classes just yet. But I will figure that out as I go. right now I'm a go get food, and give Kodachi a charge. poor thing has had a good work out over the last couple hours. 
+
+Some times the errors that go away after I rebuild the project on a different computer piss me off. :x I'll live some how. *rolls eyes*
+
+

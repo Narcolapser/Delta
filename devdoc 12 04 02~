@@ -1,5 +1,0 @@
-Fixed the rendering problem. It was that I wasn't sending the right size to the buffer. fixed that and it was all fine and dandy. as well as i fixed some problems with storing size information. the new code is cleaner than even I had imagined it being. this makes me happy. 
-
-All I have left now is the master ancestor class, Object. This should be interesting. Time to go learn how the inheritance works. 
-
-Also, for the interest of the resouce manager manager later, I'm going to get UUIDs into the picture right now. Really, that and parenting is all that the "object" class is going to do at first. Parenting means an object takes its parent's transformations in addition to its own. In this way things like follow cams and peices of a larger object, like the turret on a tank. The turret's parent is the tank.
