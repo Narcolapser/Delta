@@ -36,6 +36,20 @@ typedef struct variant
 		datum.v_asLong[0] = val.datum.v_asLong[0];
 		datum.v_asLong[1] = val.datum.v_asLong[1];
 	}
+	variant(int val0, int val1, int val2, int val3)
+	{
+		datum.v_asInt[0] = val0;
+		datum.v_asInt[1] = val1;
+		datum.v_asInt[2] = val2;
+		datum.v_asInt[3] = val3;
+	}
+	variant(float val0, float val1, float val2, float val3)
+	{
+		datum.v_asFloat[0] = val0;
+		datum.v_asFloat[1] = val1;
+		datum.v_asFloat[2] = val2;
+		datum.v_asFloat[3] = val3;
+	}
 	variant()
 	{
 		datum.v_asLong[0] = 0l;

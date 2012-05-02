@@ -59,25 +59,24 @@ Camera::~Camera()
 glm::mat4 Camera::lookAt(glm::vec3 val)
 {//wrapper method for glm::lookAt function. this way the camera can be used to wrap this up
 //neatly. you just have to tell the camera to look at something and it will manage the rest
-	printf("lookAt\n");
+	TRACE(3);
 	if(parent)
 	{
-		printf("parent\n");
+		TRACE(3);
 		return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 	}
-	printf("return\n");
+	TRACE(3);
 	return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 }
 glm::mat4 Camera::view()
 {
-	printf("In view.\n");
-	printf("UID: %i\n",focus->getID());
+	TRACE(3);
 	if(focus) 
 	{
-		printf("focus.\n");
+		TRACE(3);
 		return lookAt(focus->getGlobalLoc());
 	}
-	printf("return.\n");
+	TRACE(3);
 	return lookAt(glm::vec3(1.0f));
 }
 glm::mat4 Camera::model()
@@ -90,6 +89,11 @@ glm::mat4 Camera::newProjection()
 	projection = glm::perspective(fov, 1.0f*x/y, near, far);
 	newProj = 1;
 	return projection;
+}
+
+bool Camera::onEvent(const Event& event)
+{
+	return GeoObject::onEvent(event);
 }
 #endif
 /*.S.D.G.*/

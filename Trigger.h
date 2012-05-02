@@ -21,7 +21,6 @@ class Trigger: public Object
 public:
 	Trigger(xml_node val);
 	~Trigger();
-	void trip();
 	void setParent(Object* val);
 //private:
 	Object* parent;

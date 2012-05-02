@@ -55,29 +55,9 @@ void Model::render()
 	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(getTrans()));
 	mesh->render();
 }
-void Model::trip(xml_node arg)
+bool Model::onEvent(const Event& event)
 {
-	float x,y,z;
-	stringstream args(arg.attribute("args").value());
-	switch(arg.attribute("action").as_int())
-	{
-		case 0:
-			args >> x >> y >> z;
-			move(x,y,z);
-			break;
-		case 1:
-			args >> x >> y >> z;
-			move(x,y,z);
-			break;
-//		case 2:
-//			float x,y,z;
-//			stringstream args (arg.attribute("args").value());
-//			args >> x >> y >> z;
-//			move(x,y,z);
-//			break;
-		default:
-			break;
-	}
+	return GeoObject::onEvent(event);
 }
 
 /*.S.D.G.*/

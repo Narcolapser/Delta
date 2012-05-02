@@ -25,11 +25,7 @@ UID Object::getID()
 {
 	return ID;
 }
-void Object::trip(xml_node arg)
-{//there really isn't anything that an object can do...
-	return;
-}
-bool Object::onEvent(Event& event)
+bool Object::onEvent(const Event& event)
 {
 	return false;//there isn't anything I can really think an object can do by itself.
 		//it kind of needs to know about the resource manager to be able to self destruct.

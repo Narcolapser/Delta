@@ -113,14 +113,25 @@ void onDisplay()
 	glClearColor(0.0, 0.0, 0.0, 1.0);//set the color to clear too. not the color that is clear.
 		//thats what the alpha channel is for.
 	glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);//clear these buffers.
-//	prog->use();//use this program. woohoo and all that.
-//	printf("pre render\n");
-	foo->render();
-//	printf("post render\n");
 
-	foo->models[1]->rotate(rotx,roty,rotz);
-	foo->models[1]->move(0.0,downShuf,shuffle);
-	c->move(0.0,0.0,zoom);
+	TRACE(1);
+	foo->render();
+	TRACE(1);
+
+	Event move((UID)0,EVENT_MOVE);
+	move.setArgs(0.0f,downShuf,shuffle,0.0f);
+	foo->models[1]->onEvent(move);
+
+	Event rot((UID)0,EVENT_ROTATE);
+	rot.setArgs(rotx,roty,rotz,0.0f);
+	foo->models[1]->onEvent(rot);
+
+	Event moveCam((UID)0,EVENT_MOVE);
+	moveCam.setArgs(0.0f,0.0f,zoom,0.0f);
+	c->onEvent(moveCam);
+
+//	foo->models[1]->rotate(rotx,roty,rotz);
+//	c->move(0.0,0.0,zoom);
 	shuffle *= 0.9;rotx *= 0.9;roty *= 0.9;rotz *= 0.9;zoom *= 0.9;downShuf*=0.9;
 
 	//redrawn, swap the buffers and put this new one to the front.

@@ -36,6 +36,14 @@ bool Event::setArgs(Variant arg0, Variant arg1, Variant arg2, Variant arg3)
 	args[2] = arg2;
 	args[3] = arg3;
 }
+bool Event::setArgs(int val0, int val1, int val2, int val3)
+{
+	args[0] = Variant(val0,val1,val2,val3);
+}
+bool Event::setArgs(float val0, float val1, float val2, float val3)
+{
+	args[0] = Variant(val0,val1,val2,val3);
+}
 
 /*.S.D.G.*/
 #endif

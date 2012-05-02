@@ -26,8 +26,7 @@ public:
 	Object();
 	virtual ~Object();
 	UID getID();
-	void trip(xml_node arg);
-	bool virtual onEvent(Event& event);
+	bool onEvent(const Event& event);
 protected:
 	UID ID;
 	//delta_t type;

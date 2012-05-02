@@ -54,35 +54,25 @@ void Scene::load(xml_node self, Object* parent, string path)
 
 void Scene::render()
 {
-//	printf("Check Point 1\n");
+	TRACE(2);
 	if(renderer==NULL) bindToProgram(0);
-//	printf("Check Point 2\n");
 	if(viewPoint == NULL) viewPoint = cameras[0];
-//	printf("Check Point 3\n");
 	renderer->use();
-//	printf("Check Point 4\n");
-//	#define DEBUGPRINT printf("Check point. 1 file: %s line: %i \n",__FILE__, __LINE__);
-//	#define DEBUGPRINT
-//	DEBUGPRINT;
-	DEBUG1;
 	glm::mat4 temp1 = viewPoint->getProjection();
-	printf("Check point. 2 \n");
 	glm::mat4 temp2 = viewPoint->view();
-	printf("Check point. 3 \n");
 	glm::mat4 temp = temp1 * temp2;
-	printf("Check point. 4 \n");
 	glUniformMatrix4fv(renderer->getVP(), 1, GL_FALSE,
 		glm::value_ptr(temp));
-	printf("Check point. 5 \n");
 	//this loops through and renders each mesh that is in the vector. I might add a system for
 	//checking to see if the object is currently flagged to render or not, but for now this
 	//just gets things onto the screen which is what matters.
 //	printf("Rendering objects:\n");
 	for(int i = 0; i < models.size(); i++)
 	{
-		printf("Rendering %i\n",i);
+		TRACE(5);
 		models[i]->render();
 	}
+	TRACE(2);
 }
 void Scene::bindToProgram(Program *prog, GLint local)
 {

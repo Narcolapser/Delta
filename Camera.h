@@ -57,6 +57,7 @@ public:
 		//change the size of window
 	void inline setNearClip(float val) {near = val; newProj = 0;}	//set the near clipping plane
 	void inline setFarClip(float val) {far = val; newProj = 0;}	//set the far clipping plane
+	bool onEvent(const Event& event);
 	
 private:
 	glm::mat4 newProjection();

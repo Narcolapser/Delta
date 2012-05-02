@@ -63,6 +63,8 @@ public:
 	virtual ~Event();
 	bool setArg(Variant arg);
 	bool setArgs(Variant arg1, Variant arg2, Variant arg3, Variant arg4);
+	bool setArgs(int val0, int val1, int val2, int val3);
+	bool setArgs(float val0, float val1, float val2, float val3);
 	
 	bool inline isBool(int arg){return args[arg].type==TYPE_BOOL;}
 	bool inline isChar(int arg){return args[arg].type==TYPE_CHAR;}
@@ -71,7 +73,7 @@ public:
 	bool inline isFloat(int arg){return args[arg].type==TYPE_FLOAT;}
 	bool inline isLong(int arg){return args[arg].type==TYPE_LONG;}
 	bool inline isDouble(int arg){return args[arg].type==TYPE_DOUBLE;}
-private:
+//private:
 	event_t type;
 	Variant args[ARG_COUNT];
 	UID sender;

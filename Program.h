@@ -30,6 +30,7 @@ public:
 	GLint inline getVP(){return VP;}
 	GLint inline getLocal(){return local;}
 	void trip(xml_node arg);
+	bool onEvent(const Event& event);
 private:
 	//data members:
 	//int usingGeom;

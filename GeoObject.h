@@ -43,7 +43,7 @@ public:
 	void setLoc(glm::vec3 _loc);
 	void setRot(float _x, float _y, float _z);
 	glm::vec3 inline getLoc(){return loc;}
-	void trip(xml_node arg);
+	bool onEvent(const Event& event);
 protected:
 	glm::mat4 trans;
 	glm::vec3 loc;

@@ -28,8 +28,6 @@
 #include "Mesh.h"
 #include "Buffer.h"
 
-//#include "lib/pugixml/pugixml.cpp"
-
 using namespace std;
 using namespace pugi;
 
@@ -45,6 +43,7 @@ public:
 	UID LoadMesh(const char* filename);
 	Object* GetIDRetaining(UID val);
 	Object* GetIDNonRetaining(UID val);
+	bool onEvent(const Event& event);
 private:
 	struct Lease
 	{

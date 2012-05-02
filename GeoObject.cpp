@@ -137,47 +137,44 @@ void GeoObject::setRot(float _x, float _y, float _z)
 
 	rotquat = glm::gtc::quaternion::normalize(glm::gtc::quaternion::quat(qw,qx,qy,qz));
 }
-void GeoObject::trip(xml_node arg)
-{
-	float x,y,z;
-	stringstream args(arg.attribute("args").value());
-	switch(arg.attribute("action").as_int())
-	{
-		case 0:
-			args >> x >> y >> z;
-			move(x,y,z);
-			break;
-		case 1:
-			args >> x >> y >> z;
-			move(x,y,z);
-			break;
-//		case 2:
-//			float x,y,z;
-//			stringstream args (arg.attribute("args").value());
-//			args >> x >> y >> z;
-//			move(x,y,z);
-//			break;
-		default:
-			break;
-	}
-}
 void GeoObject::updateTrans()
-{
-//	printf("Update Trans 1\n");
+{TRACE(3);
 	//get the translation matrix.
 	trans = glm::translate(glm::mat4(1.0f),loc);
-//	printf("Update Trans 2\n");
 	//because of order of operations. the translation matrix is applied to the rotation
 	//matrix not the other way around. so rotation is done first here. 
-//	printf("Update Trans 3\n");
 	trans = trans * glm::gtc::quaternion::mat4_cast(rotquat);
-//	printf("Update Trans 4\n");
 	//lastly apply the parent transform.
 	if (parent) trans = parent->getTrans() * trans;
-//	printf("Update Trans 5\n");
 	newTrans = true;
-//	printf("Update Trans 6\n");
-	++tranC;
+	++tranC;TRACE(3);
+}
+bool GeoObject::onEvent(const Event& event)
+{
+	switch(event.type)
+	{
+		case EVENT_MOVE:
+			move(event.args[0].datum.v_asFloat[0],event.args[0].datum.v_asFloat[1],event.args[0].datum.v_asFloat[2]);
+			TRACE(3);
+			return(true);
+			break;
+		case EVENT_ROTATE:
+			rotate(event.args[0].datum.v_asFloat[0],event.args[0].datum.v_asFloat[1],event.args[0].datum.v_asFloat[2]);
+			TRACE(3);
+			return(true);
+			break;
+		case EVENT_SET_LOC:
+			setLoc(glm::vec3(event.args[0].datum.v_asFloat[0],event.args[0].datum.v_asFloat[1],event.args[0].datum.v_asFloat[2]));
+			return(true);
+			break;
+		case EVENT_SET_ROTATION:
+			setRot(event.args[0].datum.v_asFloat[0],event.args[0].datum.v_asFloat[1],event.args[0].datum.v_asFloat[2]);
+			return(true);
+			break;
+		default:
+			return(false);
+			break;
+	}
 }
 
 

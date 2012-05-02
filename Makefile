@@ -13,7 +13,7 @@ Attrib.o : Program.o Buffer.o Attrib.h Attrib.cpp
 	g++ -c Attrib.h Attrib.cpp -lglut -lGLEW -lGL -lm
 Camera.o : GeoObject.o ResourceManager.o Camera.h Camera.cpp
 	g++ -c Camera.h Camera.cpp -lm
-Scene.o : GeoObject.o Camera.o Model.h ResourceManager.o Scene.h Scene.cpp
+Scene.o : GeoObject.o Camera.o Model.o ResourceManager.o Scene.h Scene.cpp
 	g++ -c Scene.h Scene.cpp -lm
 Buffer.o : Object.o Buffer.h Buffer.cpp
 	g++ -c Buffer.h Buffer.cpp -lglut -lGlew -lGL -lm
@@ -21,7 +21,7 @@ GeoObject.o : Object.o GeoObject.h GeoObject.cpp
 	g++ -c GeoObject.h GeoObject.cpp -lm
 Program.o : Program.h Program.cpp
 	g++ -c Program.h Program.cpp -lglut -lGLEW -lGL -lm
-Object.o : Object.h Object.cpp Event.o pugixml.o
+Object.o : Object.h Object.cpp Event.o pugixml.o Lib.h Lib.cpp
 	g++ -c Object.h Object.cpp -lm
 pugixml.o: lib/pugixml/pugixml.hpp lib/pugixml/pugixml.cpp
 	g++ -c lib/pugixml/pugixml.hpp lib/pugixml/pugixml.cpp -lm

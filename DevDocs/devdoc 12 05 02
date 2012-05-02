@@ -1,0 +1,7 @@
+Well, that didn't work. Turns out preprocessor directives only span single files. *sigh*. derp. figured out what was wrong. i had it in a conditional and the condition wasn't met. xD
+
+It works like a dream.
+
+Got it done. I've now got events moving my objects. Its a little unwield to do by hand. but I hope I won't be doing it by hand very much! xD But Events are made! now I need to make a handling system. A way to spawn events and have them sent to other objects. onward Christian soldiers!
+
+

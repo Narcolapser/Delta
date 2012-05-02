@@ -10,28 +10,6 @@ Trigger::~Trigger()
 {
 	globalRM->Release(ID);
 }
-void Trigger::trip()
-{
-	switch(parentType)
-	{
-		case OBJECT:
-			parent->trip(arg);
-			break;
-//		case BUFFER:
-		case CAMERA:
-			((Camera*)parent)->trip(arg);
-			break;
-		case GEOOBJECT:
-			((GeoObject*)parent)->trip(arg);
-			break;
-//		case MESH:
-		case MODEL:
-			((Model*)parent)->trip(arg);
-			break;
-//		case PROGRAM:
-		default: break;
-	}
-}
 void Trigger::setParent(Object* val)
 {
 	parent = val;

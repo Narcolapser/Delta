@@ -24,7 +24,7 @@ public:
 	~Model();
 	void bindToProgram(Program* prog, GLint _local);
 	void render();
-	void trip(xml_node arg);
+	bool onEvent(const Event& event);
 private:
 	Mesh* mesh;
 	UID meshID;
