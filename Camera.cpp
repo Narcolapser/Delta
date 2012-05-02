@@ -59,18 +59,25 @@ Camera::~Camera()
 glm::mat4 Camera::lookAt(glm::vec3 val)
 {//wrapper method for glm::lookAt function. this way the camera can be used to wrap this up
 //neatly. you just have to tell the camera to look at something and it will manage the rest
+	printf("lookAt\n");
 	if(parent)
 	{
+		printf("parent\n");
 		return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 	}
+	printf("return\n");
 	return glm::lookAt(getGlobalLoc(),val,glm::vec3(0.0f,1.0f,0.0f));
 }
 glm::mat4 Camera::view()
 {
+	printf("In view.\n");
+	printf("UID: %i\n",focus->getID());
 	if(focus) 
 	{
+		printf("focus.\n");
 		return lookAt(focus->getGlobalLoc());
 	}
+	printf("return.\n");
 	return lookAt(glm::vec3(1.0f));
 }
 glm::mat4 Camera::model()

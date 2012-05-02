@@ -33,15 +33,19 @@ glm::mat4 GeoObject::getTrans()
 //		ptranC = parent->getTranC();
 //	}			
 //	if (newTrans) return trans;
+	printf("Check point trans1\n");
 	updateTrans();
+	printf("Check point trans2\n");
 	return trans;
 }
 glm::vec3 GeoObject::getGlobalLoc()
 {
+	printf("Check point 1, rot %f\n",rotX);
 	//this method returns an object in model space. regaurdless of camera or anything,
 	//it just gets where the object is. because these are homogeneous coordinates, the
 	//first 3 components of the vector get divided by the 4th to get consistency.
 	glm::vec4 temp = getTrans() * glm::vec4(1.0f);
+	printf("Check point 2\n");
 	return glm::vec3(temp.x/temp.w,temp.y/temp.w,temp.z/temp.w);
 }
 void GeoObject::move(float x, float y, float z)
@@ -159,17 +163,20 @@ void GeoObject::trip(xml_node arg)
 }
 void GeoObject::updateTrans()
 {
+	printf("Update Trans 1\n");
 	//get the translation matrix.
 	trans = glm::translate(glm::mat4(1.0f),loc);
-
+	printf("Update Trans 2\n");
 	//because of order of operations. the translation matrix is applied to the rotation
 	//matrix not the other way around. so rotation is done first here. 
+	printf("Update Trans 3\n");
 	trans = trans * glm::gtc::quaternion::mat4_cast(rotquat);
-
+	printf("Update Trans 4\n");
 	//lastly apply the parent transform.
 	if (parent) trans = parent->getTrans() * trans;
+	printf("Update Trans 5\n");
 	newTrans = true;
-
+	printf("Update Trans 6\n");
 	++tranC;
 }
 
