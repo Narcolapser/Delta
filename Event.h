@@ -8,11 +8,12 @@
 #define ARG_COUNT 4 //can't be less than 1.
 
 #include <stdlib.h>
+#include "Lib.cpp"
 
 enum event_t 
 {
 	NOT_EVENT,//something to clear to.
-	EVENT,//also known as a trip event.
+	EVENT_TRIP,//also known as a trip event.
 		//Arg type: bool. 
 		//Args contain: first in the first arg is a boolean tripped or not.
 		//Applicable: Really anything.
@@ -54,49 +55,6 @@ enum event_t
 		//Applicable: Resource Manager and Interface.
 	EVENT_COUNT//This is a counter for all the number of Unique Events.
 };
-
-typedef int UID;
-enum variant_t
-{
-	TYPE_BOOL,
-	TYPE_CHAR,
-	TYPE_SHORT,
-	TYPE_INT,
-	TYPE_FLOAT,
-	TYPE_LONG,
-	TYPE_DOUBLE,
-	TYPE_COUNT//a trick I got from Jason Gregory. this enum counts the number 
-			//of unique types. clever no?
-};
-
-typedef struct variant
-{
-	variant(char vals[16])
-	{
-		for(int i = 16; i-->0;datum.v_asChar[i] = vals[i]);
-	}
-	variant(variant& val)
-	{
-		datum.v_asLong[0] = val.datum.v_asLong[0];
-		datum.v_asLong[1] = val.datum.v_asLong[1];
-	}
-	variant()
-	{
-		datum.v_asLong[0] = 0l;
-		datum.v_asLong[1] = 0l;
-	}
-	variant_t type;
-	union
-	{
-		bool v_asBool[ARG_SIZE/sizeof(bool)];
-		char v_asChar[ARG_SIZE/sizeof(char)];
-		short v_asShort[ARG_SIZE/sizeof(short)];
-		int v_asInt[ARG_SIZE/sizeof(int)];
-		float v_asFloat[ARG_SIZE/sizeof(float)];
-		long int v_asLong[ARG_SIZE/sizeof(long int)];
-		double v_asDouble[ARG_SIZE/sizeof(double)];
-	} datum;
-}Variant;
 
 class Event
 {

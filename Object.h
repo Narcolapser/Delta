@@ -15,12 +15,10 @@
 #include <time.h>
 #include <iostream>
 #include <sstream>
-#include "lib/pugixml/pugixml.cpp"
 #include "Event.cpp"
+#include "Lib.cpp"
 
 using namespace std;
-
-enum delta_t {FAIL,OBJECT,BUFFER,CAMERA,GEOOBJECT,MESH,MODEL,SCENE,PROGRAM};
 
 class Object
 {

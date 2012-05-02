@@ -24,4 +24,8 @@ Alright. I've got arg creation done. I don't know what is needed in the other cl
 
 Some times the errors that go away after I rebuild the project on a different computer piss me off. :x I'll live some how. *rolls eyes*
 
+I'm getting tired of adding print statements and taking them out over and over again. so I came up with a solution. I've been thinking about this for a little bit for other reasons, but I've finally done it. made Lib.h and Lib.cpp files. These are non-classes that I can use to pull in all the typical includes. stdlib, stdio, vector, string, etc. declare my enum, and a couple other basic data types (structs only mind you, no classes here). these are things any class could use but I'd rather not have duplicates. Also, and why this applies to pring statements, I can use it to centeralize my compiler directives. And in this case I can make a directive that activates nad deactives print statements. this will make searching for seg faults and the like very simple, since I can also flip it on locally to specific functions. 
 
+I'm doing this also with a clever trick of macros. I'll have a macro declared for various debug levels. with debug 0 being no prints. I'll have debug level 1 be major calls, like the "prerender" and "postrender" prints I have. level 2 starts drilling down, till level 5 where I basically print out something every line. and now time for bed.
+
+pugixml.cpp not having an include guard was starting to piss me off. I'm suprised they haven't done such.
