@@ -62,8 +62,9 @@ void Scene::render()
 	renderer->use();
 //	printf("Check Point 4\n");
 //	#define DEBUGPRINT printf("Check point. 1 file: %s line: %i \n",__FILE__, __LINE__);
-	#define DEBUGPRINT
-	DEBUGPRINT;
+//	#define DEBUGPRINT
+//	DEBUGPRINT;
+	DEBUG1;
 	glm::mat4 temp1 = viewPoint->getProjection();
 	printf("Check point. 2 \n");
 	glm::mat4 temp2 = viewPoint->view();

@@ -3,6 +3,11 @@
 #ifndef LIB_CPP
 #define LIB_CPP
 
+#define DEBUG 0
+
+#if DEBUG > 0
+#define DEBUG1 printf("File: %s Line: %i \n",__FILE__, __LINE__);
+
 char* file_read(const char* filename)
 {
 	FILE* in = fopen(filename, "rb");

@@ -6,9 +6,6 @@
 
 #include "lib/pugixml/pugixml.cpp"
 
-
-//#define DEBUGLEVEL1 printf("
-
 #ifndef LIB_H
 #define LIB_H
 
