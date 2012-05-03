@@ -6,38 +6,6 @@
 #define DEBUG 0
 #define TRACE(n) if (DEBUG >= n) { printf("File: %s \t Function: %s \t Line: %i \n",__FILE__,__FUNCTION__,__LINE__); } else ((void)0)
 
-/*#define DEBUG1
-#define DEBUG2
-#define DEBUG3
-#define DEBUG4
-#define DEBUG5
-
-#if DEBUG > 0
-#undef DEBUG1
-#define DEBUG1 printf("File: %s Line: %i \n",__FILE__, __LINE__);
-#endif
-
-#if DEBUG > 1
-#undef DEBUG2
-#define DEBUG2 printf("File: %s Line: %i \n",__FILE__, __LINE__);
-#endif
-
-#if DEBUG > 2
-#undef DEBUG3
-#define DEBUG3 printf("File: %s Line: %i \n",__FILE__, __LINE__);
-#endif
-
-#if DEBUG > 3
-#undef DEBUG4
-#define DEBUG4 printf("File: %s Line: %i \n",__FILE__, __LINE__);
-#endif
-
-#if DEBUG > 4
-#undef DEBUG5
-#define DEBUG5 printf("File: %s Line: %i \n",__FILE__, __LINE__);
-#endif
-*/
-
 char* file_read(const char* filename)
 {
 	FILE* in = fopen(filename, "rb");

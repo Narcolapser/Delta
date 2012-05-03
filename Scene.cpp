@@ -4,6 +4,9 @@ Scene::Scene(xml_node config)
 	//read in the path so that the location of the resources are known.
 	string path = config.attribute("path").value() + string("/");
 
+	viewPoint = NULL;
+	renderer = NULL;
+
 	for(xml_node i = config.first_child(); i; i = i.next_sibling())
 	{//itterate over all the objects in the scene. pulling each one in with no parent.
 		load(i,NULL,path);
@@ -55,14 +58,14 @@ void Scene::load(xml_node self, Object* parent, string path)
 void Scene::render()
 {
 	TRACE(2);
-	if(renderer==NULL) bindToProgram(0);
-	if(viewPoint == NULL) viewPoint = cameras[0];
-	renderer->use();
-	glm::mat4 temp1 = viewPoint->getProjection();
-	glm::mat4 temp2 = viewPoint->view();
-	glm::mat4 temp = temp1 * temp2;
+	if(renderer==NULL) {bindToProgram(0); TRACE(5);}
+	if(viewPoint == NULL) {viewPoint = cameras[0]; TRACE(5);}
+	renderer->use();TRACE(3);
+//	glm::mat4 temp1 = viewPoint->getProjection();TRACE(5);
+//	glm::mat4 temp2 = viewPoint->view();TRACE(5);
+//	glm::mat4 temp = temp1 * temp2;TRACE(5);
 	glUniformMatrix4fv(renderer->getVP(), 1, GL_FALSE,
-		glm::value_ptr(temp));
+		glm::value_ptr(viewPoint->getProjection()*viewPoint->view()));TRACE(5);
 	//this loops through and renders each mesh that is in the vector. I might add a system for
 	//checking to see if the object is currently flagged to render or not, but for now this
 	//just gets things onto the screen which is what matters.

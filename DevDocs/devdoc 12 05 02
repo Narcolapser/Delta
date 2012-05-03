@@ -4,4 +4,6 @@ It works like a dream.
 
 Got it done. I've now got events moving my objects. Its a little unwield to do by hand. but I hope I won't be doing it by hand very much! xD But Events are made! now I need to make a handling system. A way to spawn events and have them sent to other objects. onward Christian soldiers!
 
+Starting work on alpha 13. Firstly, I want to fix the segmentation fault on the 32-bit build. Not sure why Kodachi is having so much problems, but I need to fix it. The annoying part is that every change I make Rebuilds 5 files. so this isn't going to fast. *sigh*
 
+I found the problem. the 64 bit system must handle this for me and 32-bit doesn't. but I wasn't setting viewPoint to null in the constructor for scene. So it thought it had a camera when it didn't actually. Fixing this solved the problem. and with that I'm going to jump back to my desktop.

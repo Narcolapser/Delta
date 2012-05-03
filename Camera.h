@@ -59,7 +59,7 @@ public:
 	void inline setFarClip(float val) {far = val; newProj = 0;}	//set the far clipping plane
 	bool onEvent(const Event& event);
 	
-private:
+//private:
 	glm::mat4 newProjection();
 //	glm::vec3 loc;		//location vector.
 	GeoObject *focus;	//something to look at

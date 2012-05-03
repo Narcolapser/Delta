@@ -6,7 +6,6 @@
 
 #ifndef GEOOBJECT_CPP
 #define GEOOBJECT_CPP
-
 #include "GeoObject.h"
 
 GeoObject::GeoObject()
@@ -140,13 +139,13 @@ void GeoObject::setRot(float _x, float _y, float _z)
 void GeoObject::updateTrans()
 {TRACE(3);
 	//get the translation matrix.
-	trans = glm::translate(glm::mat4(1.0f),loc);
+	trans = glm::translate(glm::mat4(1.0f),loc);TRACE(5);
 	//because of order of operations. the translation matrix is applied to the rotation
 	//matrix not the other way around. so rotation is done first here. 
-	trans = trans * glm::gtc::quaternion::mat4_cast(rotquat);
+	trans = trans * glm::gtc::quaternion::mat4_cast(rotquat);TRACE(5);
 	//lastly apply the parent transform.
-	if (parent) trans = parent->getTrans() * trans;
-	newTrans = true;
+	if (parent) trans = parent->getTrans() * trans;TRACE(5);
+	newTrans = true;TRACE(5);
 	++tranC;TRACE(3);
 }
 bool GeoObject::onEvent(const Event& event)
