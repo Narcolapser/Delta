@@ -36,7 +36,7 @@ public:
 	void setTrans(glm::mat4 val);
 	void bindToProgram(Program *prog);
 	void assignID(UID val);	
-	bool onEvent(const Event& event);
+	virtual bool onEvent(const Event& event);
 private:
 	//data members:
 	Attrib *coords;		//attribute containing all the vertex information.

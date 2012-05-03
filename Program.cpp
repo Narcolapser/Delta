@@ -165,5 +165,9 @@ void Program::print_log(GLuint object)
 	free(log);
 }
 ;
+bool Program::onEvent(const Event& event)
+{
+	return false;
+}
 #endif
 /*.S.D.G.*/

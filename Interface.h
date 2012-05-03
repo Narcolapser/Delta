@@ -15,11 +15,11 @@
 
 using namespace std;
 
-class InterfaceGL
+class Interface
 {
 public:
-	InterfaceGL();
-	~InterfaceGL();
+	Interface();
+	~Interface();
 	void init(const char* title, int _x, int _y);
 	int go();
 
@@ -39,10 +39,10 @@ public:
 	void setIdleFunc(void(*func)());
 	void setReshapeFunc(void(*func)(int width, int height));
 
-	void inline setProg(Program* val){ prog = val; }
-	void inline setCam(Camera* val){ cam = val; }
-	void inline setCoord(Attrib* val){ coord = val; }
-	void inline setColor(Attrib* val){ color = val; }
+//	void inline setProg(Program* val){ prog = val; }
+//	void inline setCam(Camera* val){ cam = val; }
+//	void inline setCoord(Attrib* val){ coord = val; }
+//	void inline setColor(Attrib* val){ color = val; }
 
 private:
 	//data members:
@@ -51,6 +51,6 @@ private:
 	void (*keyFuncs[256])(void);
 
 };
-#endif
-
+static Interface* globalIn;
 /*.S.D.G.*/
+#endif

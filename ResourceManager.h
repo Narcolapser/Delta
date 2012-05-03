@@ -43,7 +43,7 @@ public:
 	UID LoadMesh(const char* filename);
 	Object* GetIDRetaining(UID val);
 	Object* GetIDNonRetaining(UID val);
-	bool onEvent(const Event& event);
+	virtual bool onEvent(const Event& event);
 private:
 	struct Lease
 	{

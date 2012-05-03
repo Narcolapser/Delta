@@ -24,7 +24,7 @@ public:
 	~Model();
 	void bindToProgram(Program* prog, GLint _local);
 	void render();
-	bool onEvent(const Event& event);
+	virtual bool onEvent(const Event& event);
 private:
 	Mesh* mesh;
 	UID meshID;

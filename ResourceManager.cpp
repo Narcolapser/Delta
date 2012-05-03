@@ -183,6 +183,10 @@ ResourceManager::Lease::~Lease()
 	pointer = NULL;
 	refCount = 0;
 }
+bool ResourceManager::onEvent(const Event& event)
+{
+	return false;
+}
 
 //convenience methods, they do what it sounds like and work just fine. they are very small in scope
 //so i'm very confident that if a bug is ever below this point, i just added it. there isn't a lot

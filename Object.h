@@ -26,7 +26,7 @@ public:
 	Object();
 	virtual ~Object();
 	UID getID();
-	bool onEvent(const Event& event);
+	virtual bool onEvent(const Event& event);
 protected:
 	UID ID;
 	//delta_t type;

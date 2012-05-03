@@ -34,7 +34,7 @@ public:
 	void render();
 	void bindToProgram(Program *prog, GLint local);
 	void bindToProgram(int val);
-	bool onEvent(const Event& event);
+	virtual bool onEvent(const Event& event);
 //private:
 	vector<Model*> models;
 	vector<Camera*> cameras;

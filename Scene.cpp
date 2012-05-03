@@ -99,4 +99,9 @@ void Scene::bindToProgram(int val)
 		models[i]->bindToProgram(renderer,local);
 	}
 }
+
+bool Scene::onEvent(const Event& event)
+{
+	return false;
+}
 /*.S.D.G.*/

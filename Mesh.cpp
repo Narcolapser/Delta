@@ -172,6 +172,12 @@ void Mesh::render()
 	glDrawElements(GL_TRIANGLES, elements->getSize()/sizeof(GLushort), GL_UNSIGNED_SHORT, 0);
 	this->coords->disable();
 }
+
+
+bool Mesh::onEvent(const Event& event)
+{
+	return false;
+}
 #endif
 
 /*.S.D.G.*/

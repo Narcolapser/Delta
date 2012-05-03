@@ -46,65 +46,23 @@ int init_resources()
 	if (prog->loadVertex("Shaders/cube.v.glsl") == 0) return 0;
 	if (prog->loadFragment("Shaders/cube.f.glsl") == 0) return 0;
 
-
-	//MESHES! this is where the meshes get loaded.
 	const char* filename = "Scene.xml";
 	xml_document doc;
 	xml_parse_result result;
 	result = doc.load_file(filename);
+
 	foo = new Scene(doc.first_child());
 	c = foo->cameras[0];
 	c->setFocus(foo->models[1]);
 	foo->bindToProgram(0);
 
-	//There isn't a good way to deal with uniforms yet. I'm going to be doing something with
-	//	them because uniform buffer objects will be imlemented soon. so these will remain
-	//	for the time being.
-/*	const char* uniform_name;
-	uniform_name = "mvp";
-	uniform_mvp = glGetUniformLocation(prog->getProgram(), uniform_name);
-	if (uniform_mvp == -1) {
-		fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
-		return 0;
-	}
 
-	uniform_name = "local";
-	local = glGetUniformLocation(prog->getProgram(), uniform_name);
-	if (local == -1) {
-		fprintf(stderr, "Could not bind uniform %s\n", uniform_name);
-		return 0;
-	}
-*/
-//	foo->bindToProgram(prog,local);
 	printf("Resources loaded!\n");
 	return 1;//resources initalized.
 }
 
 void onIdle() 
 {
-	//the on idle function. basically this gets called when the frame has been rendered. 
-	//	in the future this might just raise an event because I'd like to push the rendering
-	//	controller to a seperate thread, but for now it handles the animation process.
-
-	//these two rotates deal with rotating the camera on the vertical axis and horizontal axis.
-	//	I'm going to have to figure out how to reimplement them later.
-	//get the view and projection matrix from the camera.
-//	view = c->view();
-//	projection = c->getProjection();
-
-	//make the model-view-projection global transformation matrix.
-//	glm::mat4 mvp = projection * view;// * model;// * anim;
-
-	//declare that we are going to use this program. woohoo and all that.
-//	prog->use();
-
-//	glUniformMatrix4fv(local, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
-		//set the uniform "local" to be this anim transform because mesh specific 
-		//	transforms are not currently working.
-
-//	glUniformMatrix4fv(uniform_mvp, 1, GL_FALSE, glm::value_ptr(mvp));
-		//set the global trasnform
-//	printf("end idle\n");
 	glutPostRedisplay();//request a redraw.
 }
 
@@ -120,15 +78,15 @@ void onDisplay()
 
 	Event move((UID)0,EVENT_MOVE);
 	move.setArgs(0.0f,downShuf,shuffle,0.0f);
-	foo->models[1]->onEvent(move);
+	((Object*)foo->models[1])->onEvent(move);
 
 	Event rot((UID)0,EVENT_ROTATE);
 	rot.setArgs(rotx,roty,rotz,0.0f);
-	foo->models[1]->onEvent(rot);
+	((Object*)foo->models[1])->onEvent(rot);
 
 	Event moveCam((UID)0,EVENT_MOVE);
 	moveCam.setArgs(0.0f,0.0f,zoom,0.0f);
-	c->onEvent(moveCam);
+	((Object*)c)->onEvent(moveCam);
 
 //	foo->models[1]->rotate(rotx,roty,rotz);
 //	c->move(0.0,0.0,zoom);
