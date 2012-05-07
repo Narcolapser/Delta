@@ -1,0 +1,42 @@
+I'm back! been side tracked by other things recently and I only have so much time I can devote to Delta yet. I will need to be preparing for my finals first and foremost. but I wanted to get some work in on delta, I have an hour and a half.
+
+I lefted off... Working on key bindings. I need a system for allowing me to bind objects to keys at run-time. Just like with the ResouceManager, where almost everything included, almost everything will include the interface class. But most importantly the scene class, which is responsible for most of the registering, will. When it loads an event from the xml it will be the one that registers it.
+
+So, that leads me to one very obvious function that is needed in the interface class, register. Registered events are for external events. a colision is an internal event, an explosion, a spawning, a destruction, these are internal events. the screen size changed, a key was pressed, a mouse click, a line was entered into the terminal, these are external events. The nice thing about this is they are enumeratable. each key can have a value, so can a mouse click. So envision the xml:
+
+<Event external=True binding="Key_A" recv="loadTimeIdentifier"/>
+
+oh, I guess this is a good time to introduce another new construct I'm having to add called a "loadTimeIdentifier" or LTI. This construct allows for parenting type functionality outside of direct parenting. The necessity for this is due to things such as cameras. A camera has 2 parents. 1 is the one it follows for location and rotation, the other it follows for it's look at. Parent and Focus. I can't use the parent-child system to hit both. So I need a mechanism outside of the parent child system.
+
+LTIs are handled by the scene and RM at load time. The scene will register a loadTimeIdentifier with the resource manager just like UIDs. In fact loadTimeIdentifiers just point to UIDs. The reason for their existance instead of just using UIDs is that UIDs may not be the same every time, the resource manager handles that. I've made a lot of resource saving tricks with the resource manager, and having anything outside of the resource manager touch the UID system introduces a large number of bugs and complications that I don't want to deal with.
+
+LTIs allow for objects to have parents or other associations across scenes as well. This usage could provide for things such as multiple overlays. for example, having scenes linked underneath I could have the "collision geometry" scene and the "decorative geometry" scene working together. I could be looking at the decorative scene and seeing a strange behavior, enter a command into the console and it flip rendering over to the collision geometry scene, and I now see the world how the GPU would. This could be really powerful. 
+
+So what I'm going to work on now with my remaining time before lunch is the LTI system. 
+
+It has two fascets to it. one is the registry for the LTIs. that's simple. a map of strings to UIDs. The second part is the delayed assignment system. Because I'm going to be having object references span scenes, they have to be immune to out of order loading. So what I'm going to do is have a vector of delayed assignemnt requests. each request consists of 1: the LTI of concern. 2: The UID of the object requesting. 3: a call back method. My immediate problem with this is: How do I get this working with objects. I can't use a member function as that is not allowed, there wouldn't be any way to associate it with the class. That is why I thought of the UID idea. But that just isn't jiving with me. Do I call a virtual method on object that takes a UID and an LTI? How will it be able to then be able to tell differences? Camera would need the ability to set up events as well as to parent and focus on objects. that is 3 different methods. What I'm thinking is if I have a method that sits out side of the class, and pass the whole delayed request that might do it. Let it then deal with the registering of things. for example. If I want to focus the camera on an object in a dfferent scene, the call back for the camera gets called, it reads the delayed request, Resolves the LTI to a UID, and performs a task that it is aware of but resource manager was not. so delayed requests look like this now: 1: a call back method that takes: 2: LTI, UID, functionIdentifier. This deals with getting it to be local to the object and functions with out having to expose any more than I need to to the resource manager. 
+
+I ended up with:
+typedef struct delayedRequest
+{
+	void (*callBack)(delayedRequest val);
+	char* LTI;
+	UID recv;
+	int funcID;
+}DelayedRequest;
+
+a new type! this type will hold the call back, the LTI, the UID of the object that is reciving this, and lastly the local identifier of a function. I might add more later to allow for arguments to be passed through the variant or something. but for now, this will do. 
+
+another side note. at load time looks kinda like this:
+Delta opens game.xml
+it passes the xmlNode to window class
+window class loads each scene (all resources are loaded after this.)
+window class requests the resourceManager resolve the DelayedRequests (all resources are now hooked up.)
+window class informs the resourceManager it may free the LTI storage. 
+window passes control back to Delta, the game is loaded.
+
+This may change as I introduce things such as delayed loading of scenes (obviously, you don't want to load all resources you'll ever need at start up. BAAAAAAAAAAAAAAAAAAAAAD idea), and I'll introduce a hashing system to reduce long LTI strings down into short 32-64bit hashes. 
+
+Ok. I've got the ability register LTIs, resolve them to UIDs, resolve delayed requests, and register requests. LTI system is done, for the most part. there is still some work I must do in scene. but I'm saving that for when I get around to working with scene for events.
+
+Now I'm off to lunch and study time. But that is a good chunk of work for today. I'm pleased. 

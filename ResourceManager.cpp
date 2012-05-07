@@ -187,9 +187,31 @@ bool ResourceManager::onEvent(const Event& event)
 {
 	return false;
 }
+bool ResourceManager::RegisterLTI(string val, UID bar)
+{
+	if(ResolveLTI(val) == false) return false;
+	LTIReg[val] = bar;
+}
+UID ResourceManager::ResolveLTI(string val)
+{
+	if(loaded.count(val)==0) return false;//place holder function, i'll flush this out later.
+	return loaded[val];
+}
 
-//convenience methods, they do what it sounds like and work just fine. they are very small in scope
-//so i'm very confident that if a bug is ever below this point, i just added it. there isn't a lot
-//that could go wrong down here.
+void ResourceManager::RegisterRequest(const DelayedRequest& val)
+{
+	DeReqs.push_back(val);
+}
+
+void ResourceManager::ResolveRequests()
+{
+	DelayedRequest temp;
+	for(int i = DeReqs.size(); i --> 0; temp = DeReqs.back())
+	{
+		DeReqs.pop_back();
+		temp.callBack(temp);
+	}
+}
+
 #endif
 /*.S.D.G.*/

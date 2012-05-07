@@ -31,6 +31,35 @@
 using namespace std;
 using namespace pugi;
 
+typedef struct delayedRequest
+{
+	delayedRequest()
+	{
+		callBack = NULL;
+		LTI = NULL;
+		recv = (UID)0;
+		funcID = -1;
+	}
+	delayedRequest(delayedRequest& val)
+	{
+		callBack = val.callBack;
+		LTI = val.LTI;
+		recv = val.recv;
+		funcID = val.funcID;
+	}
+	delayedRequest(const delayedRequest& val)
+	{
+		callBack = val.callBack;
+		LTI = val.LTI;
+		recv = val.recv;
+		funcID = val.funcID;
+	}
+	void (*callBack)(delayedRequest val);
+	char* LTI;
+	UID recv;
+	int funcID;
+}DelayedRequest;
+
 class ResourceManager
 {
 public:
@@ -44,6 +73,10 @@ public:
 	Object* GetIDRetaining(UID val);
 	Object* GetIDNonRetaining(UID val);
 	virtual bool onEvent(const Event& event);
+	bool RegisterLTI(string val, UID bar);
+	UID ResolveLTI(string val);
+	void RegisterRequest(const DelayedRequest& val);
+	void ResolveRequests();
 private:
 	struct Lease
 	{
@@ -56,6 +89,8 @@ private:
 	};
 	vector<Lease*> leases;
 	map<string,UID> loaded;
+	map<string,UID> LTIReg;
+	vector<DelayedRequest> DeReqs;
 	int IDc;
 	int freeCount;
 

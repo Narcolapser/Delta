@@ -18,8 +18,8 @@ Program::~Program()
 }
 Program::Program(xml_node self, string path)
 {
-	vs = create_shader((path + self.attribute("VertexShader").value()).c_str(),GL_VERTEX_SHADER);
-	fs = create_shader((path + self.attribute("FragmentShader").value()).c_str(),GL_FRAGMENT_SHADER);
+	vs = create_shader((path + self.attribute("vertexShader").value()).c_str(),GL_VERTEX_SHADER);
+	fs = create_shader((path + self.attribute("fragmentShader").value()).c_str(),GL_FRAGMENT_SHADER);
 	updateProg();
 
 	const char* uniform_name;
