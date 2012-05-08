@@ -60,6 +60,7 @@ class Event
 {
 public:
 	Event(UID _sender, event_t _type);
+	Event();
 	virtual ~Event();
 	bool setArg(Variant arg);
 	bool setArgs(Variant arg1, Variant arg2, Variant arg3, Variant arg4);

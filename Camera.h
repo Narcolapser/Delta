@@ -15,6 +15,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "GeoObject.h"
+#include "Interface.cpp"
 
 //include gaurd.
 #ifndef CAMERA_H
@@ -71,6 +72,8 @@ public:
 	int y;			//height of window
 	int newProj;		//is the projection matrix the most recent one? yes=1, no=0
 };
+
+void cameraCallBack(const delayedRequest& val);
 #endif
 /*.S.D.G.*/
 

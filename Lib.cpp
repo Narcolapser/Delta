@@ -3,7 +3,8 @@
 #ifndef LIB_CPP
 #define LIB_CPP
 
-#define DEBUG 0
+//#define DEBUG 5
+static int DEBUG;
 #define TRACE(n) if (DEBUG >= n) { printf("File: %s \t Function: %s \t Line: %i \n",__FILE__,__FUNCTION__,__LINE__); } else ((void)0)
 
 char* file_read(const char* filename)

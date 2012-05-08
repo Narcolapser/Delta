@@ -31,12 +31,12 @@
 using namespace std;
 using namespace pugi;
 
-typedef struct delayedRequest
+struct delayedRequest
 {
 	delayedRequest()
 	{
 		callBack = NULL;
-		LTI = NULL;
+		LTI = "";
 		recv = (UID)0;
 		funcID = -1;
 	}
@@ -54,11 +54,11 @@ typedef struct delayedRequest
 		recv = val.recv;
 		funcID = val.funcID;
 	}
-	void (*callBack)(delayedRequest val);
-	char* LTI;
+	void (*callBack)(const delayedRequest& val);
+	string LTI;
 	UID recv;
 	int funcID;
-}DelayedRequest;
+};
 
 class ResourceManager
 {
@@ -75,7 +75,7 @@ public:
 	virtual bool onEvent(const Event& event);
 	bool RegisterLTI(string val, UID bar);
 	UID ResolveLTI(string val);
-	void RegisterRequest(const DelayedRequest& val);
+	void RegisterRequest(const delayedRequest& val);
 	void ResolveRequests();
 private:
 	struct Lease
@@ -90,7 +90,7 @@ private:
 	vector<Lease*> leases;
 	map<string,UID> loaded;
 	map<string,UID> LTIReg;
-	vector<DelayedRequest> DeReqs;
+	vector<delayedRequest> DeReqs;
 	int IDc;
 	int freeCount;
 

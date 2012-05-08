@@ -15,6 +15,72 @@
 #define INTERFACE_CPP
 #include "Interface.h"
 
+Interface::Interface()
+{
+	specialKeys[0] = false;
+	specialKeys[1] = false;
+	specialKeys[2] = false;
+	specialKeys[3] = false;
+	specialKeys[4] = false;
+	specialKeys[5] = false;
+	specialKeys[6] = false;
+	specialKeys[7] = false;
+	specialKeys[8] = false;
+	specialKeys[9] = false;
+	specialKeys[10] = false;
+	specialKeys[11] = false;
+	specialKeys[12] = false;
+	specialKeys[100] = false;
+	specialKeys[101] = false;
+	specialKeys[102] = false;
+	specialKeys[103] = false;
+	specialKeys[104] = false;
+	specialKeys[105] = false;
+	specialKeys[106] = false;
+	specialKeys[107] = false;
+	specialKeys[108] = false;
+//	specialEvents[0] = vector<recEvent>;
+	printf("Interface instanciated!\n");
+}
+void Interface::update()
+{
+	TRACE(1);
+	for(int i = 0; i<256; ++i)
+	{
+		TRACE(2);
+		if(normalKeys[i])
+		{
+			TRACE(3);
+			for(int j = 0; j < normalEvents[i].size(); ++j)
+			{
+				TRACE(5);
+				normalEvents[i][j].recv->onEvent(normalEvents[i][j].send);
+			}
+		}
+	}
+}
+void Interface::registerToExternal(int key, Object* val, const Event& event)
+{
+	normalEvents[key].push_back(recEvent(event,val));
+}
+void keyFunc(unsigned char key, int x, int y)
+{
+	globalIn->normalKeys[key]=true;
+	printf("Raised: %c #%i\n",key,(int)key);
+}
+void specialFunc(int key, int x, int y)
+{
+	printf("key: %i\n",key);
+}
+void keyUpFunc(unsigned char key, int x, int y)
+{
+	globalIn->normalKeys[key]=false;
+	printf("Lowered: %c #%i\n",key,(int)key);
+}
+void specialUpFunc(int key, int x, int y)
+{
+
+}
 
 
 /*.S.D.G.*/

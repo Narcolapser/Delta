@@ -27,6 +27,7 @@ UID Object::getID()
 }
 bool Object::onEvent(const Event& event)
 {
+	TRACE(5);
 	return false;//there isn't anything I can really think an object can do by itself.
 		//it kind of needs to know about the resource manager to be able to self destruct.
 		//so I'm just going to say that object never handles anything.

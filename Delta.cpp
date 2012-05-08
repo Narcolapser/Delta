@@ -8,6 +8,7 @@
 #include "Camera.cpp"
 #include "ResourceManager.cpp"
 #include "Scene.cpp"
+#include "Interface.cpp"
 
 using namespace std;
 
@@ -32,19 +33,21 @@ bool lclick = false;
 bool rclick = false;
 float shuffle = 0.0;
 float downShuf = 0.0;
+int frameCount = 0;
 
 //initalize all the resources for Delta.
 int init_resources()
 {
 	globalRM = new ResourceManager();
+	globalIn = new Interface();
 	//seed the random number generator.
 	srand(time(NULL));
 
 	//PROGRAM:////////////////////////////////////////////////////////////////////
 	//this handles the creation of the program. loading the shaders and linking.
-	prog = new Program();
-	if (prog->loadVertex("Shaders/cube.v.glsl") == 0) return 0;
-	if (prog->loadFragment("Shaders/cube.f.glsl") == 0) return 0;
+//	prog = new Program();
+//	if (prog->loadVertex("Shaders/cube.v.glsl") == 0) return 0;
+//	if (prog->loadFragment("Shaders/cube.f.glsl") == 0) return 0;
 
 	const char* filename = "Scene.xml";
 	xml_document doc;
@@ -56,6 +59,28 @@ int init_resources()
 	c->setFocus(foo->models[1]);
 	foo->bindToProgram(0);
 
+	Event move((UID)0,EVENT_MOVE);
+	move.setArgs(0.0f,0.0f,0.01f,0.0f);
+	globalIn->registerToExternal(104,((Object*)foo->models[1]),move);
+
+	Event move2((UID)0,EVENT_MOVE);
+	move2.setArgs(0.0f,0.0f,-0.01f,0.0f);
+	globalIn->registerToExternal(103,((Object*)foo->models[1]),move2);
+
+	Event rotX((UID)0,EVENT_ROTATE);
+	rotX.setArgs(0.01f,0.0f,0.0f,0.0f);
+	globalIn->registerToExternal(120,((Object*)foo->models[1]),rotX);
+
+	Event rotY((UID)0,EVENT_ROTATE);
+	rotY.setArgs(0.0f,0.01f,0.0f,0.0f);
+	globalIn->registerToExternal(121,((Object*)foo->models[1]),rotY);
+
+	Event rotZ((UID)0,EVENT_ROTATE);
+	rotZ.setArgs(0.0f,0.0f,0.01f,0.0f);
+	globalIn->registerToExternal(122,((Object*)foo->models[1]),rotZ);
+
+
+	globalRM->ResolveRequests();
 
 	printf("Resources loaded!\n");
 	return 1;//resources initalized.
@@ -63,6 +88,8 @@ int init_resources()
 
 void onIdle() 
 {
+	frameCount++;
+	globalIn->update();
 	glutPostRedisplay();//request a redraw.
 }
 
@@ -76,13 +103,13 @@ void onDisplay()
 	foo->render();
 	TRACE(1);
 
-	Event move((UID)0,EVENT_MOVE);
-	move.setArgs(0.0f,downShuf,shuffle,0.0f);
-	((Object*)foo->models[1])->onEvent(move);
+//	Event move((UID)0,EVENT_MOVE);
+//	move.setArgs(0.0f,downShuf,shuffle,0.0f);
+//	((Object*)foo->models[1])->onEvent(move);
 
-	Event rot((UID)0,EVENT_ROTATE);
-	rot.setArgs(rotx,roty,rotz,0.0f);
-	((Object*)foo->models[1])->onEvent(rot);
+//	Event rot((UID)0,EVENT_ROTATE);
+//	rot.setArgs(rotx,roty,rotz,0.0f);
+//	((Object*)foo->models[1])->onEvent(rot);
 
 	Event moveCam((UID)0,EVENT_MOVE);
 	moveCam.setArgs(0.0f,0.0f,zoom,0.0f);
@@ -90,7 +117,7 @@ void onDisplay()
 
 //	foo->models[1]->rotate(rotx,roty,rotz);
 //	c->move(0.0,0.0,zoom);
-	shuffle *= 0.9;rotx *= 0.9;roty *= 0.9;rotz *= 0.9;zoom *= 0.9;downShuf*=0.9;
+//	shuffle *= 0.9;rotx *= 0.9;roty *= 0.9;rotz *= 0.9;zoom *= 0.9;downShuf*=0.9;
 
 	//redrawn, swap the buffers and put this new one to the front.
 	glutSwapBuffers();
@@ -103,9 +130,23 @@ void onReshape(int width, int height)
 	glViewport(0, 0, width, height);
 }
 
+void free_resources()
+{//done, free up the resources so there aren't any loose ends.
+//	delete prog;
+	delete foo;
+}
+
+
+void shutdown()
+{
+	free_resources();
+	printf("frames: %i\n",frameCount);
+	exit(0);
+}
+
 void onNormalKeys(unsigned char key, int x, int y)
 {//what to do on key strokes.
-	if (key == 27) exit(0);
+	if (key == 27) shutdown();
 //	cout << "key: " << (char) key << " Value of: " << (int) key << " x: " << x << " y: " << y << endl;
 	if (key == 'a') shuffle++;
 	if (key == 'd') shuffle--;
@@ -114,6 +155,7 @@ void onNormalKeys(unsigned char key, int x, int y)
 	if (key == 'x') rotx += 1;
 	if (key == 'y') roty += 1;
 	if (key == 'z') rotz += 1;
+	keyFunc(key,x,y);
 }
 
 void onActiveMotion(int x, int y)
@@ -177,25 +219,25 @@ void onClick(int button, int state, int x, int y)
 	else if (button == GLUT_RIGHT_BUTTON)
 		rclick = state == GLUT_DOWN;
 }
-	
-
-void free_resources()
-{//done, free up the resources so there aren't any loose ends.
-	delete prog;
-	delete foo;
-}
-
 
 int main(int argc, char* argv[]) 
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGBA|GLUT_ALPHA|GLUT_DOUBLE|GLUT_DEPTH);
 	glutInitWindowSize(800, 600);
-	glutCreateWindow("Delta Alpha 11");
+	glutCreateWindow("Delta Alpha 13");
 	glutKeyboardFunc(onNormalKeys);
+	glutKeyboardUpFunc(keyUpFunc);
 	glutMotionFunc(onActiveMotion);
 	glutPassiveMotionFunc(onPassiveMotion);
 	glutMouseFunc(onClick);
+	glutSpecialFunc(specialFunc);
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+
+	if (argc > 1)
+		DEBUG = ((int)argv[1][0])-(int)'0';
+	else
+		DEBUG = 0;
 
 	GLenum glew_status = glewInit();
 	if (glew_status != GLEW_OK) {
@@ -219,8 +261,6 @@ int main(int argc, char* argv[])
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glutMainLoop();
 	}
-
-	free_resources();
 	return 0;
 }
 

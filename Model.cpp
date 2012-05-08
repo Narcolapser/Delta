@@ -34,6 +34,13 @@ Model::Model(xml_node& self, string path)
 	ID = globalRM->RequestID();
 	//then this object assigns itself to that ID.
 	globalRM->AssignID(ID,this);
+
+	if(self.attribute("LTI"))
+	{
+		TRACE(3);
+		globalRM->RegisterLTI(self.attribute("LTI").value(),ID);
+		printf("LTI: %s\n",self.attribute("LTI").value());
+	}
 }
 Model::~Model()
 {//delete the model. release its ID and set mesh to a null pointer. DO NOT ELETE MESH!
@@ -57,6 +64,7 @@ void Model::render()
 }
 bool Model::onEvent(const Event& event)
 {
+	TRACE(5);
 	return GeoObject::onEvent(event);
 }
 

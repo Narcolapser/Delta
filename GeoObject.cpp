@@ -150,6 +150,7 @@ void GeoObject::updateTrans()
 }
 bool GeoObject::onEvent(const Event& event)
 {
+	TRACE(4);
 	switch(event.type)
 	{
 		case EVENT_MOVE:

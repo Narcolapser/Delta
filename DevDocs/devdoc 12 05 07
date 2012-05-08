@@ -40,3 +40,19 @@ This may change as I introduce things such as delayed loading of scenes (obvious
 Ok. I've got the ability register LTIs, resolve them to UIDs, resolve delayed requests, and register requests. LTI system is done, for the most part. there is still some work I must do in scene. but I'm saving that for when I get around to working with scene for events.
 
 Now I'm off to lunch and study time. But that is a good chunk of work for today. I'm pleased. 
+
+Several hours of linear algebra later. I'm back. On to event registry.
+
+So. Registered, re-occuring events. how do work? I need to have a mechanism for knowing what key is down. Check for which keys are down then call those which are. so lets work for that direction.
+
+sending the events will be handled by a function which takes the pointer to an object and the event. this can be in a vector I'd say. I wonder, can I make a vector like vector<type1,type2>? Nope. So I've got two choices. I could make a struct and have the vector be of that type, or I could make two seperate vectors with one being the call the other being the data. The latter idea has a lot greater chance of being wrong. and the struct idea sounds like it will put things relatively close to each other. so Ima go with that idea, even though it does mean a nother struct. 
+
+So I've got the little struct made. and an array of vectors. kinda silly. but if I want to keep a seperate list of events for each key, I must have a seperate list for each key. 
+
+I've got the lists setup. as well as the basis for the key change functions. now it is set that a key is down until it detects it has been lifted. Now I'm going to make an interface update function that will call all associated events to be resent.
+
+I got it all hooked up. now I just need to get it the loading part in the scene class. But I want to take this moment to pause and marvel. I can now have 3 keys down at once because of the way this system works. the motion is smooth and realistic. i'm just awe struck at what I've done. Never before have I really sat back and just looked at a couple of objects glidding across my screen and paused and gone "this is my doing. all mine. from scratch I did this... Wow." 
+
+Trying to get a little more out of the night I press on to the LTI system in scene. first thing I'm going to do is fix it so that the camera's focus can be delcared in the xml. 
+
+I've gotten a fair ways with the loading process. it seems like things are getting about where they syhould be, but I hit a seg fault. so I'll need to do a bit of spelunking. But all in all, great progress was made today.

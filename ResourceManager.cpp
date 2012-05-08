@@ -198,14 +198,14 @@ UID ResourceManager::ResolveLTI(string val)
 	return loaded[val];
 }
 
-void ResourceManager::RegisterRequest(const DelayedRequest& val)
+void ResourceManager::RegisterRequest(const delayedRequest& val)
 {
 	DeReqs.push_back(val);
 }
 
 void ResourceManager::ResolveRequests()
 {
-	DelayedRequest temp;
+	delayedRequest temp;
 	for(int i = DeReqs.size(); i --> 0; temp = DeReqs.back())
 	{
 		DeReqs.pop_back();

@@ -44,6 +44,23 @@ Camera::Camera(xml_node self)
 		self.attribute("locZ").as_float());
 	ID = globalRM->RequestID();
 	globalRM->AssignID(ID,this);
+	if(self.attribute("LTI"))
+	{
+		TRACE(3);
+		globalRM->RegisterLTI(self.attribute("LTI").value(),ID);
+		printf("LTI: %s\n",self.attribute("LTI").value());
+	}
+	if(self.attribute("focus"))
+	{
+		TRACE(3);
+		delayedRequest temp;
+		temp.callBack = &cameraCallBack;
+		temp.LTI = self.attribute("focus").value();
+		temp.recv = ID;
+		temp.funcID = 1;
+		globalRM->RegisterRequest(temp);
+		printf("Focus is on: %s\n",temp.LTI.c_str());
+	}
 }
 //destructor. is as you would expect.
 Camera::~Camera()
@@ -95,5 +112,20 @@ bool Camera::onEvent(const Event& event)
 {
 	return GeoObject::onEvent(event);
 }
+
+void cameraCallBack(const delayedRequest& val)
+{
+	Object* temp = (Object*)(globalRM->GetIDRetaining(globalRM->ResolveLTI(val.LTI)));
+	Camera* cam = (Camera*)(globalRM->GetIDRetaining(val.recv));
+	switch (val.funcID)
+	{
+		case 1:
+			cam->setFocus((GeoObject*)temp);
+			break;
+		default:
+			break;
+	}
+}
+
 #endif
 /*.S.D.G.*/

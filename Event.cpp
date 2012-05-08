@@ -11,6 +11,15 @@ Event::Event(UID _sender, event_t _type)
 	args[2] = Variant();
 	args[3] = Variant();
 }
+Event::Event()
+{
+	sender = (UID)0;
+	type = NOT_EVENT;
+	args[0] = Variant();
+	args[1] = Variant();
+	args[2] = Variant();
+	args[3] = Variant();
+}
 Event::~Event()
 {
 	sender = 0;
