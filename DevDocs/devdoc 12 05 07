@@ -55,4 +55,4 @@ I got it all hooked up. now I just need to get it the loading part in the scene 
 
 Trying to get a little more out of the night I press on to the LTI system in scene. first thing I'm going to do is fix it so that the camera's focus can be delcared in the xml. 
 
-I've gotten a fair ways with the loading process. it seems like things are getting about where they syhould be, but I hit a seg fault. so I'll need to do a bit of spelunking. But all in all, great progress was made today.
+I've gotten a fair ways with the loading process. it seems like things are getting about where they should be, but I hit a seg fault. so I'll need to do a bit of spelunking. But all in all, great progress was made today.

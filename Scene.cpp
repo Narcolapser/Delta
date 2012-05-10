@@ -20,9 +20,11 @@ void Scene::load(xml_node self, Object* parent, string path)
 	//first off, find out what type of object this is. this will read what it is in from the
 	//attribute and translate the string into the delta enumerated type.
 	delta_t name = stringToEnum(self.name());
+	TRACE(1);
 
 	//temporary holder for the instantiation of the new object.
 	Object* temp;
+	TRACE(5);
 	switch(name)
 	{//switch over all the possibilities. if the object type is one that isn't known, ignore it
 		//the rest of this is fairly straight forward. create a new whatever object, push
@@ -30,29 +32,45 @@ void Scene::load(xml_node self, Object* parent, string path)
 		//if this is the top level, parent is null, so setting parent does nothing. if this isn't
 		//the top level, this will parent this current object to its parent.
 	case MODEL:
+		TRACE(5);
 		temp = new Model(self,path);
 		models.push_back((Model*)temp);
 		((GeoObject*)temp)->setParent((GeoObject*)parent);
 		break;
 	case CAMERA:
+		TRACE(5);
 		temp = new Camera(self);
 		cameras.push_back((Camera*)temp);
 		((GeoObject*)temp)->setParent((GeoObject*)parent);
 		break;
 	case PROGRAM:
+		TRACE(5);
 		temp = new Program(self,path);
 		programs.push_back((Program*)temp);
 		globalRM->AssignID(globalRM->RequestID(),temp);
 		break;
+	case EVENT:
+		TRACE(5);
+//		Event e(loadEvent)
+//		delayedRequest temp;
+//		temp.callBack = &eventCallBack;
+//		temp.LTI = self.attribute("focus").value();
+//		temp.recv = ID;
+//		temp.funcID = 1;
+//		globalRM->RegisterRequest(temp);
+		break;				
 	default:
+		TRACE(5);
 		break;
 	}
 	//finally loop through and load all of this object's children. if it doesn't have any, this
 	//loop never happens. handy no?
 	for(xml_node i = self.first_child(); i; i = i.next_sibling())
 	{
+		TRACE(3);
 		load(i,temp,path);
 	}
+	TRACE(2);
 }
 
 void Scene::render()
@@ -104,4 +122,9 @@ bool Scene::onEvent(const Event& event)
 {
 	return false;
 }
+
+//	switch((variant_t)self.attribute("argsType"))
+//		{
+//			case TYPE_FLOAT:
+
 /*.S.D.G.*/

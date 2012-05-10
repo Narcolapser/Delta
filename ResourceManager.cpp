@@ -189,13 +189,18 @@ bool ResourceManager::onEvent(const Event& event)
 }
 bool ResourceManager::RegisterLTI(string val, UID bar)
 {
-	if(ResolveLTI(val) == false) return false;
+	TRACE(4);
+	if(ResolveLTI(val) == true) return false;
+	TRACE(4);
 	LTIReg[val] = bar;
+	TRACE(4);
 }
 UID ResourceManager::ResolveLTI(string val)
 {
-	if(loaded.count(val)==0) return false;//place holder function, i'll flush this out later.
-	return loaded[val];
+	TRACE(4);
+	if(LTIReg.count(val)==0) return false;//place holder function, i'll flush this out later.
+	TRACE(4);
+	return LTIReg[val];
 }
 
 void ResourceManager::RegisterRequest(const delayedRequest& val)
@@ -205,12 +210,15 @@ void ResourceManager::RegisterRequest(const delayedRequest& val)
 
 void ResourceManager::ResolveRequests()
 {
-	delayedRequest temp;
-	for(int i = DeReqs.size(); i --> 0; temp = DeReqs.back())
+	TRACE(2);
+	while(DeReqs.size())
 	{
-		DeReqs.pop_back();
-		temp.callBack(temp);
+		TRACE(5);
+		DeReqs[0].callBack(DeReqs[0]);
+		TRACE(5);
+		DeReqs.erase(DeReqs.begin());
 	}
+	TRACE(1);
 }
 
 #endif

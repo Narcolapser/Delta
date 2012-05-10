@@ -59,6 +59,7 @@ Camera::Camera(xml_node self)
 		temp.recv = ID;
 		temp.funcID = 1;
 		globalRM->RegisterRequest(temp);
+		printf("LTI: %s\n",temp.LTI.c_str());
 		printf("Focus is on: %s\n",temp.LTI.c_str());
 	}
 }
@@ -115,16 +116,28 @@ bool Camera::onEvent(const Event& event)
 
 void cameraCallBack(const delayedRequest& val)
 {
+	TRACE(3);
+	printf("LTI: %s\n",val.LTI.c_str());
+	printf("Recv: %i\n",(int)val.recv);
+	printf("funcID: %i\n",val.funcID);
+	printf("method Pointer: %li\n",(long int) val.callBack);
+	printf("Temp is at: %li\n", (long int) &val);
 	Object* temp = (Object*)(globalRM->GetIDRetaining(globalRM->ResolveLTI(val.LTI)));
+	TRACE(5);
 	Camera* cam = (Camera*)(globalRM->GetIDRetaining(val.recv));
+	TRACE(5);
 	switch (val.funcID)
 	{
 		case 1:
+			TRACE(5);
 			cam->setFocus((GeoObject*)temp);
+			TRACE(5);
 			break;
 		default:
+			TRACE(5);
 			break;
 	}
+	TRACE(3);
 }
 
 #endif

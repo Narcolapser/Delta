@@ -20,6 +20,7 @@
 #include "ResourceManager.cpp"
 #include "Program.cpp"
 #include "Model.cpp"
+#include "Interface.cpp"
 
 using namespace std;
 using namespace pugi;

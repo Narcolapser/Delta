@@ -1,0 +1,41 @@
+one final left to go. but it is just database, I'm not worried.
+
+now, where did I leave off? Seg fault. right. I've traced it down to resource manager line 215. When it attempts the call back. Now I need to figure out why this is a seg fault. found it. the problems are here:
+
+bool ResourceManager::RegisterLTI(string val, UID bar)
+{
+	printf("String: %s\n",val.c_str());
+	TRACE(4);
+	if(ResolveLTI(val) == false) return false;
+	//should be: 	if(ResolveLTI(val) == true) return false;
+	TRACE(4);
+	LTIReg[val] = bar;
+	TRACE(4);
+}
+UID ResourceManager::ResolveLTI(string val)
+{
+	TRACE(4);
+	printf("String: %s\n",val.c_str());
+
+	//should be LTIReg not loaded
+	if(loaded.count(val)==0) return false;//place holder function, i'll flush this out later.
+	TRACE(4);
+	//here too.
+	return loaded[val];
+}
+
+
+No more seg faults. woohoo! and with that i no longer need a camera in Delta.cpp. I also no longer need the key functions or mouse function (though the mouse function hasn't been re-implemented yet.) Now to get ride of those events by having them declared in the XML as well. woohoo!
+
+	<Event external=True binding="122" recv="lookie" funcID="2" arg0="0" arg1="0" arg2="0.01" arg3="0"/>
+a little different eh? I realized that I would have to have a way of setting the arguments for the event. luckily, because this is all contextual, I will be able to make sense of the arguments. for now I'm having the key binding be the actual numbers. I'll implement a look up table later. 
+
+Ok. I'm seeing a problem, this isn't as contextual as I had thought. args have to be parsed in a way that is non-contextual. But, they are being parsed into the variants. so that will help. What i'm thinking is that I'll have an arg parser function, I'll have to, but luckily variant_t makes this simplier. I'll have there be an int value in the attributes argsType="0-6" in order of the size. 0:Bool, 1:char, 2:short, 3:int, 4:float, 5:long, 6:double. Then it will have a switch statement that parses the arguments appropriately. Next I'll have to have an argCount. this is total args. so if i have 4 sets of 2 longs/doubles it argc would be 8. if it is char and all gets used, argc=64. 
+
+I've got a new thought. I'm going to go shower than expand upon it.
+
+Ok. I have previously had a call back method that wasn't part of the object due to the fact that I can't pass member methods as args. But, since everything is an object, I can just assume and thus a call back isn't necessary. The one limitation this does impose is that if there ever is something that isn't an object, how is that dealt with? I think what I'll do is have a check on the call back. if it is null, it calls a virtual method defined by Object, if it is not null, it calls the call back. best of both worlds. 
+
+Lastly, I need to add another data member to delayedMethod that will allow the transfer of an event. this can be useful for hooking up events, but also one time events on hook up. 
+
+But now, bed.
