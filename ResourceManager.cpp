@@ -3,8 +3,11 @@
 #include "ResourceManager.h"
 ResourceManager::ResourceManager()
 {//the constructor. not much to construct. just need to initalize the local variables.
-	IDc = 0;
+	IDc = 1;
 	freeCount = 1;
+	
+	//assign the interface to UID 1.
+	leases.push_back(new Lease(1, globalIn, 65535));
 }
 ResourceManager::~ResourceManager()
 {//clear out them local variables!
@@ -203,7 +206,7 @@ UID ResourceManager::ResolveLTI(string val)
 	return LTIReg[val];
 }
 
-void ResourceManager::RegisterRequest(const delayedRequest& val)
+void ResourceManager::RegisterRequest(const Event& val)
 {
 	DeReqs.push_back(val);
 }
@@ -214,7 +217,11 @@ void ResourceManager::ResolveRequests()
 	while(DeReqs.size())
 	{
 		TRACE(5);
-		DeReqs[0].callBack(DeReqs[0]);
+//		DeReqs[0].callBack(DeReqs[0]);
+//		printf("ID: %i\n",(UID)DeReqs[0].receiver);
+//		printf("location: %li\n\n",(long int)GetIDNonRetaining(DeReqs[0].receiver));
+		if (DeReqs[0].receiver == (UID)1) globalIn->onEvent(DeReqs[0]);
+		else GetIDNonRetaining(DeReqs[0].receiver)->onEvent(DeReqs[0]);
 		TRACE(5);
 		DeReqs.erase(DeReqs.begin());
 	}

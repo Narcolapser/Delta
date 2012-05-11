@@ -3,6 +3,7 @@
  * for now, I've got this as a small first step. 
  */
 
+#include "Interface.cpp"
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 
@@ -25,8 +26,8 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include "Object.cpp"
-#include "Mesh.h"
-#include "Buffer.h"
+#include "Mesh.cpp"
+#include "Buffer.cpp"
 
 using namespace std;
 using namespace pugi;
@@ -75,7 +76,7 @@ public:
 	virtual bool onEvent(const Event& event);
 	bool RegisterLTI(string val, UID bar);
 	UID ResolveLTI(string val);
-	void RegisterRequest(const delayedRequest& val);
+	void RegisterRequest(const Event& val);
 	void ResolveRequests();
 private:
 	struct Lease
@@ -90,7 +91,7 @@ private:
 	vector<Lease*> leases;
 	map<string,UID> loaded;
 	map<string,UID> LTIReg;
-	vector<delayedRequest> DeReqs;
+	vector<Event> DeReqs;
 	int IDc;
 	int freeCount;
 

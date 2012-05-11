@@ -1,0 +1,15 @@
+I altered the delayed request function in resource manager to allow for a default and a alternate call back. Now if you want to use something other than the default you simply specify a call back method. if you don't specify, it will just assume and call the default virtual method. 
+
+Apiphany! the event system! it is designed to take a request to the highest class accesable. Why not use it? I can make delayed request a type of event. Events already carry sender. What i'm thinking is I could use the first arg for the UID of sender and the funcID. Next Use second arg for what ever information needs to be passed. then use the last 2 args for a 31 character string (char 32 is \0). 31 characters should be sufficent for most anything.
+
+wait, the event already keeps track of the UID of the sender. So funcID goes in the first 32 bits. and then 3 args can follow. arg2 can contain 128 bits more if needed. 
+
+The advantages of this system are many. one, I don't have to make a seperate system. further I can reuse this for delayed requests later in the system. In doing this I've realized one more data member to add to Event, Reciever. In cases such as these, it would be convenient to declare what UID is going to recieve the request. 
+
+Ok. I've got camera's focus method rebuilt. it now works with events. Now to hook that up with models and the interface.
+
+So. first off. External events, these are not going to be processed by the model, or what ever object that is going to be moved, if it is an external event it it is going to be processed by the interface. important little note to remember. 
+
+So, how do I send something to the interface? It doesn't have UID since it isn't a child of object. I'm thinking the simplest solution is going to be just have it do so, then reserve UID 1 for it. so have RM start counting at 2 instead of 1.
+
+Got it. took a lot of thinking, but the systems all line up. now an event gets loaded from the xml, gets parsed as a delayed request, sent to the LTI in concern, and everything hooks up. it is pretty awesome. And that concludes Alpha 13 I believe. woohoo!

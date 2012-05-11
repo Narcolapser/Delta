@@ -25,7 +25,7 @@ Alpha 10: Clean up. Take out scafolding. Comment the uncommented. Update make so
 Arch 3: Interactivity Arch
 Alpha 11: Get the shaders fixed so something can be blood seen other than blue.
 Alpha 12: Figure out how to Events, create a easier debugging system than manual inserting printfs.
-Alpha 13: Create system for dispatching events from objects as well as the keyboard/mouse.
+Alpha 13: Create system for dispatching events from objects as well as the keyboard.
 Alpha 14: Create system for spawning objects.
 Alpha 15: Clean up.
 

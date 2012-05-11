@@ -53,14 +53,19 @@ Camera::Camera(xml_node self)
 	if(self.attribute("focus"))
 	{
 		TRACE(3);
-		delayedRequest temp;
-		temp.callBack = &cameraCallBack;
-		temp.LTI = self.attribute("focus").value();
-		temp.recv = ID;
-		temp.funcID = 1;
-		globalRM->RegisterRequest(temp);
-		printf("LTI: %s\n",temp.LTI.c_str());
-		printf("Focus is on: %s\n",temp.LTI.c_str());
+//		delayedRequest temp;
+//		temp.callBack = &cameraCallBack;
+//		temp.LTI = self.attribute("focus").value();
+///		temp.recv = ID;
+//		temp.funcID = 1;
+		Event e;
+		e.args[0].datum.v_asInt[0] = (int)20;
+		e.receiver = ID;
+		e.type = EVENT_DELAYED_REQUEST;
+		strcpy(e.args[2].datum.v_asChar,self.attribute("focus").value());
+		globalRM->RegisterRequest(e);
+//		printf("LTI: %s\n",temp.LTI.c_str());
+//		printf("Focus is on: %s\n",temp.LTI.c_str());
 	}
 }
 //destructor. is as you would expect.
@@ -111,34 +116,55 @@ glm::mat4 Camera::newProjection()
 
 bool Camera::onEvent(const Event& event)
 {
+//	DEBUG = 5;
+	TRACE(3);
+	if(event.type == EVENT_DELAYED_REQUEST)
+	{
+		TRACE(2);
+		if(event.args[0].datum.v_asInt[0] == 20)
+		{
+			TRACE(3);
+			string s(event.args[2].datum.v_asChar);
+			TRACE(5);
+			printf("LTI: %s\n",event.args[2].datum.v_asChar);
+			GeoObject* temp = (GeoObject*)(globalRM->GetIDRetaining(globalRM->ResolveLTI(s)));
+			TRACE(5);
+			setFocus(temp);
+			TRACE(5);
+			return true;
+		}
+		TRACE(3);
+	}
+	TRACE(5);
+//	DEBUG = 0;
 	return GeoObject::onEvent(event);
 }
 
-void cameraCallBack(const delayedRequest& val)
-{
-	TRACE(3);
-	printf("LTI: %s\n",val.LTI.c_str());
-	printf("Recv: %i\n",(int)val.recv);
-	printf("funcID: %i\n",val.funcID);
-	printf("method Pointer: %li\n",(long int) val.callBack);
-	printf("Temp is at: %li\n", (long int) &val);
-	Object* temp = (Object*)(globalRM->GetIDRetaining(globalRM->ResolveLTI(val.LTI)));
-	TRACE(5);
-	Camera* cam = (Camera*)(globalRM->GetIDRetaining(val.recv));
-	TRACE(5);
-	switch (val.funcID)
-	{
-		case 1:
-			TRACE(5);
-			cam->setFocus((GeoObject*)temp);
-			TRACE(5);
-			break;
-		default:
-			TRACE(5);
-			break;
-	}
-	TRACE(3);
-}
+//void cameraCallBack(const delayedRequest& val)
+//{
+//	TRACE(3);
+//	printf("LTI: %s\n",val.LTI.c_str());
+//	printf("Recv: %i\n",(int)val.recv);
+//	printf("funcID: %i\n",val.funcID);
+//	printf("method Pointer: %li\n",(long int) val.callBack);
+//	printf("Temp is at: %li\n", (long int) &val);
+//	Object* temp = (Object*)(globalRM->GetIDRetaining(globalRM->ResolveLTI(val.LTI)));
+//	TRACE(5);
+//	Camera* cam = (Camera*)(globalRM->GetIDRetaining(val.recv));
+//	TRACE(5);
+//	switch (val.funcID)
+//	{
+//		case 1:
+//			TRACE(5);
+//			cam->setFocus((GeoObject*)temp);
+//			TRACE(5);
+//			break;
+//		default:
+//			TRACE(5);
+//			break;
+//	}
+//	TRACE(3);
+//}
 
 #endif
 /*.S.D.G.*/

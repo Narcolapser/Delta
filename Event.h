@@ -53,6 +53,13 @@ enum event_t
 		//Arg Type:: Bool
 		//Args contain: true.
 		//Applicable: Resource Manager and Interface.
+	EVENT_DELAYED_REQUEST,//This event is used chiefly during load time to hook up the UI.
+		//Arg Type:: multiple. varries with context.
+		//Args contain: arg[0][0] contains a function ID to be parsed by the reciving class
+		//arg[0][1:3] contain the information to be passed.
+		//arg[1] contains extra information if needed.
+		//arg[2:3] contain an LTI, 31 characters + '\0' to uniquely identify 
+		//Applicable: Any decendant of "Object"
 	EVENT_COUNT//This is a counter for all the number of Unique Events.
 };
 
@@ -61,6 +68,7 @@ class Event
 public:
 	Event(UID _sender, event_t _type);
 	Event();
+	Event(const Event& event);
 	virtual ~Event();
 	bool setArg(Variant arg);
 	bool setArgs(Variant arg1, Variant arg2, Variant arg3, Variant arg4);
@@ -78,6 +86,7 @@ public:
 	event_t type;
 	Variant args[ARG_COUNT];
 	UID sender;
+	UID receiver;
 };
 
 

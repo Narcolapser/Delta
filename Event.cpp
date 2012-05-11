@@ -5,6 +5,7 @@
 Event::Event(UID _sender, event_t _type)
 {
 	sender = sender;
+	receiver = (UID)0;
 	type = _type;
 	args[0] = Variant();
 	args[1] = Variant();
@@ -14,11 +15,22 @@ Event::Event(UID _sender, event_t _type)
 Event::Event()
 {
 	sender = (UID)0;
+	receiver = (UID)0;
 	type = NOT_EVENT;
 	args[0] = Variant();
 	args[1] = Variant();
 	args[2] = Variant();
 	args[3] = Variant();
+}
+Event::Event(const Event& event)
+{
+	sender = event.sender;
+	receiver = event.receiver;
+	type = event.type;
+	args[0] = event.args[0];
+	args[1] = event.args[1];
+	args[2] = event.args[2];
+	args[3] = event.args[3];
 }
 Event::~Event()
 {

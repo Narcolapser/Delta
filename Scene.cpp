@@ -24,6 +24,7 @@ void Scene::load(xml_node self, Object* parent, string path)
 
 	//temporary holder for the instantiation of the new object.
 	Object* temp;
+	Event* e;
 	TRACE(5);
 	switch(name)
 	{//switch over all the possibilities. if the object type is one that isn't known, ignore it
@@ -51,16 +52,25 @@ void Scene::load(xml_node self, Object* parent, string path)
 		break;
 	case EVENT:
 		TRACE(5);
-//		Event e(loadEvent)
-//		delayedRequest temp;
-//		temp.callBack = &eventCallBack;
-//		temp.LTI = self.attribute("focus").value();
-//		temp.recv = ID;
-//		temp.funcID = 1;
-//		globalRM->RegisterRequest(temp);
+		e = new Event();
+		if(self.attribute("external").as_bool())
+		{
+			e->receiver = (UID)1;
+			e->type = EVENT_DELAYED_REQUEST;
+			e->args[0].datum.v_asInt[0] = self.attribute("funcID").as_int();
+			e->args[0].datum.v_asInt[1] = self.attribute("binding").as_int();
+			e->args[1].datum.v_asFloat[0] = self.attribute("arg0").as_float();
+			e->args[1].datum.v_asFloat[1] = self.attribute("arg1").as_float();
+			e->args[1].datum.v_asFloat[2] = self.attribute("arg2").as_float();
+			e->args[1].datum.v_asFloat[3] = self.attribute("arg3").as_float();
+			strcpy(e->args[2].datum.v_asChar,self.attribute("recv").value());
+			//printf("LTI: %s\n",e->args[2].datum.v_asChar);
+		}		
+		globalRM->RegisterRequest(*e);
 		break;				
 	default:
 		TRACE(5);
+		printf("FAIL!\n");
 		break;
 	}
 	//finally loop through and load all of this object's children. if it doesn't have any, this

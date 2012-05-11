@@ -16,14 +16,15 @@
 
 #include "Event.cpp"
 #include "Object.cpp"
+#include "ResourceManager.h"
 
 using namespace std;
 
-class Interface
+class Interface: public Object
 {
 public:
 	Interface();
-	~Interface();
+	virtual ~Interface();
 	void update();
 	void registerToExternal(int key, Object* val, const Event& event);
 //	void init(const char* title, int _x, int _y);
@@ -32,6 +33,7 @@ public:
 	void motionFunc(int x, int y);
 	void passiveMotionFunc(int x, int y);
 	void mouseFunc(int button, int state, int x, int y);
+	virtual bool onEvent(const Event& event);
 //	void displayFunc();
 //	void idleFunc();
 //	void reshapeFunc(int width, int height);

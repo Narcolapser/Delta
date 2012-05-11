@@ -17,6 +17,7 @@
 
 Interface::Interface()
 {
+	ID = (UID)1;
 	specialKeys[0] = false;
 	specialKeys[1] = false;
 	specialKeys[2] = false;
@@ -42,6 +43,12 @@ Interface::Interface()
 //	specialEvents[0] = vector<recEvent>;
 	printf("Interface instanciated!\n");
 }
+
+Interface::~Interface()
+{
+
+}
+
 void Interface::update()
 {
 	TRACE(1);
@@ -81,7 +88,38 @@ void specialUpFunc(int key, int x, int y)
 {
 
 }
+bool Interface::onEvent(const Event& event)
+{
 
+//	Event move2((UID)0,EVENT_MOVE);
+//	move2.setArgs(0.0f,0.0f,-0.01f,0.0f);
+//	globalIn->registerToExternal(103,((Object*)foo->models[1]),move2);	
+
+	Event* e;
+
+	switch(event.args[0].datum.v_asInt[0])
+	{
+		case 1:
+			e = new Event();
+			e->sender = ID;
+			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);
+			e->args[0] = event.args[1];
+			e->type = EVENT_MOVE;
+			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);
+			break;
+		case 2:
+			e = new Event();
+			e->sender = ID;
+			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);
+			e->args[0] = event.args[1];
+			e->type = EVENT_ROTATE;
+			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);
+			break;
+		default:
+			break;
+	}
+	return true;
+}
 
 /*.S.D.G.*/
 
