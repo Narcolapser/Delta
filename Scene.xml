@@ -1,15 +1,15 @@
 <Scene path="Scene">
 	<Model path="floor.obj" />
-	<Model path="sphere.obj" LTI="lookie">
+	<Model path="cube.obj" LTI="lookie">
 		<Camera locX="0" locY="0" locZ="-30" fov="45" dimX="800" dimY="600" clipNear="0.1" clipFar="1000" focus="lookie"/>
-		<Model path="sphere.obj" locX="5" locY="4" locZ="0"/>
+		<Model path="cube.obj" locX="5" locY="4" locZ="0"/>
 	</Model>
 	<Model path="level.obj" locY="-10" LTI="level"/>
 	<Program vertexShader="cube.v.glsl" fragmentShader="cube.f.glsl" VP="mvp" local="local"/>
-	<Event external="True" binding="104" recv="lookie" funcID="1" arg0="0" arg1="0" arg2="0.01" arg3="0"/>
-	<Event external="True" binding="103" recv="lookie" funcID="1" arg0="0" arg1="0" arg2="-0.01" arg3="0"/>
-	<Event external="True" binding="120" recv="lookie" funcID="2" arg0="0.01" arg1="0" arg2="0" arg3="0"/>
-	<Event external="True" binding="121" recv="lookie" funcID="2" arg0="0" arg1="0.01" arg2="0" arg3="0"/>
-	<Event external="True" binding="122" recv="lookie" funcID="2" arg0="0" arg1="0" arg2="0.01" arg3="0"/>
+	<Event external="True" binding="104" recv="lookie" funcID="1" arg0="0" arg1="0" arg2="0.1" arg3="0"/>
+	<Event external="True" binding="103" recv="lookie" funcID="1" arg0="0" arg1="0" arg2="-0.1" arg3="0"/>
+	<Event external="True" binding="120" recv="lookie" funcID="2" arg0="0.1" arg1="0" arg2="0" arg3="0"/>
+	<Event external="True" binding="121" recv="lookie" funcID="2" arg0="0" arg1="0.1" arg2="0" arg3="0"/>
+	<Event external="True" binding="122" recv="lookie" funcID="2" arg0="0" arg1="0" arg2="0.1" arg3="0"/>
 </Scene>
 

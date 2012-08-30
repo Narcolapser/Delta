@@ -1,0 +1,1 @@
+Back from my summer Hiatus, I'm now considering the respawn system. In order to spawn an object, i need to know what kind of object it is. Question: can something other than a Mesh/Model be spawned? basically no. next question, 

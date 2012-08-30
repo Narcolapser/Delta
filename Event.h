@@ -60,6 +60,9 @@ enum event_t
 		//arg[1] contains extra information if needed.
 		//arg[2:3] contain an LTI, 31 characters + '\0' to uniquely identify 
 		//Applicable: Any decendant of "Object"
+	EVENT_SPAWN_OBJECT,//This event is used for the creation of new objects at run time.
+		//Arg type:: Multiple
+		//Args contain: arg[0][0] contains the UID of the object to create
 	EVENT_COUNT//This is a counter for all the number of Unique Events.
 };
 
