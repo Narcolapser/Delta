@@ -53,7 +53,7 @@ void Scene::load(xml_node self, Object* parent, string path)
 	case EVENT:
 		TRACE(5);
 		e = new Event();
-		if(self.attribute("external").as_bool())
+		if(self.attribute("external").as_bool() && self.attribute("funcID").as_int() != 3)
 		{
 			e->receiver = (UID)1;
 			e->type = EVENT_DELAYED_REQUEST;
@@ -65,7 +65,11 @@ void Scene::load(xml_node self, Object* parent, string path)
 			e->args[1].datum.v_asFloat[3] = self.attribute("arg3").as_float();
 			strcpy(e->args[2].datum.v_asChar,self.attribute("recv").value());
 			//printf("LTI: %s\n",e->args[2].datum.v_asChar);
-		}		
+		}
+		else if(self.attribute("funcID").as_int() == 3)
+		{
+			
+		}
 		globalRM->RegisterRequest(*e);
 		break;				
 	default:

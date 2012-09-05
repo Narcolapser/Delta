@@ -1,0 +1,5 @@
+I've got the description of the spawn event:
+	<Event external="True" binding="32" recv="pScene" 
+		funcID="3" path="cube.obj" arg0="5" arg1="0" arg2="0" arg3="0"/>
+
+This will create a new object at 5,0,0 of the type "cube". now to get it registered. For starters I'm just going to link up the spawn event to connect to a user pressing a key. 

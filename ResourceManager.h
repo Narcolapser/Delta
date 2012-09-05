@@ -3,7 +3,8 @@
  * for now, I've got this as a small first step. 
  */
 
-#include "Interface.cpp"
+//#include "Interface.cpp"
+
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
 

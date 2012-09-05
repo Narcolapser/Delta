@@ -63,6 +63,7 @@ enum event_t
 	EVENT_SPAWN_OBJECT,//This event is used for the creation of new objects at run time.
 		//Arg type:: Multiple
 		//Args contain: arg[0][0] contains the UID of the object to create
+		//arg[0][1:3] contain the locative information.
 	EVENT_COUNT//This is a counter for all the number of Unique Events.
 };
 
@@ -77,6 +78,7 @@ public:
 	bool setArgs(Variant arg1, Variant arg2, Variant arg3, Variant arg4);
 	bool setArgs(int val0, int val1, int val2, int val3);
 	bool setArgs(float val0, float val1, float val2, float val3);
+	bool setArgs(char* val, int len);
 	
 	bool inline isBool(int arg){return args[arg].type==TYPE_BOOL;}
 	bool inline isChar(int arg){return args[arg].type==TYPE_CHAR;}

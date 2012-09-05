@@ -65,6 +65,13 @@ bool Event::setArgs(float val0, float val1, float val2, float val3)
 {
 	args[0] = Variant(val0,val1,val2,val3);
 }
+bool Event::setArgs(char* val, int len)
+{
+	for(int i = 0; i < len; i++)
+	{
+		args[i] = val[i];
+	}
+}
 
 /*.S.D.G.*/
 #endif

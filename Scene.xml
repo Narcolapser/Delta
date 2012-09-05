@@ -1,4 +1,4 @@
-<Scene path="Scene">
+<Scene path="Scene" LTI="pScene">
 	<Model path="floor.obj" />
 	<Model path="cube.obj" LTI="lookie">
 		<Camera locX="0" locY="0" locZ="-30" fov="45" dimX="800" dimY="600" clipNear="0.1" clipFar="1000" focus="lookie"/>
@@ -11,5 +11,7 @@
 	<Event external="True" binding="120" recv="lookie" funcID="2" arg0="0.1" arg1="0" arg2="0" arg3="0"/>
 	<Event external="True" binding="121" recv="lookie" funcID="2" arg0="0" arg1="0.1" arg2="0" arg3="0"/>
 	<Event external="True" binding="122" recv="lookie" funcID="2" arg0="0" arg1="0" arg2="0.1" arg3="0"/>
+	<Event external="True" binding="32" recv="pScene" 
+		funcID="3" path="cube.obj" arg0="5" arg1="0" arg2="0" arg3="0"/>
 </Scene>
 

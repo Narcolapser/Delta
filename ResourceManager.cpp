@@ -1,6 +1,7 @@
 #ifndef RESOURCEMANAGER_CPP
 #define RESOURCEMANAGER_CPP
 #include "ResourceManager.h"
+#include "Interface.cpp"
 ResourceManager::ResourceManager()
 {//the constructor. not much to construct. just need to initalize the local variables.
 	IDc = 1;

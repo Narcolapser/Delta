@@ -73,7 +73,7 @@ void Interface::registerToExternal(int key, Object* val, const Event& event)
 void keyFunc(unsigned char key, int x, int y)
 {
 	globalIn->normalKeys[key]=true;
-//	printf("Raised: %c #%i\n",key,(int)key);
+	printf("Raised: %c #%i\n",key,(int)key);
 }
 void specialFunc(int key, int x, int y)
 {
@@ -82,7 +82,7 @@ void specialFunc(int key, int x, int y)
 void keyUpFunc(unsigned char key, int x, int y)
 {
 	globalIn->normalKeys[key]=false;
-//	printf("Lowered: %c #%i\n",key,(int)key);
+	printf("Lowered: %c #%i\n",key,(int)key);
 }
 void specialUpFunc(int key, int x, int y)
 {
@@ -97,6 +97,10 @@ bool Interface::onEvent(const Event& event)
 
 	Event* e;
 
+	//the cases to this switch are arbitrarily assigned values.
+	//1 = move object
+	//2 = rotate object
+	//3 = spawn object
 	switch(event.args[0].datum.v_asInt[0])
 	{
 		case 1:
@@ -114,6 +118,11 @@ bool Interface::onEvent(const Event& event)
 			e->args[0] = event.args[1];
 			e->type = EVENT_ROTATE;
 			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);
+			break;
+
+		case 3:
+			e = new Event();
+			e->sender = ID;
 			break;
 		default:
 			break;
