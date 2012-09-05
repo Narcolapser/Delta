@@ -68,7 +68,15 @@ void Scene::load(xml_node self, Object* parent, string path)
 		}
 		else if(self.attribute("funcID").as_int() == 3)
 		{
-			
+			e->receiver = (UID)1;
+			e->type = EVENT_DELAYED_REQUEST;
+			e->args[0].datum.v_asInt[0] = self.attribute("funcID").as_int();
+			e->args[0].datum.v_asInt[1] = self.attribute("binding").as_int();
+			e->args[0].datum.v_asInt[2] = globalRM->LoadMesh((path + string(self.attribute("path").value())).c_str());
+			e->args[1].datum.v_asFloat[0] = self.attribute("arg0").as_float();
+			e->args[1].datum.v_asFloat[1] = self.attribute("arg1").as_float();
+			e->args[1].datum.v_asFloat[2] = self.attribute("arg2").as_float();
+			strcpy(e->args[2].datum.v_asChar,self.attribute("recv").value());
 		}
 		globalRM->RegisterRequest(*e);
 		break;				
@@ -134,6 +142,15 @@ void Scene::bindToProgram(int val)
 
 bool Scene::onEvent(const Event& event)
 {
+	if(event.type == EVENT_SPAWN_OBJECT)
+	{
+		Object* temp;
+		temp = new Model((UID)event.args[0].datum.v_asInt[0],
+			event.args[0].datum.v_asFloat[1],
+			event.args[0].datum.v_asFloat[2],
+			event.args[0].datum.v_asFloat[3]);
+		models.push_back((Model*)temp);
+	}
 	return false;
 }
 

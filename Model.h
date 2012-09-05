@@ -20,6 +20,7 @@ class Model: public GeoObject
 {
 public:
 	Model(UID _meshID);
+	Model(UID _meshID, float x, float y, float z);
 	Model(xml_node& self, string path);
 	~Model();
 	void bindToProgram(Program* prog, GLint _local);

@@ -78,7 +78,7 @@ public:
 	bool setArgs(Variant arg1, Variant arg2, Variant arg3, Variant arg4);
 	bool setArgs(int val0, int val1, int val2, int val3);
 	bool setArgs(float val0, float val1, float val2, float val3);
-	bool setArgs(char* val, int len);
+	bool setArgs(int arg, char* val, int len);
 	
 	bool inline isBool(int arg){return args[arg].type==TYPE_BOOL;}
 	bool inline isChar(int arg){return args[arg].type==TYPE_CHAR;}
@@ -89,9 +89,10 @@ public:
 	bool inline isDouble(int arg){return args[arg].type==TYPE_DOUBLE;}
 //private:
 	event_t type;
-	Variant args[ARG_COUNT];
 	UID sender;
 	UID receiver;
+	int pad;
+	Variant args[ARG_COUNT];
 };
 
 

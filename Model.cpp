@@ -17,6 +17,14 @@ Model::Model(UID _meshID)
 	local = 0;
 	ID = globalRM->RequestID();
 }
+Model::Model(UID _meshID, float x, float y, float z)
+{
+	mesh = (Mesh*)globalRM->GetIDRetaining(_meshID);
+	meshID = _meshID;
+	local = 0;
+	ID = globalRM->RequestID();
+	loc = glm::vec3(x,y,z);
+}
 Model::Model(xml_node& self, string path)
 {
 //	printf("Loading: %s\n",(path + self.attribute("path").value()).c_str());

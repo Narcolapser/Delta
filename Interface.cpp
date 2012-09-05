@@ -123,6 +123,13 @@ bool Interface::onEvent(const Event& event)
 		case 3:
 			e = new Event();
 			e->sender = ID;
+			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);
+			e->args[0].datum.v_asInt[0] = event.args[0].datum.v_asInt[2];
+			e->args[0].datum.v_asFloat[1] = event.args[1].datum.v_asFloat[0];
+			e->args[0].datum.v_asFloat[2] = event.args[1].datum.v_asFloat[1];
+			e->args[0].datum.v_asFloat[3] = event.args[1].datum.v_asFloat[2];
+			e->type = EVENT_SPAWN_OBJECT;
+			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);
 			break;
 		default:
 			break;
