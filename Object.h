@@ -27,7 +27,7 @@ public:
 	virtual ~Object();
 	UID getID();
 	virtual bool onEvent(const Event& event);
-protected:
+//protected:
 	UID ID;
 	//delta_t type;
 };

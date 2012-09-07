@@ -60,8 +60,18 @@ void Interface::update()
 			TRACE(3);
 			for(int j = 0; j < normalEvents[i].size(); ++j)
 			{
+				printf("num events: %li j: %i\n",normalEvents[i].size(),j);
 				TRACE(5);
-				normalEvents[i][j].recv->onEvent(normalEvents[i][j].send);
+				Object* temp = normalEvents[i][j].recv;
+				TRACE(5);
+				printf("temp pointer is: %li\n",(long int)(temp));
+				TRACE(5);
+				printf("temp is a %i\n",(int)(temp->ID));
+				Event stemp;
+				stemp = normalEvents[i][j].send;
+				TRACE(5);
+				temp->onEvent(stemp);
+				TRACE(5);
 			}
 		}
 	}
@@ -90,7 +100,7 @@ void specialUpFunc(int key, int x, int y)
 }
 bool Interface::onEvent(const Event& event)
 {
-
+	TRACE(1);
 //	Event move2((UID)0,EVENT_MOVE);
 //	move2.setArgs(0.0f,0.0f,-0.01f,0.0f);
 //	globalIn->registerToExternal(103,((Object*)foo->models[1]),move2);	
@@ -104,34 +114,38 @@ bool Interface::onEvent(const Event& event)
 	switch(event.args[0].datum.v_asInt[0])
 	{
 		case 1:
-			e = new Event();
-			e->sender = ID;
-			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);
-			e->args[0] = event.args[1];
-			e->type = EVENT_MOVE;
-			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);
+			TRACE(3);
+			e = new Event();TRACE(5);
+			e->sender = ID;TRACE(5);
+			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);TRACE(5);
+			e->args[0] = event.args[1];TRACE(5);
+			e->type = EVENT_MOVE;TRACE(5);
+			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);TRACE(5);
 			break;
 		case 2:
-			e = new Event();
-			e->sender = ID;
-			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);
-			e->args[0] = event.args[1];
-			e->type = EVENT_ROTATE;
-			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);
+			TRACE(3);
+			e = new Event();TRACE(5);
+			e->sender = ID;TRACE(5);
+			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);TRACE(5);
+			e->args[0] = event.args[1];TRACE(5);
+			e->type = EVENT_ROTATE;TRACE(5);
+			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);TRACE(5);
 			break;
 
 		case 3:
-			e = new Event();
-			e->sender = ID;
-			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);
-			e->args[0].datum.v_asInt[0] = event.args[0].datum.v_asInt[2];
-			e->args[0].datum.v_asFloat[1] = event.args[1].datum.v_asFloat[0];
-			e->args[0].datum.v_asFloat[2] = event.args[1].datum.v_asFloat[1];
-			e->args[0].datum.v_asFloat[3] = event.args[1].datum.v_asFloat[2];
-			e->type = EVENT_SPAWN_OBJECT;
-			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);
+			TRACE(3);
+			e = new Event();TRACE(5);
+			e->sender = ID;TRACE(5);
+			e->receiver = globalRM->ResolveLTI(event.args[2].datum.v_asChar);TRACE(5);
+			e->args[0].datum.v_asInt[0] = event.args[0].datum.v_asInt[2];TRACE(5);
+			e->args[0].datum.v_asFloat[1] = event.args[1].datum.v_asFloat[0];TRACE(5);
+			e->args[0].datum.v_asFloat[2] = event.args[1].datum.v_asFloat[1];TRACE(5);
+			e->args[0].datum.v_asFloat[3] = event.args[1].datum.v_asFloat[2];TRACE(5);
+			e->type = EVENT_SPAWN_OBJECT;TRACE(5);
+			registerToExternal(event.args[0].datum.v_asInt[1],globalRM->GetIDNonRetaining(e->receiver),*e);TRACE(5);
 			break;
 		default:
+			TRACE(3);
 			break;
 	}
 	return true;

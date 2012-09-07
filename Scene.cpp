@@ -142,14 +142,16 @@ void Scene::bindToProgram(int val)
 
 bool Scene::onEvent(const Event& event)
 {
+	TRACE(2);
 	if(event.type == EVENT_SPAWN_OBJECT)
 	{
-		Object* temp;
+		TRACE(3);
+		Object* temp;TRACE(5);
 		temp = new Model((UID)event.args[0].datum.v_asInt[0],
 			event.args[0].datum.v_asFloat[1],
 			event.args[0].datum.v_asFloat[2],
-			event.args[0].datum.v_asFloat[3]);
-		models.push_back((Model*)temp);
+			event.args[0].datum.v_asFloat[3]);TRACE(5);
+		models.push_back((Model*)temp);TRACE(5);
 	}
 	return false;
 }

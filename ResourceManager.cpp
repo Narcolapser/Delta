@@ -97,10 +97,12 @@ Object* ResourceManager::GetIDRetaining(UID val)
 }
 Object* ResourceManager::GetIDNonRetaining(UID val)
 {
-	int idLoc = findLease(val);
+	TRACE(2);
+	int idLoc = findLease(val);TRACE(5);
 	if(idLoc == -1) return NULL;
-	Lease *temp = leases[idLoc];
+	Lease *temp = leases[idLoc];TRACE(5);
 	if(temp->refCount == 0) return NULL;
+	TRACE(5);
 	return temp->pointer;
 }
 void ResourceManager::Release(UID val)
@@ -113,24 +115,34 @@ void ResourceManager::Release(UID val)
 }
 int ResourceManager::findLease(UID val)
 {
+	TRACE(2);
 	//this is a simple binary search for the lease requested by UID. Because I can depend on
 	//vector keeping things in chronological order, and I know that the ID's are given out
 	//sequentially, I know that the object isn't going to be any higher than its ID number.
 	//further, it can only be as low as the number of releases that have happened. this means
 	//that the lowest possible location is the ID - the freeCount. If there were 1m objects
 	//this would take 20 searches with out this trick. with this trick the number can be
-	//as low as 1 if there have been now releases, with a probable case of like 6-8. woohoo!
+	//as low as 1 if there have been no releases, with a probable case of like 6-8. woohoo!
 	int high = val;
 	int low = val - freeCount;
-	int mid;
+	int mid;TRACE(5);
 	for(mid = low + ((high - low)/2);mid != low && leases[mid]->ID != val;)
 	{
+		TRACE(3);
 		if(leases[mid]->ID > val) low = mid;
 		else if(leases[mid]->ID < val) high = mid;
 		else return mid;
-		mid = low + ((high - low)/2);
+		TRACE(5);
+		mid = low + ((high - low)/2);TRACE(5);
 	}
-	if(leases[mid]->ID == val) return mid;
+	TRACE(5);
+	printf("high: %i mid: %i low: %i \n",high, mid, low);
+	if(mid != -1 && leases[mid]->ID == val) 
+	{
+		TRACE(5);
+		return mid;
+	}
+	TRACE(5);
 	return -1;
 }
 UID ResourceManager::isDuplicate(const char* val)
@@ -189,6 +201,7 @@ ResourceManager::Lease::~Lease()
 }
 bool ResourceManager::onEvent(const Event& event)
 {
+	TRACE(5);
 	return false;
 }
 bool ResourceManager::RegisterLTI(string val, UID bar)
@@ -202,7 +215,11 @@ bool ResourceManager::RegisterLTI(string val, UID bar)
 UID ResourceManager::ResolveLTI(string val)
 {
 	TRACE(4);
-	if(LTIReg.count(val)==0) return false;//place holder function, i'll flush this out later.
+	if(LTIReg.count(val)==0) 
+	{
+		TRACE(4);
+		return false;//place holder function, i'll flush this out later.
+	}
 	TRACE(4);
 	return LTIReg[val];
 }
@@ -221,8 +238,18 @@ void ResourceManager::ResolveRequests()
 //		DeReqs[0].callBack(DeReqs[0]);
 //		printf("ID: %i\n",(UID)DeReqs[0].receiver);
 //		printf("location: %li\n\n",(long int)GetIDNonRetaining(DeReqs[0].receiver));
-		if (DeReqs[0].receiver == (UID)1) globalIn->onEvent(DeReqs[0]);
-		else GetIDNonRetaining(DeReqs[0].receiver)->onEvent(DeReqs[0]);
+		if (DeReqs[0].receiver == (UID)1)
+		{
+			TRACE(5);
+			globalIn->onEvent(DeReqs[0]);
+			TRACE(5);
+		}
+		else 
+		{
+			TRACE(5);
+			GetIDNonRetaining(DeReqs[0].receiver)->onEvent(DeReqs[0]);
+			TRACE(5);
+		}
 		TRACE(5);
 		DeReqs.erase(DeReqs.begin());
 	}

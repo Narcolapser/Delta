@@ -1,0 +1,5 @@
+Well, I broke the player interaction system but most importantly, i've realized quite a few things.
+
+I'm handling spawning object in the engine code. The engine should be managing objects and raising events, but it should not be handling something such as this. that is more the job of the scripting system. I have no scripting system.
+
+I'm calling it quits on Delta. This has been a worth while endevour, but I must press on to something else now as I'm hitting dead ends. So i now conclude alpha 14. Tomorrow, when I get the chance, I will make my final pass through and clean the code. update the class diagram. and complete alpha 15 making the conclusion of Delta.

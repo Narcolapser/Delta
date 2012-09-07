@@ -31,7 +31,7 @@ Model::Model(xml_node& self, string path)
 	//load the mesh, but do so through the resource manager to prevent duplicates.
 	mesh = (Mesh*)globalRM->GetIDNonRetaining(
 			globalRM->LoadMesh((path + self.attribute("path").value()).c_str()));
-	printf("Mesh ID for %s is %i\n",self.attribute("path").value(),(int)mesh);
+//	printf("Mesh ID for %s is %i\n",self.attribute("path").value(),(int)mesh);
 	//move it according to what is given in the xml.
 	move(self.attribute("locX").as_float(),
 		self.attribute("locY").as_float(),
