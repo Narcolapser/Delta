@@ -17,7 +17,9 @@
 
 Interface::Interface()
 {
+	//the interface is given special assignment for UID of 1. 
 	ID = (UID)1;
+	//this initalizes all the special key assignments. 
 	specialKeys[0] = false;
 	specialKeys[1] = false;
 	specialKeys[2] = false;
@@ -46,65 +48,54 @@ Interface::Interface()
 
 Interface::~Interface()
 {
-
+	//there really isn't anything that needs to be deconstructed.
 }
 
 void Interface::update()
-{
+{//this loop goes through all of the normal key events and dispatches them accordingly.
 	TRACE(1);
 	for(int i = 0; i<256; ++i)
 	{
 		TRACE(2);
 		if(normalKeys[i])
-		{
+		{//check if this key is down.
 			TRACE(3);
 			for(int j = 0; j < normalEvents[i].size(); ++j)
-			{
-				printf("num events: %li j: %i\n",normalEvents[i].size(),j);
+			{//this loop does the actual dispatching.
 				TRACE(5);
-				Object* temp = normalEvents[i][j].recv;
-				TRACE(5);
-				printf("temp pointer is: %li\n",(long int)(temp));
-				TRACE(5);
-				printf("temp is a %i\n",(int)(temp->ID));
+				Object* temp = normalEvents[i][j].recv;TRACE(5);
 				Event stemp;
-				stemp = normalEvents[i][j].send;
-				TRACE(5);
-				temp->onEvent(stemp);
-				TRACE(5);
+				stemp = normalEvents[i][j].send;TRACE(5);
+				temp->onEvent(stemp);TRACE(5);
 			}
 		}
 	}
 }
 void Interface::registerToExternal(int key, Object* val, const Event& event)
-{
+{//this registers an event to a key being pressed.
 	normalEvents[key].push_back(recEvent(event,val));
 }
 void keyFunc(unsigned char key, int x, int y)
-{
+{//function to pass to GLUT for managing a key being pressed.
 	globalIn->normalKeys[key]=true;
 	printf("Raised: %c #%i\n",key,(int)key);
 }
 void specialFunc(int key, int x, int y)
-{
+{//function to pass to GLUT for managing special keys being pressed.
 	printf("key: %i\n",key);
 }
 void keyUpFunc(unsigned char key, int x, int y)
-{
+{//function to pass to GLUT for keys being raised.
 	globalIn->normalKeys[key]=false;
 	printf("Lowered: %c #%i\n",key,(int)key);
 }
 void specialUpFunc(int key, int x, int y)
 {
-
+	//never got around writting this function, but it would manage special keys being released.
 }
 bool Interface::onEvent(const Event& event)
 {
 	TRACE(1);
-//	Event move2((UID)0,EVENT_MOVE);
-//	move2.setArgs(0.0f,0.0f,-0.01f,0.0f);
-//	globalIn->registerToExternal(103,((Object*)foo->models[1]),move2);	
-
 	Event* e;
 
 	//the cases to this switch are arbitrarily assigned values.

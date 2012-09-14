@@ -101,15 +101,11 @@ void Scene::render()
 	if(renderer==NULL) {bindToProgram(0); TRACE(5);}
 	if(viewPoint == NULL) {viewPoint = cameras[0]; TRACE(5);}
 	renderer->use();TRACE(3);
-//	glm::mat4 temp1 = viewPoint->getProjection();TRACE(5);
-//	glm::mat4 temp2 = viewPoint->view();TRACE(5);
-//	glm::mat4 temp = temp1 * temp2;TRACE(5);
 	glUniformMatrix4fv(renderer->getVP(), 1, GL_FALSE,
 		glm::value_ptr(viewPoint->getProjection()*viewPoint->view()));TRACE(5);
 	//this loops through and renders each mesh that is in the vector. I might add a system for
 	//checking to see if the object is currently flagged to render or not, but for now this
 	//just gets things onto the screen which is what matters.
-//	printf("Rendering objects:\n");
 	for(int i = 0; i < models.size(); i++)
 	{
 		TRACE(5);
@@ -155,9 +151,5 @@ bool Scene::onEvent(const Event& event)
 	}
 	return false;
 }
-
-//	switch((variant_t)self.attribute("argsType"))
-//		{
-//			case TYPE_FLOAT:
 
 /*.S.D.G.*/

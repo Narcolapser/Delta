@@ -100,6 +100,8 @@ Mesh::Mesh(const char* filename)
 	}
 
 	for(int i = vertc*4; i-->0;vertNorms[i] = 0);
+
+	//find the normal for each vertex.
 	for(int i = 0; i < elc; i++)
 	{
 		vertNorms[elarray[i*3]*4] += faceNorms[i*3];
@@ -155,17 +157,16 @@ Mesh::~Mesh()
 	delete normals;
 }
 void Mesh::bindToProgram(Program *prog)
-{
+{//bind the buffers to a program so that they can be used by said program.
 	coords->bindToProgram(prog);
 	normals->bindToProgram(prog);
 }
 void Mesh::assignID(UID val)
-{
+{//give the mesh its object ID.
 	ID = val;
 }
 void Mesh::render()
-{
-//	Mesh *cube = this;
+{//render the mesh to the screen.
 	this->coords->enable();
 	this->normals->enable();
 	this->elements->bind();
@@ -175,22 +176,9 @@ void Mesh::render()
 
 
 bool Mesh::onEvent(const Event& event)
-{
+{//respond to events.
 	return false;
 }
 #endif
 
 /*.S.D.G.*/
-
-/*little references:
-
-    glm::vec4 v(0);
-    glm::mat4 m(0);
-    glVertex3fv(glm::value_ptr(v));
-    glLoadMatrixfv(glm::value_ptr(m)); 
-
-    glm::vec4 v(0);
-    glm::mat4 m(0);
-    glVertex3fv(&v[0]);
-    glLoadMatrixfv(&m[0][0]); 
-*/

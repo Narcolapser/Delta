@@ -9,7 +9,7 @@
 #include "GeoObject.h"
 
 GeoObject::GeoObject()
-{
+{//default constructor for geoobject.
 	loc = glm::vec3(0.0f);
 	rotX = 0;
 	rotY = 0;
@@ -22,33 +22,22 @@ GeoObject::GeoObject()
 }
 glm::mat4 GeoObject::getTrans()
 {
-//	if (parent)
-//	{
-//		if(ptranC < parent->getTranC())
-//		{
-//			newTrans = false;
-//			printf("ptranC: %li parent->tranC: %li\n",ptranC,parent->getTranC());
-//		}
-//		ptranC = parent->getTranC();
-//	}			
-//	if (newTrans) return trans;
-//	printf("Check point trans1\n");
+	//this was to have programing to check for if there is a new transformation 
+	//was needed or not. but the tricky with the parent matrix I never got working, so it just
+	//always updates the transformation matrix.
 	updateTrans();
-//	printf("Check point trans2\n");
 	return trans;
 }
 glm::vec3 GeoObject::getGlobalLoc()
 {
-//	printf("Check point 1, rot %f\n",rotX);
 	//this method returns an object in model space. regaurdless of camera or anything,
 	//it just gets where the object is. because these are homogeneous coordinates, the
 	//first 3 components of the vector get divided by the 4th to get consistency.
 	glm::vec4 temp = getTrans() * glm::vec4(1.0f);
-//	printf("Check point 2\n");
 	return glm::vec3(temp.x/temp.w,temp.y/temp.w,temp.z/temp.w);
 }
 void GeoObject::move(float x, float y, float z)
-{
+{//this moves an object by the amount given. so this is an addative method. setLoc is not.
 	if(!(x == 0 && y == 0 && z == 0))
 	{
 		loc = loc + glm::vec3(x,y,z);
@@ -56,7 +45,7 @@ void GeoObject::move(float x, float y, float z)
 	}
 }
 void GeoObject::rotate(float _x, float _y, float _z)
-{
+{//this rotates an object by the amount given, and thus is addative, setRot is not.
 	//these calculations are the same as below, follow link below for detail.
 	if(!(_x == 0 && _y == 0 && _z == 0))
 	{
@@ -89,7 +78,7 @@ void GeoObject::rotate(float _x, float _y, float _z)
 }
 
 void GeoObject::setLoc(glm::vec3 _loc)
-{
+{//this sets the location to the one passed. Regaurdless of what the current location.
 	if(loc!=_loc)
 	{
 		loc = _loc;

@@ -12,9 +12,6 @@
 
 using namespace std;
 
-//hopefully these global variables will be going away soon.
-//Camera *c;
-//Program *prog;
 Scene *foo;
 glm::mat4 projection,view;
 
@@ -44,61 +41,15 @@ int init_resources()
 	//seed the random number generator.
 	srand(time(NULL));
 
-	//PROGRAM:////////////////////////////////////////////////////////////////////
-	//this handles the creation of the program. loading the shaders and linking.
-//	prog = new Program();
-//	if (prog->loadVertex("Shaders/cube.v.glsl") == 0) return 0;
-//	if (prog->loadFragment("Shaders/cube.f.glsl") == 0) return 0;
-
 	const char* filename = "Scene.xml";
 	xml_document doc;
-	xml_parse_result result;
-	TRACE(3);
-	result = doc.load_file(filename);
-	TRACE(3);
+	xml_parse_result result;			TRACE(3);
+	result = doc.load_file(filename);		TRACE(3);
 
-	foo = new Scene(doc.first_child());
-	TRACE(3);
-//	c = foo->cameras[0];
-	TRACE(3);
-//	c->setFocus(foo->models[1]);
-	TRACE(3);
-	foo->bindToProgram(0);
-	TRACE(3);
+	foo = new Scene(doc.first_child());		TRACE(3);
+	foo->bindToProgram(0);				TRACE(3);
 
-//	Event move((UID)0,EVENT_MOVE);
-//	move.setArgs(0.0f,0.0f,0.01f,0.0f);
-//	globalIn->registerToExternal(104,((Object*)foo->models[1]),move);
-
-//	TRACE(3);
-
-//	Event move2((UID)0,EVENT_MOVE);
-//	move2.setArgs(0.0f,0.0f,-0.01f,0.0f);
-//	globalIn->registerToExternal(103,((Object*)foo->models[1]),move2);
-
-//	TRACE(3);
-
-//	Event rotX((UID)0,EVENT_ROTATE);
-//	rotX.setArgs(0.01f,0.0f,0.0f,0.0f);
-//	globalIn->registerToExternal(120,((Object*)foo->models[1]),rotX);
-
-//	TRACE(3);
-
-//	Event rotY((UID)0,EVENT_ROTATE);
-//	rotY.setArgs(0.0f,0.01f,0.0f,0.0f);
-//	globalIn->registerToExternal(121,((Object*)foo->models[1]),rotY);
-
-//	TRACE(3);
-
-//	Event rotZ((UID)0,EVENT_ROTATE);
-//	rotZ.setArgs(0.0f,0.0f,0.01f,0.0f);
-//	globalIn->registerToExternal(122,((Object*)foo->models[1]),rotZ);
-
-//	TRACE(3);
-
-	globalRM->ResolveRequests();
-
-	TRACE(3);
+	globalRM->ResolveRequests();			TRACE(3);
 
 	printf("Resources loaded!\n");
 	return 1;//resources initalized.
@@ -121,36 +72,13 @@ void onDisplay()
 	foo->render();
 	TRACE(1);
 
-//	Event move((UID)0,EVENT_MOVE);
-//	move.setArgs(0.0f,downShuf,shuffle,0.0f);
-//	((Object*)foo->models[1])->onEvent(move);
-
-//	Event rot((UID)0,EVENT_ROTATE);
-//	rot.setArgs(rotx,roty,rotz,0.0f);
-//	((Object*)foo->models[1])->onEvent(rot);
-
-//	Event moveCam((UID)0,EVENT_MOVE);
-//	moveCam.setArgs(0.0f,0.0f,zoom,0.0f);
-//	((Object*)c)->onEvent(moveCam);
-
-//	foo->models[1]->rotate(rotx,roty,rotz);
-//	c->move(0.0,0.0,zoom);
-//	shuffle *= 0.9;rotx *= 0.9;roty *= 0.9;rotz *= 0.9;zoom *= 0.9;downShuf*=0.9;
 
 	//redrawn, swap the buffers and put this new one to the front.
 	glutSwapBuffers();
-//	printf("end render\n");
 }
-
-//void onReshape(int width, int height) 
-//{//what to do when the user changes the size of the screen.
-//	c->setScreen(width,height);
-//	glViewport(0, 0, width, height);
-//}
 
 void free_resources()
 {//done, free up the resources so there aren't any loose ends.
-//	delete prog;
 	delete foo;
 }
 
@@ -161,82 +89,6 @@ void shutdown()
 	printf("frames: %i\n",frameCount);
 	exit(0);
 }
-
-//void onNormalKeys(unsigned char key, int x, int y)
-//{//what to do on key strokes.
-//	if (key == 27) shutdown();
-//	cout << "key: " << (char) key << " Value of: " << (int) key << " x: " << x << " y: " << y << endl;
-//	if (key == 'a') shuffle++;
-//	if (key == 'd') shuffle--;
-//	if (key == 'w') downShuf++;
-//	if (key == 's') downShuf--;
-//	if (key == 'x') rotx += 1;
-//	if (key == 'y') roty += 1;
-//	if (key == 'z') rotz += 1;
-//	keyFunc(key,x,y);
-//}
-
-//void onActiveMotion(int x, int y)
-//{what to do when the user is clicking and dragging.
-//	int dx = x - lx;
-//	int dy = y - ly;
-
-//	if(lclick)
-//	{
-//		add the change in movement to the angle
-//		angleV += dy;
-//		if (angleV < 0)this will keep angleV inside of 0-360
-//			angleV += 360;
-//		else if (angleV > 360)
-//			angleV -= 360;
-//	
-//		if the object is upside down the user will expect movement along the horizontal axis
-//		to flip, or inother words, that he's always grabbing the front of the object.
-//		if ((int)angleV % 360 < 90 || (int)angleV % 360 > 270)
-//			angleH += dx;
-//		else
-//			angleH -= dx;
-//		if (angleH < 0)
-//			angleH += 360;
-//		else if (angleH > 360)
-//			angleH -= 360;
-//	}
-//	if(rclick)
-//	{
-//		zoom += dy;
-//		if (dy > 0)
-//		{
-//			dy *= (-1);
-//			if (dy <= 1) dy = 2;
-//			zoom += log10(dy);
-//		}
-//		else
-//		{
-//			if (dy <= 1) dy = 2;
-//			zoom += log10(dy) * (-1);
-//		}
-//		if (zoom > -1.5) zoom = -1.5;
-//	}
-//		
-//	lx = x;
-//	ly = y;
-//}
-
-//void onPassiveMotion(int x, int y)
-//{//what tod o when the user is just running his mouse across the screen.
-//	lx = x;
-//	ly = y;
-//}
-
-//void onClick(int button, int state, int x, int y)
-//{//what to do when the user clicks.
-//	lx = x;
-//	ly = y;
-//	if (button == GLUT_LEFT_BUTTON)
-//		lclick = state == GLUT_DOWN;
-//	else if (button == GLUT_RIGHT_BUTTON)
-//		rclick = state == GLUT_DOWN;
-//}
 
 int main(int argc, char* argv[]) 
 {
@@ -249,9 +101,6 @@ int main(int argc, char* argv[])
 	glutSpecialFunc(specialFunc);
 	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
 
-//	glutMotionFunc(onActiveMotion);
-//	glutPassiveMotionFunc(onPassiveMotion);
-//	glutMouseFunc(onClick);
 
 	if (argc > 1)
 		DEBUG = ((int)argv[1][0])-(int)'0';
@@ -271,7 +120,6 @@ int main(int argc, char* argv[])
 
 	if (init_resources()) {
 		glutDisplayFunc(onDisplay);
-//		glutReshapeFunc(onReshape);
 		glutIdleFunc(onIdle);
 		glEnable(GL_BLEND);
 		glEnable(GL_DEPTH_TEST);

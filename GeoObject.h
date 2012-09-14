@@ -44,18 +44,21 @@ public:
 	void setRot(float _x, float _y, float _z);
 	glm::vec3 inline getLoc(){return loc;}
 	virtual bool onEvent(const Event& event);
+
 protected:
-	glm::mat4 trans;
-	glm::vec3 loc;
-	float rotX;
-	float rotY;
-	float rotZ;
-	bool newTrans;
-	long int tranC;
-	GeoObject *parent;
-	long int ptranC;
-	glm::gtc::quaternion::quat rotquat;
-	void updateTrans();
+	glm::mat4 trans;	//keeps the local transformation matrix to be sent to the GPU.
+	glm::vec3 loc;		//the current location of the object.
+	float rotX;		//the current rotation of the object on x
+	float rotY;		//				on y
+	float rotZ;		//				on z
+	bool newTrans;		//a flag for whether or not a new transformation matrix is needed.
+	long int tranC;		//the number of the current transformation matrix, this was going to
+		//this was going to be used to keep child objects up to date with their parents.
+	GeoObject *parent;	//the parent object from which locations and rotation are drawn.
+	long int ptranC;	//the transformation count of the parent so that this object knows 
+		//it needs update its matrix or not.
+	glm::gtc::quaternion::quat rotquat; //the current rotation represented as a quarternion.
+	void updateTrans();	//the method to update the transformation matrix. 
 };
 
 /*.S.D.G.*/

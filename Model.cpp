@@ -18,7 +18,7 @@ Model::Model(UID _meshID)
 	ID = globalRM->RequestID();
 }
 Model::Model(UID _meshID, float x, float y, float z)
-{
+{//constructor to create a model from a loaded mesh at a given location.
 	mesh = (Mesh*)globalRM->GetIDRetaining(_meshID);
 	meshID = _meshID;
 	local = 0;
@@ -72,7 +72,7 @@ void Model::render()
 	mesh->render();
 }
 bool Model::onEvent(const Event& event)
-{
+{//respond to events.
 	TRACE(5);
 	return GeoObject::onEvent(event);
 }

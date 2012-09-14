@@ -29,36 +29,9 @@ public:
 	virtual bool onEvent(const Event& event);
 //protected:
 	UID ID;
-	//delta_t type;
+
 };
 
 #endif
-/*
-class Object
-{
-public:
-	Object()
-	{
-		ID = 0;
-	}
-	virtual ~Object()
-	{
-		ID = 0;
-	}
-	UID getID()
-	{
-		return ID;
-	}
-	void trip(xml_node arg)
-	{//there really isn't anything that an object can do...
-		return;
-	}
-protected:
-	UID ID;
-	//delta_t type;
-};
-
 
 /*.S.D.G.*/
-
-//#endif

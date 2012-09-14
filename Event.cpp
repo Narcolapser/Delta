@@ -36,11 +36,6 @@ Event::~Event()
 {
 	sender = 0;
 	type = NOT_EVENT;
-//	char clear = {'\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0','\0',};
-//	args[0] = Variant(clear);
-//	args[1] = Variant(clear);
-//	args[2] = Variant(clear);
-//	args[3] = Variant(clear);
 	args[0] = Variant();
 	args[1] = Variant();
 	args[2] = Variant();

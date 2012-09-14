@@ -4,8 +4,8 @@
  * loaded as the resource manager doesn't do anything on its own.
  */
 
-//#ifndef SCENE_H
-//#define SCENE_H
+#ifndef SCENE_H
+#define SCENE_H
 #include <vector>
 #include <stdio.h>
 #include <iostream>
@@ -25,7 +25,7 @@
 using namespace std;
 using namespace pugi;
 
-class Scene: public Object //yup, scenes are objects to, they need to be globably adressable.
+class Scene: public Object //yup, scenes are objects to, they need to be globably addressable.
 {
 public:
 	Scene(const char* config);
@@ -44,5 +44,5 @@ public:
 	Program* renderer;
 };
 
-//#endif 
+#endif 
 /*.S.D.G.*/

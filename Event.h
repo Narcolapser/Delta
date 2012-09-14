@@ -91,7 +91,7 @@ public:
 	event_t type;
 	UID sender;
 	UID receiver;
-	int pad;
+	int pad;//this adds 32 bits to make events 128bit aligned. overall they are 640 bits.
 	Variant args[ARG_COUNT];
 };
 

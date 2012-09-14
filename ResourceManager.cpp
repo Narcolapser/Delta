@@ -230,14 +230,12 @@ void ResourceManager::RegisterRequest(const Event& val)
 }
 
 void ResourceManager::ResolveRequests()
-{
+{//this method resolves load time idetifier requests to link the system up to itself in a non
+	//heirachial manner. 
 	TRACE(2);
 	while(DeReqs.size())
 	{
 		TRACE(5);
-//		DeReqs[0].callBack(DeReqs[0]);
-//		printf("ID: %i\n",(UID)DeReqs[0].receiver);
-//		printf("location: %li\n\n",(long int)GetIDNonRetaining(DeReqs[0].receiver));
 		if (DeReqs[0].receiver == (UID)1)
 		{
 			TRACE(5);

@@ -29,10 +29,4 @@ Alpha 13: Create system for dispatching events from objects as well as the keybo
 Alpha 14: Create system for spawning objects.
 Alpha 15: Clean up.
 
-Rather than try and predict how things are going to go, I'm just going to make a todo pool:
-
-
->  Create a way to do menus and the like. allow for shifting between scenes and over laying scenes.
->  Sound, get OpenAL up initally. back ground music, locational sound, and sound byte triggers.
->  Add support for texturing.
->  Improve lighting system. Radiocity. 
+I have concluded this Project at Alpha 15. I've hit a lot of dead ends and really want to rework the way I did a lot of things. So I'm starting over later. this project is now left as is. an uncomplete engine. I might re-visit it and complete it for the sack of the challenge years from now. but as of now. This project is orphaned. 
