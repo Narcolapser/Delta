@@ -1,0 +1,424 @@
+{
+    "description": "Personal education exercise in making a game engine.",
+    "name": "Delta",
+    "path": "/home/toben/Code/ssg/delta",
+    "posts": [
+        {
+            "author": "Narcolapser",
+            "branch": "master",
+            "date": "2014-04-10",
+            "message": "long over due push",
+            "project": "delta",
+            "title": "long over due push"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-09-17",
+            "message": "final commit with all documentation in place.",
+            "project": "delta",
+            "title": "final commit with all documentation in place."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-09-14",
+            "message": "This is the end of it for now. I'm Shelving Delta indefinately. I'm going to try again taking the lessons I have learned and try and make Epsilon better.",
+            "project": "delta",
+            "title": "This is the end of it for now. I'm Shelving Delta indefinately. I'm going to try again taking the lessons I have learned and try and make Epsilon better."
+        },
+        {
+            "author": "Toben",
+            "branch": "master",
+            "date": "2012-09-07",
+            "message": "i'm calling it quits on delta. It is time to move on.",
+            "project": "delta",
+            "title": "i'm calling it quits on delta. It is time to move on."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-09-05",
+            "message": "got spawning almost working, hit a seg fault.",
+            "project": "delta",
+            "title": "got spawning almost working, hit a seg fault."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-09-04",
+            "message": "a storm is coming wooh.",
+            "project": "delta",
+            "title": "a storm is coming wooh."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-08-30",
+            "message": "started work on Alpha 14",
+            "project": "delta",
+            "title": "started work on Alpha 14"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-10",
+            "message": "Thus completes alpha 13. Player interactions with the enviorment can now be described in the xml as events. I'm super pleased about this.",
+            "project": "delta",
+            "title": "Thus completes alpha 13. Player interactions with the enviorment can now be described in the xml as events. I'm super pleased about this."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-10",
+            "message": "seg faults fixed, LTI now works. last step for this alpha is getting events working on load.",
+            "project": "delta",
+            "title": "seg faults fixed, LTI now works. last step for this alpha is getting events working on load."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-08",
+            "message": "The event system is nearing a certain level of usability. I've now got the ability to hook things up to keyboard commands. I've also almost got the LTI system to where it needs to be. another day or two and I should have Alpha 13 wrapped up.",
+            "project": "delta",
+            "title": "The event system is nearing a certain level of usability. I've now got the ability to hook things up to keyboard commands. I've also almost got the LTI system to where it needs to be. another day or two and I should have Alpha 13 wrapped up."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-07",
+            "message": "added a Load Time Identifier system.",
+            "project": "delta",
+            "title": "added a Load Time Identifier system."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-03",
+            "message": "made on event a virtual method. began musing about Alpha 13.",
+            "project": "delta",
+            "title": "made on event a virtual method. began musing about Alpha 13."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-02",
+            "message": "fixed 32-bit segmentation error.",
+            "project": "delta",
+            "title": "fixed 32-bit segmentation error."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-02",
+            "message": "Got Events up and working. Shazbot! also improved the debug system by creating \"TRACE(#)\" where I can define each trace point with a value and define debug to trigger or not trigger the tracing. woohoo",
+            "project": "delta",
+            "title": "Got Events up and working. Shazbot! also improved the debug system by creating \"TRACE(#)\" where I can define each trace point with a value and define debug to trigger or not trigger the tracing. woohoo"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-02",
+            "message": "really didn't change a lot, but I'm jumping ship to my desktop.",
+            "project": "delta",
+            "title": "really didn't change a lot, but I'm jumping ship to my desktop."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-02",
+            "message": "added the Lib.h and Lib.cpp files.",
+            "project": "delta",
+            "title": "added the Lib.h and Lib.cpp files."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-01",
+            "message": "jumping back to Dotanuki",
+            "project": "delta",
+            "title": "jumping back to Dotanuki"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-01",
+            "message": "Gotta go live through a tornado! transfering to Kodachi.",
+            "project": "delta",
+            "title": "Gotta go live through a tornado! transfering to Kodachi."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-01",
+            "message": "got a seg error I want to do on my desktop. commiting for now.",
+            "project": "delta",
+            "title": "got a seg error I want to do on my desktop. commiting for now."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-01",
+            "message": "I've got the events created. Now I need to start working on their handling. and figure out command chaining.",
+            "project": "delta",
+            "title": "I've got the events created. Now I need to start working on their handling. and figure out command chaining."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-05-01",
+            "message": "started work on Events.",
+            "project": "delta",
+            "title": "started work on Events."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-25",
+            "message": "mostly just wrote in the dev doc. began work on the Interface class. need to start work on SceneAction class.",
+            "project": "delta",
+            "title": "mostly just wrote in the dev doc. began work on the Interface class. need to start work on SceneAction class."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-24",
+            "message": "Got triggers to be loadable from the XML. now i just need to get the controller class above! w00t!",
+            "project": "delta",
+            "title": "Got triggers to be loadable from the XML. now i just need to get the controller class above! w00t!"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-24",
+            "message": "Everything has been broken into .h and .cpp files now. This is causing a segmentation error. I'll deal with that later today when I'm at my desktop. But now it is no longer necessary to do a complete rebuild every time, only those files that need it will be rebuilt. This saves me a lot of time, particularly on Kodachi.",
+            "project": "delta",
+            "title": "Everything has been broken into .h and .cpp files now. This is causing a segmentation error. I'll deal with that later today when I'm at my desktop. But now it is no longer necessary to do a complete rebuild every time, only those files that need it will be rebuilt. This saves me a lot of time, particularly on Kodachi."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-24",
+            "message": "I got the trigger class made. Just a start yet, It hasn't been hooked up to anything, but it is a start. I also figured out why my entire project would get rebuilt every time. It has to do with breaking things into .h and .cpp files. I've begun moving everything to be split like this and updating the make file. It is saving me a bit of time not having to recompile ever class every time.",
+            "project": "delta",
+            "title": "I got the trigger class made. Just a start yet, It hasn't been hooked up to anything, but it is a start. I also figured out why my entire project would get rebuilt every time. It has to do with breaking things into .h and .cpp files. I've begun moving everything to be split like this and updating the make file. It is saving me a bit of time not having to recompile ever class every time."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-23",
+            "message": "I changed the README a little to reflect realisticly what I'm capable of. On to band for now. I'll probably be coding some more tonight.",
+            "project": "delta",
+            "title": "I changed the README a little to reflect realisticly what I'm capable of. On to band for now. I'll probably be coding some more tonight."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-23",
+            "message": "Started working on triggers. more to come",
+            "project": "delta",
+            "title": "Started working on triggers. more to come"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-23",
+            "message": "Alpha 11 complete. I now have all camera interactions moved over to scene, leaving Delta.cpp starting to look pretty barren. woohoo! Additionally, I've now got diffuse lighting enabled. so geometry is now actually visible as having distinct faces.",
+            "project": "delta",
+            "title": "Alpha 11 complete. I now have all camera interactions moved over to scene, leaving Delta.cpp starting to look pretty barren. woohoo! Additionally, I've now got diffuse lighting enabled. so geometry is now actually visible as having distinct faces."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-22",
+            "message": "I added a bunch of code for calculating normals for each vertex. I've started to work in the shaders too to get diffuse lighting working. I also have almost completely removed the camera form the main delta.cpp file. it is all handled in the scene class now, as well as programs.",
+            "project": "delta",
+            "title": "I added a bunch of code for calculating normals for each vertex. I've started to work in the shaders too to get diffuse lighting working. I also have almost completely removed the camera form the main delta.cpp file. it is all handled in the scene class now, as well as programs."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-21",
+            "message": "I'm making progress! its so nice. Onward to making things visible and movable. ",
+            "project": "delta",
+            "title": "Alpha 10. woohoo! I've gotten every thing cleaned up and a new diagram. I added Program.cpp as it was getting to long. Camera is probably going to be getting there soon. I also wrote a make clean function so now it is easy to clear out the temporaries before commiting. I still want to get the temporaries out of github, I'll have to figure it out later."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-20",
+            "message": "started clean up on my net book while I was away from my desktop. transfering back to my desktop now.",
+            "project": "delta",
+            "title": "started clean up on my net book while I was away from my desktop. transfering back to my desktop now."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-20",
+            "message": "Alpha 9! Fixed rotation, which was fundamentally wrong. got follow cams working, and made scene description work via XML. Doing so made it super easy to describe levels as well as load them. WEEEEEEEE! I did it. Alpha 9 is done. food time.",
+            "project": "delta",
+            "title": "Alpha 9! Fixed rotation, which was fundamentally wrong. got follow cams working, and made scene description work via XML. Doing so made it super easy to describe levels as well as load them. WEEEEEEEE! I did it. Alpha 9 is done. food time."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-18",
+            "message": "I made a few tweeks to rotation. managed to track down a pair of minor bugs related to how objects were loaded and rotated. did some of the priliminary thought work for follow cams. I've got a good idea of what needs to be done now. Should have alpha 9 done by the end of the week for sure, alpha 10 is still a possibility.",
+            "project": "delta",
+            "title": "I made a few tweeks to rotation. managed to track down a pair of minor bugs related to how objects were loaded and rotated. did some of the priliminary thought work for follow cams. I've got a good idea of what needs to be done now. Should have alpha 9 done by the end of the week for sure, alpha 10 is still a possibility."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-17",
+            "message": "Got quaternions working. rotation works properly now, better than it ever has and in probably its final form. now I just need to get cameras into the XML and follow cams working and this alpha is done!",
+            "project": "delta",
+            "title": "Got quaternions working. rotation works properly now, better than it ever has and in probably its final form. now I just need to get cameras into the XML and follow cams working and this alpha is done!"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-16",
+            "message": "Got xml up and running entirely. that is fantastic. It currently only has the ability to load models, but cameras will be coming before the end of this alpha. can't believe I'm almost done with alpha 9! I'm soooo looking forward to doing alpha 10 for the retrospective and recreating the architecture chart. :) I am far to exited about documentation right now. ha! probably because I'm sleepy. hopefully follow cams tomorrow.",
+            "project": "delta",
+            "title": "Got xml up and running entirely. that is fantastic. It currently only has the ability to load models, but cameras will be coming before the end of this alpha. can't believe I'm almost done with alpha 9! I'm soooo looking forward to doing alpha 10 for the retrospective and recreating the architecture chart. :) I am far to exited about documentation right now. ha! probably because I'm sleepy. hopefully follow cams tomorrow."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-14",
+            "message": "Alpha 8 has been completed. woohoo! I've now got a resource manager system that will prevent loading of duplicate data and free data when it is no longer needed. making progress! I'm making progress! :D",
+            "project": "delta",
+            "title": "Alpha 8 has been completed. woohoo! I've now got a resource manager system that will prevent loading of duplicate data and free data when it is no longer needed. making progress! I'm making progress! :D"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-13",
+            "message": "Uploading so I can pull down on my desktop. alpha 9 is nearly done. :)",
+            "project": "delta",
+            "title": "Uploading so I can pull down on my desktop. alpha 9 is nearly done. :)"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-12",
+            "message": "I'm done for the day, early as it is. But I must work on my linear algebra homework. But as a side note, I may also be done with this week's alpha. There is still some work I want to do on the resource manager I think, and how it interacts with scenes. That being said however, I've got the scene loading it's meshes through the resource manager. So the resource manager works on at least some level.",
+            "project": "delta",
+            "title": "I'm done for the day, early as it is. But I must work on my linear algebra homework. But as a side note, I may also be done with this week's alpha. There is still some work I want to do on the resource manager I think, and how it interacts with scenes. That being said however, I've got the scene loading it's meshes through the resource manager. So the resource manager works on at least some level."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-12",
+            "message": "Nightly commit. Made huge strides forward in the resource manager. It looks like I'll be on target for a completed alpha on saturday. woohoo.",
+            "project": "delta",
+            "title": "Nightly commit. Made huge strides forward in the resource manager. It looks like I'll be on target for a completed alpha on saturday. woohoo."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-11",
+            "message": "I'm going to start trying to do nightly commits. try and encourage myself to be productive.",
+            "project": "delta",
+            "title": "I'm going to start trying to do nightly commits. try and encourage myself to be productive."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-10",
+            "message": "Added pugixml. wanted to pull things over to my netbook so i commited and am transfering this way. only way I know of to transfer like this. well, no, scratch my last, I do know I can do it directly, but I just don't know how.",
+            "project": "delta",
+            "title": "Added pugixml. wanted to pull things over to my netbook so i commited and am transfering this way. only way I know of to transfer like this. well, no, scratch my last, I do know I can do it directly, but I just don't know how."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-09",
+            "message": "Merge branch 'master' of github.com:Narcolapser/Delta",
+            "project": "delta",
+            "title": "Merge branch 'master' of github.com:Narcolapser/Delta"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-09",
+            "message": "",
+            "project": "delta",
+            "title": "ALPHA 7! Moved resources into a file path, as well as devdocs."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-06",
+            "message": "My computer is doing what looked like an upgrade of the OS. these are the most dangerous updates, and I want to save my changes just in case something goes wrong. I also deleted the compiler temporaries.",
+            "project": "delta",
+            "title": "My computer is doing what looked like an upgrade of the OS. these are the most dangerous updates, and I want to save my changes just in case something goes wrong. I also deleted the compiler temporaries."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-03",
+            "message": "Cleaned up a little bit, removed a bunch of temp files and got all the dev docs uploaded.",
+            "project": "delta",
+            "title": "Cleaned up a little bit, removed a bunch of temp files and got all the dev docs uploaded."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-04-03",
+            "message": "Added a bunch a bunch of new classes, a lot of which aren't done/even started yet, but their files exist there. The main thing was the addition of the \"buffer\" class and the \"object\" class. I'm now staged to begin proper work on scenes. I also made it so that the program will automatically translate quads into triangles from .obj files. thus making it so that while modeling in blender, there need not be the concern to make everything into triangles.",
+            "project": "delta",
+            "title": "Added a bunch a bunch of new classes, a lot of which aren't done/even started yet, but their files exist there. The main thing was the addition of the \"buffer\" class and the \"object\" class. I'm now staged to begin proper work on scenes. I also made it so that the program will automatically translate quads into triangles from .obj files. thus making it so that while modeling in blender, there need not be the concern to make everything into triangles."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-03-11",
+            "message": "Alpha 5. Cleaned up and documented things up real nice. now I can continue on with real work easier with out the knowledge that I would have to do that at some point looming over my head.",
+            "project": "delta",
+            "title": "Alpha 5. Cleaned up and documented things up real nice. now I can continue on with real work easier with out the knowledge that I would have to do that at some point looming over my head."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-03-10",
+            "message": "meshes now supported baby. WOOHOO",
+            "project": "delta",
+            "title": "meshes now supported baby. WOOHOO"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-03-10",
+            "message": "I'm going to delete a lot of code to make it easier to read while I work on including mesh. I want to save everything before I do so.",
+            "project": "delta",
+            "title": "I'm going to delete a lot of code to make it easier to read while I work on including mesh. I want to save everything before I do so."
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-03-10",
+            "message": "before i go and gut for mesh support",
+            "project": "delta",
+            "title": "before i go and gut for mesh support"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-03-09",
+            "message": "added the code",
+            "project": "delta",
+            "title": "added the code"
+        },
+        {
+            "author": "Toben Archer",
+            "branch": "master",
+            "date": "2012-03-09",
+            "message": "firstcommit",
+            "project": "delta",
+            "title": "firstcommit"
+        }
+    ],
+    "url": "/delta"
+}
